@@ -1,10 +1,198 @@
-# Sillok pack registry — placeholder
+---
+# Sillok pack registry — 10 starter packs
 #
-# Full registry lands during F0.6 (10 starter packs sanitized from
-# upstream registry.yaml v1.14.0 / 56 packs).
+# Schema:    sillok.schemas.RegistrySchema
+# Bodies:    packs/<sub_category>/<id>.md (currently stubs — F0.6 step 2)
+# Validate:  python -c "import yaml,sillok.schemas as s; \
+#              s.RegistrySchema.model_validate(yaml.safe_load(open('packs/registry.yaml')))"
 #
-# Schema: sillok/schemas/registry.py (after F0.5)
-version: 0.0.0
+# Selection criteria for the 10 starter packs:
+#   - Built on globally available standards (PMBOK / SAFe / ITIL / COSO / TOGAF / Pyramid)
+#   - Minimal client-specific examples
+#   - Immediate value for PM, consultant, and AX worker personas
+#
+# Real bodies land per pack in F0.6 step 2.
+
+version: "0.1.0a0"
 schema: sillok.registry.v1
-status: placeholder
-packs: []
+
+packs:
+  - id: pm-enhanced
+    title: PM Lifecycle Pack — Plan / Doing / Done / Release / Audit
+    path: packs/methodology/pm-enhanced.md
+    category: domain
+    sub_category: methodology
+    trigger_signals:
+      explicit:
+        - "[pm]"
+        - "$pm-todo"
+        - "$pm-doing"
+        - "$pm-done"
+      contains:
+        - "issue"
+        - "milestone"
+        - "release"
+        - "retrospective"
+    intent_tags: ["pm", "lifecycle", "issue-tracking"]
+    output_contracts: ["issue.body.md", "result.md", "release-notes.md"]
+    precedence: 95
+    visibility_label: PM Lifecycle
+    summary_overlay:
+      - "PM lifecycle (start / sync / audit / close / release)"
+      - "5-class failure taxonomy + replay pointer on closeout"
+
+  - id: risk-uncertainty
+    title: Risk & Uncertainty Management Pack (PMBOK PD8)
+    path: packs/methodology/risk-uncertainty.md
+    category: domain
+    sub_category: methodology
+    trigger_signals:
+      explicit: ["[risk]"]
+      contains: ["risk register", "EMV", "Monte Carlo", "appetite", "tolerance"]
+    intent_tags: ["risk", "pmbok", "quantitative"]
+    output_contracts: ["risk-register.md", "risk-response.md"]
+    precedence: 75
+    visibility_label: "Risk (PMBOK)"
+    summary_overlay:
+      - "10-column Risk Register, 4-Response strategy"
+      - "EMV / Monte Carlo quantification, appetite/tolerance/threshold"
+
+  - id: itil-operations
+    title: ITIL Operations Pack — Incident · Problem · Continuity
+    path: packs/methodology/itil-operations.md
+    category: domain
+    sub_category: methodology
+    trigger_signals:
+      explicit: ["[itil]"]
+      contains: ["incident", "problem", "post-mortem", "RPO", "RTO", "BIA"]
+    intent_tags: ["itil", "operations", "incident-mgmt"]
+    output_contracts: ["incident-runbook.md", "post-mortem.md"]
+    precedence: 70
+    visibility_label: ITIL Ops
+    summary_overlay:
+      - "SEV 1-4 playbook, 5-Why + Ishikawa RCA"
+      - "Blameless post-mortem, BIA RPO/RTO/RLO, DR 6-step runbook"
+
+  - id: portfolio-governance
+    title: Portfolio Governance Pack — ITIL Portfolio + PMBOK Stakeholder + Supplier
+    path: packs/methodology/portfolio-governance.md
+    category: domain
+    sub_category: methodology
+    trigger_signals:
+      explicit: ["[portfolio]"]
+      contains: ["stage gate", "stakeholder", "supplier", "Kraljic", "SLA", "OLA"]
+    intent_tags: ["portfolio", "governance", "supplier"]
+    output_contracts: ["portfolio-scoring.md", "stakeholder-grid.md"]
+    precedence: 70
+    visibility_label: Portfolio
+    summary_overlay:
+      - "4-dim scoring, Stage-Gate, Power-Interest Grid"
+      - "Kraljic Supplier quadrant, SLA/OLA/UC chain"
+
+  - id: safe-agile-delivery
+    title: SAFe 6.0 Agile Delivery Pack — ART · PI Planning · LPM · I&A
+    path: packs/methodology/safe-agile-delivery.md
+    category: domain
+    sub_category: methodology
+    trigger_signals:
+      explicit: ["[safe]"]
+      contains: ["PI Planning", "ART", "WSJF", "ROAM", "Lean Portfolio"]
+    intent_tags: ["agile", "safe", "delivery"]
+    output_contracts: ["pi-objectives.md", "wsjf-table.md"]
+    precedence: 75
+    visibility_label: "SAFe 6.0"
+    summary_overlay:
+      - "7 Competencies Maturity, 4 Levels, PI Planning 2-day"
+      - "WSJF, ROAM, Epic Hypothesis, Lean Portfolio 3 Horizons"
+
+  - id: consulting-strategy-audit
+    title: Strategy / Market-Entry / BMC Audit (Lens 0)
+    path: packs/consulting/consulting-strategy-audit.md
+    category: domain
+    sub_category: consulting
+    trigger_signals:
+      explicit: ["[strategy]"]
+      contains: ["Porter", "Ansoff", "Blue Ocean", "BMC", "TAM", "SAM", "SOM"]
+    intent_tags: ["strategy", "consulting", "lens-0"]
+    output_contracts: ["bmc-9block.md", "porter-five-forces.md"]
+    precedence: 85
+    visibility_label: "Strategy (Lens 0)"
+    summary_overlay:
+      - "Porter 5-Forces, Ansoff, Blue Ocean ERRC, BMC 9-Block"
+      - "TAM/SAM/SOM dual derivation, Strategic Options + Moat"
+
+  - id: consulting-saas-audit
+    title: SaaS Architecture / Business Audit (Lens 1)
+    path: packs/consulting/consulting-saas-audit.md
+    category: domain
+    sub_category: consulting
+    trigger_signals:
+      explicit: ["[saas-audit]"]
+      contains: ["PMP", "SAFe", "BABOK", "SEBOK", "5-part audit"]
+    intent_tags: ["consulting", "saas", "lens-1"]
+    output_contracts: ["audit-report.md", "moat-3-axis.md"]
+    precedence: 85
+    visibility_label: "SaaS (Lens 1)"
+    summary_overlay:
+      - "PMP/SAFe/BABOK/SEBOK 5-part audit (Business + Tech + Market + Roadmap)"
+      - "Evidence labels, Claim Verification 5-stage, Moat 3-axis"
+
+  - id: governance-standards
+    title: Governance Standards Pack — COSO ERM · ISO 31000 · COBIT · TOGAF
+    path: packs/methodology/governance-standards.md
+    category: domain
+    sub_category: methodology
+    trigger_signals:
+      explicit: ["[governance]"]
+      contains: ["COSO", "ISO 31000", "COBIT", "TOGAF", "Three Lines"]
+    intent_tags: ["governance", "erm", "standards"]
+    output_contracts: ["governance-roadmap.md", "three-lines-mapping.md"]
+    precedence: 80
+    visibility_label: Governance
+    summary_overlay:
+      - "COSO ERM 2017 (5 Components × 20 Principles), ISO 31000:2018"
+      - "COBIT 2019 (40 Objectives × Maturity), TOGAF 10 ADM, 12-36M Roadmap"
+
+  - id: report-quality
+    title: Report Quality Pack — CRAAP · AIMQ · IQF · Bond Triangulation
+    path: packs/methodology/report-quality.md
+    category: quality-guard
+    sub_category: methodology
+    trigger_signals:
+      explicit: ["[report-quality]"]
+      contains: ["CRAAP", "AIMQ", "IQF", "triangulation", "evidence"]
+    intent_tags: ["report", "quality", "evaluation"]
+    output_contracts: ["quality-report.md", "triangulation-table.md"]
+    precedence: 60
+    visibility_label: Report Quality
+    summary_overlay:
+      - "3-framework guardrail (CRAAP / AIMQ / IQF)"
+      - "Bond Evidence Principles: triangulation count gate"
+
+  - id: exec-communication
+    title: Executive Communication Pack — Pyramid · SCR · Board Deck
+    path: packs/output-styles/exec-communication.md
+    category: output-style
+    sub_category: business
+    trigger_signals:
+      explicit: ["[exec-comms]"]
+      contains: ["board deck", "Pyramid Principle", "SCR", "1-pager", "Sequoia"]
+    intent_tags: ["communication", "executive", "board"]
+    output_contracts: ["board-deck-10.md", "exec-1pager.md"]
+    precedence: 75
+    visibility_label: Exec Comms
+    summary_overlay:
+      - "Pyramid Principle, SCR/SCQA, 10-slide Board deck, 1-Pager"
+      - "Sequoia Pitch, Quarterly MD&A, Communication Cadence"
+
+retrieval_plans:
+  - id: vault_first
+    description: "Vault search only (default for most queries)"
+  - id: vault_then_llmwiki_fallback
+    description: "Vault first; archived llm-wiki when methodological canon needed"
+  - id: llmwiki_recovery_first
+    description: "Archived llm-wiki first (historical recovery only)"
+  - id: dual_compare
+    description: "Promoted concept + raw provenance side-by-side"
+  - id: no_corpus
+    description: "Orchestration-only (no retrieval)"
