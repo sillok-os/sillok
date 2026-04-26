@@ -7,7 +7,54 @@ adheres to [SemVer](https://semver.org/).
 ## [Unreleased]
 
 ### Added
-- (none — see 0.1.0a0 below for the latest landed work)
+- (none yet — pending F0.3 step 2 cherry-pick of full v2 router with
+  semantic embeddings + calibration, deferred to 0.2.0)
+
+## [0.1.0a1] — 2026-04-26
+
+Functional alpha. The two step-2 items that gated the cutover are now
+either landed (F0.6) or explicitly deferred (F0.3 → 0.2.0).
+
+### Added
+- **Pack bodies (F0.6 step 2)** — all 10 starter packs now ship full
+  prompt bodies, not stubs. Each body is English-only, public-
+  distribution form, anchored to publicly available methodologies and
+  standards: PMBOK 8 / SAFe 6.0 / BABOK / SEBOK / COSO ERM 2017 / ISO
+  31000:2018 / COBIT 2019 / TOGAF 10 / Three Lines Model / Porter /
+  Ansoff / Blue Ocean ERRC / BMC / CRAAP / AIMQ / IQF / Bond
+  Triangulation / Pyramid Principle / SCQA.
+- **Empty-folder audit closeout (P0+P1+P2)** — every directory in the
+  repo now has either real content or a placeholder README explaining
+  its phase / activation gate. Empty directory count: 0.
+- **Smoke tests** — 30 unit + 3 integration tests covering naru,
+  bongsu, schemas, pyeonchan, and end-to-end route → ingest → telemetry
+  flow. The remaining four module directories (jikji, sangso,
+  telemetry, eval) carry namespace-import smoke tests so future PRs
+  can swap in real tests without touching CI.
+- **Examples** — `examples/starter-projects/{minimal, multi-pack,
+  multi-tenant}/README.md` walkthroughs covering 3 archetypes.
+- **Integrations** — placeholder READMEs for obsidian-vault,
+  llm-wiki, claude-code, promptfoo, langfuse with phase / activation
+  gate documented per integration.
+- **Docs landings** — `docs/{tutorials, recipes, governance, modules,
+  api, benchmarks}/index.md` populated.
+- **Release script** — `scripts/release.sh` for patch / minor / major
+  bumps with draft GitHub release creation.
+
+### Deferred
+- **F0.3 step 2** — cherry-pick + sanitize of `prompt_os_v2.py`
+  (1235 LOC: semantic embeddings, confidence calibration, R1-R7 fixes
+  for v2 routing). Defers to **0.2.0**. The 2-tier router shipped in
+  0.1.0a0 remains the production path for `0.1.0a1`.
+
+### Notes
+- This is the first **functional** alpha. `pip install sillok` produces
+  a working router and the 10 starter packs return substantive prompt
+  bodies. Eval CI is still warn-only (flips to blocking in PR-B,
+  Phase 1).
+- Workshop-Retro atom type (7th type) and starter atoms (12) remain
+  in the upstream `aipm/project/Harness-Sillok/04-prototypes/`
+  staging area; they ship to `packs/atoms/` in 0.2.0.
 
 ## [0.1.0a0] — 2026-04-26
 
@@ -67,6 +114,7 @@ follows once the remaining Phase 0 step 2 items land.
   functional alpha will be `0.1.0a1`.
 - F0.10 in the upstream roadmap remains 🟡 partial until 0.1.0a1 ships.
 
-[Unreleased]: https://github.com/sillok-os/sillok/compare/v0.1.0a0...HEAD
+[Unreleased]: https://github.com/sillok-os/sillok/compare/v0.1.0a1...HEAD
+[0.1.0a1]: https://github.com/sillok-os/sillok/releases/tag/v0.1.0a1
 [0.1.0a0]: https://github.com/sillok-os/sillok/releases/tag/v0.1.0a0
 [0.0.1]: https://github.com/sillok-os/sillok/releases/tag/v0.0.1
