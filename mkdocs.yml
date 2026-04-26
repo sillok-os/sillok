@@ -1,0 +1,78 @@
+site_name: Sillok
+site_description: "Productized LLM Wiki pattern + typed pack registry + proposal-only governance"
+site_url: https://sillok.dev
+repo_url: https://github.com/sillok-os/sillok
+repo_name: sillok-os/sillok
+edit_uri: edit/main/docs/
+
+copyright: Copyright &copy; 2026 Peter Kim and Sillok contributors. Apache License 2.0.
+
+theme:
+  name: material
+  features:
+    - navigation.instant
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.indexes
+    - navigation.top
+    - search.highlight
+    - search.share
+    - search.suggest
+    - content.code.copy
+    - content.code.annotate
+    - toc.follow
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep purple
+      accent: deep orange
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep purple
+      accent: deep orange
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+
+nav:
+  - Home: index.md
+  - Architecture:
+      - Overview: architecture/README.md
+  - Modules: modules/.gitkeep
+  - Tutorials: tutorials/.gitkeep
+  - Recipes: recipes/.gitkeep
+  - Governance: governance/.gitkeep
+  - Benchmarks: benchmarks/.gitkeep
+  - API Reference: api/.gitkeep
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/sillok-os
