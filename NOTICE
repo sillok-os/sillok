@@ -1,0 +1,214 @@
+Sillok
+Copyright 2026 Peter Kim and Sillok contributors
+
+This product includes software developed by the Sillok project
+(https://github.com/sillok-os/sillok).
+
+================================================================================
+1. THIRD-PARTY METHODOLOGIES & STANDARDS (REFERENCED UNDER NOMINATIVE FAIR USE)
+================================================================================
+
+Sillok references the following third-party trademarks for educational and
+methodological referencing purposes within its starter prompt packs and
+documentation. Sillok is **not** affiliated with, endorsed by, sponsored by,
+or in any way officially connected to any of the organizations listed below.
+
+Project / Portfolio Management
+- PMBOK(R) Guide is a registered trademark of Project Management Institute, Inc. (PMI)
+- PMP(R), PgMP(R), PfMP(R) are registered trademarks of PMI
+- Disciplined Agile(R) is a registered trademark of PMI
+
+Agile / Scaled
+- SAFe(R) and Scaled Agile Framework(R) are registered trademarks of Scaled Agile, Inc.
+- Scrum is a registered trademark of Scrum.org and Scrum Alliance
+- Spotify Model is a model originally documented by Spotify AB
+
+Business Analysis
+- BABOK(R) Guide is a registered trademark of International Institute of Business Analysis (IIBA)
+- CBAP(R), CCBA(R) are registered trademarks of IIBA
+
+Service Management & Governance
+- ITIL(R) is a registered trademark of AXELOS Limited / PeopleCert
+- COBIT(R) is a registered trademark of ISACA
+- TOGAF(R) is a registered trademark of The Open Group
+- Three Lines Model is a model maintained by The Institute of Internal Auditors (IIA)
+- COSO ERM, COSO Internal Control - Integrated Framework are works of the
+  Committee of Sponsoring Organizations of the Treadway Commission (COSO)
+
+Risk & Quality Standards (ISO/IEC)
+- ISO standards (ISO 31000:2018, ISO 26262:2018, ISO 14971:2019, ISO/SAE 21434:2021,
+  ISO 21448:2022, ISO/IEC 27001/27002, ISO/IEC 42001, IEC 31010:2019, IEC 62304,
+  ISO 9001:2015, ISO 13485:2016, ISO 24089) are copyright (c) International
+  Organization for Standardization. Sillok packs reference these standards under
+  fair-use educational citation only; the standards themselves remain the
+  property of ISO/IEC and must be obtained from official sources for production use.
+- AIAG-VDA FMEA Handbook is jointly published by AIAG and VDA QMC.
+- IATF 16949 is a registered trademark of IATF.
+- IATF, AIAG, VDA logos are property of respective owners.
+
+Automotive
+- AUTOSAR(R) is a registered trademark of the AUTOSAR development partnership
+- ASPICE(R) is a registered trademark of VDA QMC
+- MISRA(R) is a registered trademark of HORIBA MIRA Limited
+- UN R155, UN R156 are regulations of the United Nations Economic Commission for Europe
+
+Medical Devices
+- FDA 21 CFR is part of the U.S. Code of Federal Regulations
+- EU MDR (Regulation (EU) 2017/745) is European Union legislation
+- IMDRF guidance is published by the International Medical Device Regulators Forum
+
+Financial Services
+- Basel III/IV are accords of the Basel Committee on Banking Supervision (BCBS)
+- Solvency II (Directive 2009/138/EC) is European Union legislation
+- IFRS 17, IFRS 9 are standards of the IFRS Foundation
+- K-ICS, K-ISMS-P are frameworks of Korea Financial Supervisory Service /
+  Korea Internet & Security Agency
+- DORA (Regulation (EU) 2022/2554) is European Union legislation
+- PCI DSS v4.0 is a standard of the PCI Security Standards Council, LLC
+
+Embedded / Software
+- AUTOSAR Classic, AUTOSAR Adaptive are specifications of AUTOSAR
+- SEI CERT C, SEI CERT C++ are works of the Software Engineering Institute,
+  Carnegie Mellon University
+
+Privacy / Compliance (regional)
+- PIPL (Personal Information Protection Law) is legislation of the People's Republic of China
+- GDPR (Regulation (EU) 2016/679), CCPA (Cal. Civ. Code §1798.100 et seq.) are referenced
+
+Scope of use:
+- Sillok packs use these standard names solely as nominative descriptors
+  (e.g., "PMBOK 8th Edition Pack" or "ISO 31000 Risk Management Pack").
+- Sillok does NOT reproduce the standards' protected text, diagrams, or
+  copyrighted material. Production use requires obtaining the official
+  standard from its respective publisher.
+- Any user of Sillok who wishes to claim PMP, SAFe, BABOK, ITIL, COBIT, or
+  similar certification compliance must obtain certification through the
+  respective certifying body. Sillok is a tool, not a certification authority.
+
+================================================================================
+2. PATTERN ATTRIBUTION
+================================================================================
+
+LLM Wiki pattern (3-layer raw / wiki / schema)
+- Original idea by Andrej Karpathy, described publicly at
+  https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f (2026)
+- Sillok is an independent productized implementation of the publicly
+  described pattern. Per 17 U.S.C. §102(b), ideas, methods, and systems
+  are not subject to copyright protection. Sillok extends the pattern
+  with a typed pack registry, two-stage routing, proposal-only governance,
+  and multi-tenant overlays — none of which are part of Karpathy's gist.
+
+Memex (1945)
+- Vannevar Bush's "As We May Think" (Atlantic Monthly, July 1945) — public
+  domain by virtue of authorship and publication date.
+
+Zettelkasten
+- Niklas Luhmann's slip-box methodology (1960s) and its modern English
+  treatment by Sönke Ahrens, "How to Take Smart Notes" (2017) — referenced
+  for comparative purposes only; no text reproduction.
+
+================================================================================
+3. CULTURAL REFERENCES
+================================================================================
+
+The names "Sillok (실록)", "Jikji (직지)", "Janggyeong (장경)", "Naru (나루)",
+"Bongsu (봉수)", "Sangso (상소)", "Sagwan (사관)", "Beopjeon (법전)",
+"Pyeonchan (편찬)", "Yeonryun (연륜)", "Gwageo (과거)", "Madang (마당)",
+"Dure (두레)", "Tongsa (통사)", "Yeokcham (역참)" are general Korean nouns
+referring to historical or cultural heritage concepts; they are not
+trademarks of any organization.
+
+Sillok's "UNESCO Memory of the World Triple Anchor" thematic naming refers to:
+  - The Annals of the Joseon Dynasty (조선왕조실록), inscribed 1997
+  - Jikji (직지심체요절), inscribed 2001
+  - Tripitaka Koreana (팔만대장경), inscribed 2007
+on UNESCO's Memory of the World International Register.
+
+UNESCO Memory of the World is a documentary-heritage recognition program of
+the United Nations Educational, Scientific and Cultural Organization (UNESCO).
+Sillok's reference is a thematic naming choice and does NOT imply endorsement,
+sponsorship, or affiliation by UNESCO, the Korean Cultural Heritage Administration,
+or any other governmental or international organization.
+
+================================================================================
+4. COMPONENTS & DEPENDENCIES (RUNTIME)
+================================================================================
+
+Sillok depends on the following third-party open-source components.
+Full attribution and license texts are maintained in the source distribution.
+
+- Model Context Protocol (MCP) — Anthropic, MIT License
+  https://github.com/modelcontextprotocol
+- Agent2Agent (A2A) — Linux Foundation, Apache License 2.0
+  https://a2a-protocol.org
+- Pydantic — MIT License
+  https://github.com/pydantic/pydantic
+- FastAPI — MIT License
+  https://github.com/tiangolo/fastapi
+- OpenTelemetry Python — Apache License 2.0
+  https://github.com/open-telemetry/opentelemetry-python
+- Mermaid — MIT License (rendering of diagrams in docs only)
+  https://github.com/mermaid-js/mermaid
+
+Optional ingest dependencies (Pyeonchan):
+- PyMuPDF (fitz) — AGPL v3 / commercial dual license. PDF parsing.
+  Users who do NOT wish to be bound by AGPL must use an alternative parser
+  (e.g., pdfminer.six, MIT) or obtain a commercial PyMuPDF license.
+- python-docx — MIT License
+- openpyxl — MIT License
+- python-pptx — MIT License
+- pyhwpx — Korean HWPX parser, license per upstream
+
+NOTE on PyMuPDF: PyMuPDF's AGPL v3 license may have copyleft implications
+for commercial deployments. Sillok's default ingest pipeline is configured
+to allow PDF parsing to be DISABLED or substituted with an MIT-licensed
+alternative. See `04-prototypes/janggyeong-starter-atoms/workshop-retro/SCHEMA.md`
+and the install manual §4.2.4 for parser selection.
+
+================================================================================
+5. STARTER ATOMS LICENSING
+================================================================================
+
+The 12 starter atoms in `04-prototypes/janggyeong-starter-atoms/` are
+licensed under Creative Commons Attribution 4.0 International (CC BY 4.0):
+  https://creativecommons.org/licenses/by/4.0/
+
+This dual-licensing structure is intentional:
+  - Sillok source code: Apache License 2.0
+  - Sillok starter atoms (educational content): CC BY 4.0
+
+Atom contents include short quotations and references to public statements
+by Andrej Karpathy, Ilya Sutskever, Demis Hassabis, Yann LeCun, Geoffrey Hinton,
+Andrew Ng, and Fei-Fei Li. These quotations fall under fair-use academic
+citation. Provenance URLs (peer-reviewed papers, public lectures, or the
+author's own analysis at projectresearch.co.kr) are recorded in each atom's
+frontmatter `provenance` field.
+
+================================================================================
+6. AX SERIES SELF-CITATION
+================================================================================
+
+Sillok references the AX series (Agentic PO/PM/PL whitepaper, 44 posts /
+10 categories) published at https://projectresearch.co.kr by the same
+author (Peter Kim) under copyright (c) 2025-2026 Peter Kim. AX series
+posts are referenced for their categorical structure (X / S / B / K / P /
+G / A / D / E / M) and selected analytical findings (notably K-6's 30-hour
+RAG ablation that informed Sillok's vault-resident corpus design).
+
+This is a self-citation; no third-party permission is required.
+
+================================================================================
+7. NO WARRANTY ON THIRD-PARTY REFERENCES
+================================================================================
+
+The accuracy and currency of all third-party standard names, version
+numbers, and trademark holders listed in this NOTICE are provided on a
+best-effort basis as of the date of authorship. Trademark holders may
+have changed; standards may have been superseded. Users are responsible
+for verifying current trademark ownership and standard versions for any
+production deployment. Notify the Sillok maintainers via GitHub issues
+if any attribution requires correction.
+
+================================================================================
+END OF NOTICE
+================================================================================
