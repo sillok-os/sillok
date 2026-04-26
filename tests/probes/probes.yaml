@@ -1,0 +1,114 @@
+# Sillok RAG Golden Probes (17 probes across 6 families)
+#
+# Run:    sillok gwageo run --suite rag-probes
+# KPI:    citation 100% / median ≤ 10s / token reduction 30%↓ / blind-spot promotion ≤ 7d
+# Schema: see tests/probes/schema.yaml (TBD)
+
+version: "1.0"
+created_date: 2026-04-26
+
+kpi_targets:
+  recall_time_median_seconds: 10
+  citation_coverage_pct: 100
+  token_cost_reduction_pct: 30
+  blind_spot_cycle_days: 7
+
+families:
+  # F1 — vault structure auditing (3)
+  - id: vault-structure
+    description: "Frontmatter and ontology probes for personal RAG vaults"
+    queries:
+      - id: F1-Q1
+        query: "frontmatter v5.4"
+        expected_corpus: vault
+        expected_min_hits: 3
+      - id: F1-Q2
+        query: "atom ontology"
+        expected_corpus: vault
+        expected_min_hits: 3
+      - id: F1-Q3
+        query: "MOC map of content"
+        expected_corpus: vault
+        expected_min_hits: 2
+        expected_path_match: "MOC|map-of-content"
+
+  # F2 — generic tagging integration (3)
+  - id: generic-tagging
+    description: "Tag and backlink retrieval, content-agnostic"
+    queries:
+      - id: F2-Q1
+        query: "tag taxonomy"
+        expected_corpus: vault
+        expected_min_hits: 2
+      - id: F2-Q2
+        query: "backlink graph"
+        expected_corpus: vault
+        expected_min_hits: 1
+      - id: F2-Q3
+        query: "atom backlink"
+        expected_corpus: vault
+        expected_min_hits: 1
+
+  # F3 — framework-project sync (2)
+  - id: framework-sync
+    description: "Pack registry to project document linkage"
+    queries:
+      - id: F3-Q1
+        query: "retrieval tier"
+        expected_corpus: vault
+        expected_min_hits: 1
+      - id: F3-Q2
+        query: "accumulation loop"
+        expected_corpus: vault
+        expected_min_hits: 1
+
+  # F4 — report value authoring (3)
+  - id: report-authoring
+    description: "Report quality, evidence, triangulation"
+    queries:
+      - id: F4-Q1
+        query: "triangulation count"
+        expected_corpus: vault
+        expected_min_hits: 1
+      - id: F4-Q2
+        query: "Bond Evidence Principles"
+        expected_corpus: vault
+        expected_min_hits: 1
+      - id: F4-Q3
+        query: "CRAAP AIMQ IQF"
+        expected_corpus: vault
+        expected_min_hits: 1
+
+  # F5 — cross-tool plan SSOT (3)
+  - id: cross-tool-plan
+    description: "docs/plans/ shared across Claude Code, Codex, Cursor"
+    queries:
+      - id: F5-Q1
+        query: "docs/plans"
+        expected_corpus: vault
+        expected_min_hits: 1
+      - id: F5-Q2
+        query: "MCP plan SSoT"
+        expected_corpus: vault
+        expected_min_hits: 1
+      - id: F5-Q3
+        query: "active issue plan"
+        expected_corpus: vault
+        expected_min_hits: 1
+
+  # F6 — proposal-only governance (3)
+  - id: governance-proposal
+    description: "4-gate proposal model and Sangso pipeline"
+    queries:
+      - id: F6-Q1
+        query: "4-gate proposal"
+        expected_corpus: vault
+        expected_min_hits: 1
+      - id: F6-Q2
+        query: "proposal-only governance"
+        expected_corpus: vault
+        expected_min_hits: 1
+      - id: F6-Q3
+        query: "Sangso review"
+        expected_corpus: vault
+        expected_min_hits: 1
