@@ -1,0 +1,10 @@
+# Sillok pack registry — placeholder
+#
+# Full registry lands during F0.6 (10 starter packs sanitized from
+# upstream registry.yaml v1.14.0 / 56 packs).
+#
+# Schema: sillok/schemas/registry.py (after F0.5)
+version: 0.0.0
+schema: sillok.registry.v1
+status: placeholder
+packs: []

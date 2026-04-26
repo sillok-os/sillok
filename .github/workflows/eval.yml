@@ -1,0 +1,40 @@
+name: Eval (Gwageo)
+
+on:
+  pull_request:
+    branches: [main]
+  schedule:
+    # Daily nightly soak
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+
+jobs:
+  goldens:
+    name: Router goldens (30) — warn-only until F0.7
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+      - name: Run router goldens
+        run: |
+          echo "TODO: invoke 'sillok gwageo run --suite router-goldens --baseline last' once F0.7 lands."
+          echo "Skipping until eval module is wired (placeholder workflow)."
+
+  rag-probes:
+    name: RAG probes (17 across 6 families) — warn-only until F0.7
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+      - name: Run RAG probes
+        run: |
+          echo "TODO: invoke 'sillok gwageo run --suite rag-probes --baseline last' once F0.7 lands."
+          echo "Skipping until eval module is wired (placeholder workflow)."
+
+  kpi:
+    name: KPI gate (citation 100% / p50 ≤ 10s / token 30%↓) — warn-only until F0.7
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Placeholder
+        run: echo "KPI guard placeholder — to be wired with sillok gwageo kpi-check."

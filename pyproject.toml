@@ -1,0 +1,122 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "sillok"
+version = "0.1.0a0.dev0"
+description = "Productized LLM Wiki pattern + typed pack registry + proposal-only governance — UNESCO Memory of the World Triple Anchor"
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+authors = [{ name = "Peter Kim", email = "tykim21@gmail.com" }]
+maintainers = [{ name = "Sillok contributors" }]
+requires-python = ">=3.11"
+keywords = [
+  "llm",
+  "rag",
+  "agent",
+  "harness",
+  "routing",
+  "prompt-engineering",
+  "governance",
+  "proposal-only",
+  "korean",
+  "unesco",
+  "karpathy-llm-wiki",
+  "mcp",
+  "model-context-protocol",
+  "multi-tenant",
+]
+classifiers = [
+  "Development Status :: 2 - Pre-Alpha",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+dependencies = [
+  "pydantic>=2.0",
+  "pyyaml>=6.0",
+  "click>=8.0",
+  "httpx>=0.25",
+]
+
+[project.optional-dependencies]
+mcp = ["mcp>=0.1.0"]
+otel = [
+  "opentelemetry-api>=1.20",
+  "opentelemetry-sdk>=1.20",
+  "opentelemetry-exporter-otlp>=1.20",
+]
+gepa = ["dspy-ai>=2.4"]
+ingest-md = []
+ingest-pdf = ["pymupdf>=1.23"]
+ingest-office = [
+  "python-docx>=1.0",
+  "openpyxl>=3.1",
+  "python-pptx>=0.6",
+]
+ingest-hwpx = ["pyhwpx>=0.5"]
+ingest-full = [
+  "sillok[ingest-md,ingest-pdf,ingest-office,ingest-hwpx]",
+]
+all = ["sillok[mcp,otel,gepa,ingest-full]"]
+dev = [
+  "pytest>=7.4",
+  "pytest-cov>=4.1",
+  "ruff>=0.1",
+  "mypy>=1.7",
+  "pre-commit>=3.5",
+]
+
+[project.scripts]
+sillok = "sillok.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/sillok-os/sillok"
+Source = "https://github.com/sillok-os/sillok"
+Issues = "https://github.com/sillok-os/sillok/issues"
+Discussions = "https://github.com/sillok-os/sillok/discussions"
+Changelog = "https://github.com/sillok-os/sillok/blob/main/CHANGELOG.md"
+
+[tool.hatch.build.targets.wheel]
+packages = ["sillok"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "sillok",
+  "packs",
+  "docs",
+  "tests",
+  "adr",
+  "README.md",
+  "LICENSE",
+  "NOTICE",
+  "pyproject.toml",
+  "CHANGELOG.md",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "C4", "SIM", "RET"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_return_any = true
+warn_unused_ignores = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
