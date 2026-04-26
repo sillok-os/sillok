@@ -1,0 +1,50 @@
+cff-version: 1.2.0
+title: "Sillok: A Productized LLM Wiki Pattern with Two-Stage Routing and Proposal-Only Governance"
+message: "If you use Sillok in research, please cite it using the metadata below."
+type: software
+authors:
+  - family-names: Kim
+    given-names: Peter
+    email: tykim21@gmail.com
+abstract: >-
+  Sillok is a productized implementation of Andrej Karpathy's LLM Wiki
+  three-layer pattern, extended with a typed pack registry, two-stage
+  routing, proposal-only four-gate governance, multi-tenant overlays,
+  and a multi-format auto-ingest pipeline (md / pdf / docx / xlsx /
+  pptx / txt / hwpx). Its naming evokes a UNESCO Memory of the World
+  Triple Anchor (Sillok 1997, Jikji 2001, Janggyeong 2007) for a
+  cultural identity rooted in immutable, audit-friendly knowledge
+  governance.
+keywords:
+  - large-language-models
+  - retrieval-augmented-generation
+  - prompt-engineering
+  - agent-framework
+  - governance
+  - proposal-only
+  - karpathy-llm-wiki
+  - mcp
+  - model-context-protocol
+  - multi-tenant
+license: Apache-2.0
+repository-code: "https://github.com/sillok-os/sillok"
+url: "https://github.com/sillok-os/sillok"
+version: "0.1.0a0"
+date-released: 2026-04-26
+preferred-citation:
+  type: software
+  authors:
+    - family-names: Kim
+      given-names: Peter
+  title: "Sillok: A Productized LLM Wiki Pattern with Two-Stage Routing and Proposal-Only Governance"
+  year: 2026
+  url: "https://github.com/sillok-os/sillok"
+references:
+  - type: software
+    title: "LLM Wiki"
+    authors:
+      - family-names: Karpathy
+        given-names: Andrej
+    url: "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f"
+    year: 2026
+    notes: "The 3-layer LLM Wiki pattern that Sillok productizes."
