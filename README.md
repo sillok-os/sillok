@@ -11,8 +11,10 @@
 
 ## Quickstart (60 seconds)
 
+> **Status (2026-04-26)**: PyPI `sillok` 0.0.1 is a **namespace placeholder** (no functionality). The real implementation ships as `0.1.0a1` after Phase 0 cherry-pick (roadmap §1). To pin against the placeholder explicitly: `pip install "sillok==0.0.1"`. The Quickstart below describes the GA experience (`>=0.1.0a1`).
+
 ```bash
-pip install sillok
+pip install sillok               # 0.1.0a1+ (real alpha) — see "Status" above
 sillok init
 sillok route "Draft a Q3 strategy report for Acme Corp"
 
