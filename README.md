@@ -3,6 +3,8 @@
 > Proposal-only LLM Operating System with two-stage routing.
 > Born from UNESCO Memory of the World heritage (Sillok 1997 · Jikji 2001 · Janggyeong 2007).
 
+**Languages:** English · [한국어](README.ko.md)
+
 [![PyPI](https://img.shields.io/pypi/v/sillok.svg)](https://pypi.org/project/sillok/)
 [![License: Apache 2.0](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![Tests](https://github.com/sillok-os/sillok/actions/workflows/eval.yml/badge.svg)](https://github.com/sillok-os/sillok/actions)
