@@ -11,6 +11,49 @@ adheres to [SemVer](https://semver.org/).
   semantic embeddings + calibration, deferred to 0.2.0; also pending
   FTS5 indexer for `pyeonchan` Phase 2)
 
+## [0.1.0a3] — 2026-04-27
+
+Documentation honesty release. No code changes; READMEs and
+CHANGELOG only. The 0.1.0a2 README mixed a *GA experience*
+quickstart with the *alpha reality* in a way that overpromised what
+currently ships — specifically the `sillok` unified command,
+`sillok corpus install --starter`, and `@sillok` MCP bridge are
+still alpha-stubs.
+
+### Added
+- **"Consultant Quickstart for 0.1.0a3 — what works today"**
+  section in both READMEs (EN + KO). One-screen path for Biz /
+  Product / Project / IT / ITO consultants:
+  - point Sillok at your own RAG repository
+  - select packs with `python -m sillok.naru.router_2tier`
+  - search vault with `python -m sillok.bongsu.search`
+  - promote new outputs with `python -m sillok.yeonryun.disposition`
+  - ingest raw md with `python -m sillok.pyeonchan.ingest_md`
+  - attach routed pack body to an external LLM by hand
+- **Architecture-at-a-glance Mermaid section** — two views:
+  - *Business view*: how a consultant gets value (vault → router →
+    packs → LLM → atom promote → vault).
+  - *Technical view*: 14-module data flow with a live-vs-stub
+    legend (green solid = production-path in 0.1.0a3, red dashed =
+    stub / Phase 1 / 0.2.0a1).
+- **Gap table** — the six capabilities that are *not* yet in
+  0.1.0a3, each with the milestone they land in.
+
+### Changed
+- The 60-second Quickstart at the top of each README is now
+  explicitly labeled **"GA target"**. A link routes readers who
+  need today's behavior to the Consultant Quickstart section.
+- `pip install sillok` example version pin moved from `0.1.0a1+`
+  (alpha) to `1.0.0+` (GA). The Consultant Quickstart correctly
+  pins `>=0.1.0a3`.
+
+### Why a docs-only patch alpha
+Honesty over speed: 0.1.0a3 is entirely about giving readers the
+right mental model for what the alpha actually does. No tests, no
+API surface changes — `pip install "sillok==0.1.0a2"` and
+`pip install "sillok==0.1.0a3"` are behaviorally identical at
+runtime.
+
 ## [0.1.0a2] — 2026-04-26
 
 B+ cherry-pick: the two halves of Karpathy's LLM Wiki pattern that

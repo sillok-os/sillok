@@ -13,12 +13,12 @@
 
 ---
 
-## 60초 퀵스타트
+## 60초 퀵스타트 — *GA 목표*
 
-> **상태(2026-04-26)**: PyPI `sillok` 0.0.1 은 **이름 선점용 placeholder**(기능 없음)입니다. 실제 구현은 Phase 0 cherry-pick 이후 `0.1.0a1` 로 출시됩니다(roadmap §1). placeholder 를 명시적으로 고정하려면 `pip install "sillok==0.0.1"`. 아래 퀵스타트는 GA(`>=0.1.0a1`) 경험을 기준으로 합니다.
+> **상태(2026-04-27)**: 본 퀵스타트는 **GA 경험**(`>=1.0.0`) 기준입니다. 현재 출시 버전은 `0.1.0a3` (alpha) 이며, **today** 동작 경로는 아래 [컨설턴트 퀵스타트 (0.1.0a3)](#컨설턴트-퀵스타트-0103a3--today-동작-경로) 를 참고하세요.
 
 ```bash
-pip install sillok               # 0.1.0a1+ (실제 알파) — 상단 "상태" 참고
+pip install sillok               # 1.0.0+ (GA 목표)
 sillok init
 sillok route "Acme사 Q3 전략 보고서 작성"
 
@@ -30,6 +30,200 @@ sillok route "Acme사 Q3 전략 보고서 작성"
 ```
 
 라우팅이 동작합니다. 그게 전부입니다.
+
+---
+
+## 컨설턴트 퀵스타트 (0.1.0a3) — *today 동작 경로*
+
+Biz / Product / Project / IT / ITO 컨설턴트로서 **본인 RAG repository 만 가리키고** 지금 바로 쓰고 싶다면, `0.1.0a3` 의 전체 사용 경로는 본 섹션입니다. 통합 `sillok` 명령 + `@sillok` IDE 브릿지는 아직 alpha-stub — 단 아래 **Python module CLI** 들은 production-path.
+
+### A. 본인 vault 인덱싱 (5분)
+
+```bash
+pip install "sillok>=0.1.0a3"
+
+# 본인 vault = .md + YAML frontmatter 폴더 어떤 것이든
+# (Obsidian · plain notes · docs site · 케이스 뱅크 모두 가능)
+python -m sillok.bongsu.search --vault ~/Documents/my-vault --stats
+
+# Frontmatter + body grep (rg → grep fallback):
+python -m sillok.bongsu.search --vault ~/Documents/my-vault \
+    --scope acme --type pattern --query "pricing" --format full
+```
+
+### B. 쿼리에 맞는 starter pack(s) 선택
+
+```bash
+python -m sillok.naru.router_2tier --message "Acme사 Q3 전략 작성"
+
+# 출력:
+# applied prompt packs: consulting-strategy-audit, exec-communication
+# tier breakdown:       discovery_tier=2 → 10 packs scanned, 2 selected
+```
+
+10 starter packs 본문은 wheel 안에 동봉됩니다 — 위치:
+
+```bash
+python -c "import sillok, os; print(os.path.dirname(sillok.__file__))"
+# 형제 'packs/' 트리에서 본문 확인:
+ls "$(python -c 'import sillok, os; print(os.path.dirname(os.path.dirname(sillok.__file__)))')/packs"
+# packs/consulting/  packs/methodology/  packs/output-styles/  registry.yaml
+```
+
+### C. 라우팅된 pack(s) 을 LLM 에 attach (today 는 수동)
+
+통합 `sillok route --execute` 는 GA 목표. Today 는 라우팅된 pack 본문을 직접 LLM 시스템 프롬프트에 복사 — 또는 Claude Code / Cursor / Codex CLI 에서 한 줄로:
+
+```bash
+ROUTED=$(python -m sillok.naru.router_2tier --message "Acme사 Q3 전략 작성" --json | jq -r '.packs[].id')
+for p in $ROUTED; do
+  cat "packs/**/$p.md"
+done > /tmp/system-prompt.md
+# /tmp/system-prompt.md 를 본인 LLM 시스템 프롬프트로 attach
+```
+
+(GA: `sillok route --execute "..."` 한 번에 처리.)
+
+### D. 새 산출물 → vault atom 자동 승격
+
+```bash
+# 단일 결과 파일 score
+python -m sillok.yeonryun.disposition research/2026-04-27-pricing-debrief.md
+
+# 폴더 sweep + auto-extract
+python -m sillok.yeonryun.disposition --scan research/ \
+    --auto-extract \
+    --target-dir ~/Documents/my-vault/40_Knowledge/auto \
+    --vault ~/Documents/my-vault \
+    --source-repo your-org/playbooks
+```
+
+### E. raw 노트 폴더 자동 ingest (md, today)
+
+```bash
+python -m sillok.pyeonchan.ingest_md \
+    --vault ~/Documents/my-vault \
+    --out ~/.sillok/index.jsonl
+```
+
+> Multi-format ingest (`pdf` / `docx` / `xlsx` / `pptx` / `hwpx`) + watch/cron daemon 화는 `0.2.0a1` (Pyeonchan Phase 2) 에서 도착. 현재는 `.md` + frontmatter 로 표현 가능한 모든 것 인덱싱.
+
+### 0.1.0a3 가 **아직** 제공하지 않는 것
+
+| 능력 | 상태 | 도착 |
+|---|:-:|:-:|
+| `sillok ...` 통합 명령 | ⏳ stub | `0.2.0a1` |
+| `sillok corpus install --starter` | ⏳ 미구현 | `0.2.0a1` |
+| `@sillok` IDE 용 MCP bridge | ⏳ Tongsa stub | Phase 1 PR-D |
+| Multi-format ingest (pdf/docx/xlsx/pptx/hwpx) | ⏳ md only | `0.2.0a1` (Pyeonchan Phase 2) |
+| Proposal-only 4-gate governance executor | ⏳ Sangso stub | Phase 1 PR-A |
+| Eval CI blocking gate | ⏳ probes only · runner missing | Phase 1 PR-B |
+
+위 항목 중 deal-breaker 가 있다면 alpha 유지 + 마일스톤 watch — 통합 surface 가 도착해도 위 module CLI 들은 그대로 작동합니다.
+
+---
+
+## 한눈에 보는 아키텍처
+
+같은 시스템의 두 시점. 컨설팅 활용 평가 중이라면 **Business view 부터**, 통합 / 확장 / 디버깅 중이라면 **Technical view 부터** 읽으세요.
+
+### Business view — 컨설턴트가 가치를 얻는 흐름
+
+```mermaid
+flowchart LR
+    subgraph YOU["컨설턴트 (Biz / Product / Project / ITO)"]
+        VAULT["📚 본인 RAG repository<br/>vault · notes · case bank<br/>(.md + frontmatter)"]
+        WORK["📝 신규 작업<br/>research · debrief · retro"]
+    end
+
+    subgraph SILLOK["Sillok 0.1.0a3"]
+        PACKS["📦 10 starter packs<br/>strategy · PMO · ITIL · risk ·<br/>SAFe · pricing · governance ·<br/>report-quality · exec-comm"]
+        ROUTER["🧭 나루(Naru)<br/>2단계 라우터"]
+        SEARCH["🔎 봉수(Bongsu)<br/>vault 검색"]
+        PROMOTE["🌱 연륜(Yeonryun)<br/>disposition + atom 승격"]
+    end
+
+    LLM["🤖 본인 LLM<br/>(Claude · GPT · Codex · ...)"]
+
+    VAULT --> SEARCH
+    SEARCH --> ROUTER
+    ROUTER --> PACKS
+    PACKS --> LLM
+    SEARCH --> LLM
+    LLM --> WORK
+    WORK --> PROMOTE
+    PROMOTE --> VAULT
+
+    style YOU fill:#fef3c7,stroke:#92400e
+    style SILLOK fill:#e0f2fe,stroke:#075985
+    style VAULT fill:#fff7ed
+    style WORK fill:#fff7ed
+    style LLM fill:#dcfce7,stroke:#14532d
+```
+
+**한 문장 요약:** 본인 vault 를 Sillok 에 가리키고 → 질문 → 적합한 pack(s) + 관련 atom 자동 선정 → LLM 답변 → 답변이 vault 의 새 atom 으로 환류 → 다음 쿼리 더 똑똑.
+
+### Technical view — module 데이터 흐름
+
+```mermaid
+flowchart TB
+    subgraph CORPUS["지식 계층"]
+        VAULTROOT["vault root<br/>(.md + frontmatter v5.4)"]
+        REGISTRY["packs/registry.yaml<br/>(56-pack typed registry)"]
+    end
+
+    subgraph INGEST["Ingest 경로"]
+        PYEON["편찬(pyeonchan).ingest_md<br/>(md → atoms · today)"]
+        PYEON_F["편찬(pyeonchan) 다포맷<br/>(pdf/docx/xlsx · 0.2.0a1)"]
+    end
+
+    subgraph QUERY["Query 경로"]
+        BONGSU["봉수(bongsu).search<br/>(frontmatter + body grep)"]
+        NARU["나루(naru).router_2tier<br/>(tier 1 키워드 → tier 2 LLM)"]
+        JIKJI["직지(jikji)<br/>(typed pack registry · stub)"]
+    end
+
+    subgraph LINT["Lint · 승격 경로"]
+        YEON["연륜(yeonryun).disposition<br/>(score → atom 승격)"]
+        SANGSO["상소(sangso)<br/>(4-gate proposal · stub)"]
+    end
+
+    subgraph OBS["관측"]
+        SAGWAN["사관(sagwan) / telemetry<br/>(라우팅 로그 · stub)"]
+        GWAGEO["과거(gwageo) / eval<br/>(probes · runner stub)"]
+    end
+
+    subgraph BRIDGES["엣지 브릿지"]
+        TONGSA["통사(tongsa) / MCP bridge<br/>(Claude Code · Cursor · stub)"]
+        DURE["두레(dure) / plugins<br/>(WAF fetch · code search · stub)"]
+        YEOK["역참(yeokcham) / 외부 bridge<br/>(stub)"]
+    end
+
+    USER["사용자<br/>(CLI · Python API · IDE)"]
+
+    USER --> NARU
+    NARU --> REGISTRY
+    NARU --> JIKJI
+    NARU --> BONGSU
+    BONGSU --> VAULTROOT
+    USER --> BONGSU
+    USER --> YEON
+    YEON --> VAULTROOT
+    PYEON --> VAULTROOT
+    PYEON_F --> VAULTROOT
+    SANGSO -.proposal.-> REGISTRY
+    SAGWAN -.log.-> NARU
+    GWAGEO -.regress.-> NARU
+    TONGSA -.MCP.-> USER
+    DURE -.plugin.-> NARU
+
+    classDef stub fill:#fee2e2,stroke:#991b1b,stroke-dasharray: 5 5
+    classDef live fill:#dcfce7,stroke:#14532d
+    class BONGSU,NARU,YEON,PYEON,VAULTROOT,REGISTRY live
+    class JIKJI,SANGSO,SAGWAN,GWAGEO,TONGSA,DURE,YEOK,PYEON_F stub
+```
+
+**범례:** 녹색 실선 = `0.1.0a3` production-path · 빨강 점선 = stub / Phase 1 / `0.2.0a1`. 모든 녹색 노드는 today `python -m sillok.<module>...` CLI 가 작동.
 
 ---
 

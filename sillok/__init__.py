@@ -17,5 +17,5 @@ Functional alpha (0.1.0a1). Submodules:
 See README.md for the Top 10 features overview.
 """
 
-__version__ = "0.1.0a2"
+__version__ = "0.1.0a3"
 __all__ = ["__version__"]
