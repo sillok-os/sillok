@@ -11,6 +11,50 @@ adheres to [SemVer](https://semver.org/).
   semantic embeddings + calibration, deferred to 0.2.0; also pending
   FTS5 indexer for `pyeonchan` Phase 2)
 
+## [0.1.0a6] — 2026-04-27
+
+Documentation release. README structural reorganization only — no
+code, no API, no test changes. Behaviorally identical to 0.1.0a5
+at runtime.
+
+### Changed
+- **READMEs (EN + KO) reorganized into a 6-part flow** matching the
+  natural reading order (value → use cases → install → use →
+  maintain → appendix):
+  1. **Part 1 — Value & Overview** — What you get, Architecture
+     (Business + Technical views), Framework coverage, Top 10
+     features.
+  2. **Part 2 — Business Use Cases** — Persona pairing (find your
+     category fast), Common workflows (3 archetypes).
+  3. **Part 3 — Installation** — Requirements, GA Quickstart,
+     Setup paths (Basic / MCP / RAG corpus).
+  4. **Part 4 — Usage** — Consultant Quickstart for 0.1.0a6 (the
+     5-step ABCDE today path), Common commands, What does NOT yet
+     ship.
+  5. **Part 5 — Maintenance & Extension** — Troubleshooting,
+     Multi-user deployment, **Adding a pack for your domain**,
+     Module reference.
+  6. **Part 6 — Appendix** — License, Prior art (Karpathy LLM Wiki
+     + D-series), Citation.
+- Top-of-README **Reading order** TOC links the six parts.
+- Version references updated `0.1.0a3` → `0.1.0a6` throughout the
+  Consultant Quickstart, Mermaid Business view label, framework
+  coverage table headers, and gap table.
+- Module reference table includes the new `bongsu / vault search`
+  and `yeonryun / atom promotion` summaries delivered in 0.1.0a2.
+
+### Why a docs-only patch alpha
+Earlier alphas accumulated sections in the order they were authored
+(`Quickstart → Consultant Quickstart → Architecture → Framework
+coverage → What you get → Requirements → Setup → Workflows → ...`).
+A first-time reader hits *install before value* and *examples
+before persona*. The 6-part flow puts value first, persona second,
+install third — matching how a consultant evaluates whether to
+adopt the tool.
+
+`pip install "sillok==0.1.0a5"` and `pip install "sillok==0.1.0a6"`
+are behaviorally identical at runtime.
+
 ## [0.1.0a5] — 2026-04-27
 
 Documentation release. No code changes; new contribution guide and
