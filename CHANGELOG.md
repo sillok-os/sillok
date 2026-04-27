@@ -8,7 +8,69 @@ adheres to [SemVer](https://semver.org/).
 
 ### Added
 - (none yet — pending F0.3 step 2 cherry-pick of full v2 router with
-  semantic embeddings + calibration, deferred to 0.2.0)
+  semantic embeddings + calibration, deferred to 0.2.0; also pending
+  FTS5 indexer for `pyeonchan` Phase 2)
+
+## [0.1.0a2] — 2026-04-26
+
+B+ cherry-pick: the two halves of Karpathy's LLM Wiki pattern that
+were missing from 0.1.0a1 — *Query* (vault search) and *Lint*
+(disposition / promotion) — are now production-path. Coverage of the
+upstream maintainer's daily workflow goes from ~35% to ~55%; coverage
+of the external OSS scenario goes from ~80% to ~88%.
+
+### Added
+- **`sillok.bongsu.search` (B+ 1of4)** — vault-resident corpus search
+  engine. `build_index()` walks a markdown vault, parses frontmatter,
+  honors a `.sillok/scope-aliases.yaml` map, and excludes `.git` /
+  `.obsidian` / `.sillok` / `node_modules` / `__pycache__` / `.venv`
+  by default. `filter_notes()` supports scope / type / tier / status /
+  topic / date_from. `fulltext_search()` uses ripgrep when available
+  with a grep fallback. CLI: `python -m sillok.bongsu.search --vault
+  <path> [--scope X] [--type Y] [--query "Z"] [--format
+  summary|full|json] [--stats]`. 12 smoke tests.
+- **`sillok.bongsu._common`** — frontmatter parser, scalar/list field
+  helpers, scope alias loader, body preview extractor. Generic
+  defaults — no client / pm-domain ontology baked in.
+- **`sillok.yeonryun.disposition` (B+ 2of4)** — knowledge disposition
+  engine. Scores reusability across 10 bilingual signal patterns
+  (en + ko). Decides `none` / `local-reusable` / `cross-repo-reusable`.
+  Identifies extractable atoms (max 5) by knowledge type. Generates
+  vault-compatible atomic notes with frontmatter v5.4 shape. Default
+  promotes only the highest-priority *representative* atom per source
+  (avoids signal/noise degradation); `--extract-all` opt-in for the
+  legacy fan-out path. Honors `cross_repo: false` / `disposition:
+  none` opt-out keys in source frontmatter. `/tmp/` guard preserved.
+  Carries `retrieval_tier` / `quality_score` from source frontmatter
+  through to the result. CLI: `python -m sillok.yeonryun.disposition
+  [file | --scan dir] [--auto-extract --target-dir DIR]
+  [--source-repo REPO] [--topic TOPIC] [--format text|json]`. 16 smoke
+  tests + 3 integration tests for the bongsu→yeonryun seam.
+- **Recipes (B+ 3of4)** — `docs/recipes/search-vault-with-bongsu.md`
+  and `docs/recipes/decide-reusability-with-yeonryun.md`. Recipe index
+  updated.
+- **Bilingual README** — `README.ko.md` Korean companion to README.md.
+  Module reference table now spells out the classical meaning of each
+  Korean module name (e.g. 봉수 = 烽燧 signal-fire network, 직지 = 1377
+  oldest extant metal-type print).
+
+### Changed
+- `sillok.__init__` doc-comment names `sillok.yeonryun` and credits
+  `sillok.bongsu` for vault search.
+- `00-meta/09-coverage-vs-aipm-vault.md` §11 added — re-evaluation
+  matrix vs 0.1.0a1 baseline.
+
+### Sanitization (vs upstream `vault_search.py` / `vault-disposition.py`)
+- Removed `VAULT_ROOT` defaults and `40_FullyActiveLearning` paths.
+- Removed client / pm-domain ontology and AIPM-specific frontmatter
+  keys.
+- `source-system` changed from `aipm-research` to `sillok.yeonryun`.
+- `source_repo` defaults to `$SILLOK_SOURCE_REPO` env var or `sillok`,
+  no hardcoded GitHub coordinate.
+- Topic defaults to `general`; honors source-frontmatter `topic:`.
+- `image-template` atom-type removed (out-of-scope for OSS surface).
+- English-first regex patterns; Korean kept as parallel branches so
+  bilingual sources still score correctly.
 
 ## [0.1.0a1] — 2026-04-26
 
