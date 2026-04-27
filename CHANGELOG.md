@@ -11,6 +11,31 @@ adheres to [SemVer](https://semver.org/).
   semantic embeddings + calibration, deferred to 0.2.0; also pending
   FTS5 indexer for `pyeonchan` Phase 2)
 
+## [0.1.0a4] — 2026-04-27
+
+Documentation release. No code changes; READMEs and architecture
+inventory only. Behaviorally identical to 0.1.0a3 at runtime.
+
+### Added
+- **`docs/architecture/framework-coverage.md`** — full inventory of
+  the 25 categories / 110+ global standards Sillok's roadmap targets,
+  with explicit ship status per category (today / 0.2.0a1 / 1.0.0 GA)
+  and a 25-row persona pairing table (external consultant ·
+  internal IC/Manager · internal Leader). The OSS-distribution
+  counterpart of the upstream `00-meta/06-framework-coverage-inventory.md`.
+- **README "Framework coverage" section** (EN + KO) — one-screen
+  ASCII picture of the 5 axes / 25 categories with ship-status
+  glyphs, the 0.1.0a3 ship table, a persona-pairing excerpt
+  ("find your category fast"), and a link to the full inventory.
+
+### Why a docs-only patch alpha
+Honesty before promise: the framework coverage inventory is one of
+Sillok's strongest moats, but slapping "110+ standards" onto the
+README without a ship-status column would mislead 0.1.0a3 users —
+only ~7 of the 25 categories actually ship today. This release adds
+the inventory **with** ship status visible at every level so a
+reader sees the roadmap and the alpha-reality side by side.
+
 ## [0.1.0a3] — 2026-04-27
 
 Documentation honesty release. No code changes; READMEs and

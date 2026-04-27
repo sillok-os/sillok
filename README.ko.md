@@ -227,6 +227,52 @@ flowchart TB
 
 ---
 
+## Framework 커버리지 — Sillok 이 통합하는 것
+
+Sillok 의 **로드맵** 은 **5축 / 25 카테고리 / 110+ 글로벌 표준** 을 단일 registry · 단일 router · 단일 proposal-only governance 위에서 통합. **`0.1.0a3` 은 25 카테고리 중 ~7개 (10 starter packs) ship**, 나머지는 milestone 에 단계 도착.
+
+```
+[축1] 거버넌스         [축2] 딜리버리        [축3] 산업특화          [축4] 비즈니스       [축5] AI/엔지니어링
+├─ ERM/EA          ✅  ├─ PMBOK 8        ✅  ├─ 자동차            ⏳ ├─ 전략/BM       ✅ ├─ AI/LLM Eng    🚧
+├─ Risk 정량       🚧 ├─ SAFe 6.0       ✅  ├─ 의료기기          ⏳ ├─ M&A/재무      ⏳ └─ Prompt 시퀀싱  ⏳
+├─ ITIL/ITSM       ✅  ├─ 변화관리        🚧 ├─ 금융 은행         ⏳ ├─ SaaS/Pricing/GTM ◐
+└─ 보안/컴플       🚧 └─ 조직설계        🚧 ├─ 보험              ⏳ ├─ 그로스/데이터  ⏳ [보조] 출력
+                                            └─ 임베디드 SW       ⏳ └─ UX/Discovery  ⏳ ├─ 외부 배포      ◐
+                                                                                       ├─ 콘텐츠 발행    ⏳
+✅ 0.1.0a3 today ship                                                                   ├─ 보고서 품질    ✅
+◐ 0.1.0a3 부분 ship                                                                     ├─ Enterprise B2B ⏳
+🚧 0.2.0a1 (Phase 1) 예정                                                                ├─ 디자인 시스템  ⏳
+⏳ 1.0.0 GA 예정                                                                         └─ 다이어그램/이미지 ⏳
+```
+
+### 0.1.0a3 가 ship 하는 것
+
+| 카테고리 | Pack(s) | 표준 |
+|---|---|---|
+| ERM · IT 거버넌스 · EA | `governance-standards` | COSO ERM 2017 · ISO 31000 · COBIT 2019 · TOGAF 10 ADM · Three Lines |
+| ITIL · ITSM | `itil-operations` | ITIL v4 · 5-Why + Ishikawa · Blameless PM · BIA · DR runbook |
+| 프로젝트 · 포트폴리오 | `pm-enhanced` + `portfolio-governance` + `risk-uncertainty` | PMBOK 8 · Stage-Gate · Power-Interest · Kraljic |
+| SAFe 애자일 | `safe-agile-delivery` | SAFe 6.0 · PI Planning · WSJF · ROAM · Lean Portfolio · I&A |
+| 전략 · 시장 · BM | `consulting-strategy-audit` | Porter 5F · Ansoff · Blue Ocean · BMC · TAM/SAM/SOM · Pyramid · SCQA |
+| SaaS · 감사 (부분) | `consulting-saas-audit` | SaaS audit lens — pricing/GTM 팩은 1.0.0 GA 예정 |
+| 임원 커뮤니케이션 | `exec-communication` | Pyramid · SCQA · 10-slide Board · 1-Pager · Sequoia · MD&A |
+| 보고서 품질 | `report-quality` | CRAAP · AIMQ · IQF · Bond Triangulation |
+
+### 본인 카테고리 빠르게 찾기 — Persona 페어링 (요약)
+
+| 본인 역할 | 시작할 카테고리 |
+|---|---|
+| 전략/비즈 컨설턴트 (A1) · 제품 매니저 · CPO/CSO/CEO | **#14 전략/BM** + #16 SaaS + #21 임원 커뮤니케이션 |
+| 프로젝트 컨설턴트 (PMP) · PjM/PMO Lead · COO/PfM | **#5 PMBOK** + #6 SAFe + #2 리스크 |
+| ITO/ITIL 컨설턴트 · SRE/ITSM · CIO/CISO | **#3 ITIL** + #1 ERM + #4 보안 (예정) |
+| Risk 컨설턴트 (FAIR) · Risk Engineer · CRO | **#1 ERM** + #2 리스크 정량 (0.2.0a1 예정) |
+| AI Solution Architect · ML Engineer · CTO/CDO | #19 AI/LLM Eng (0.2.0a1 예정) |
+| Industry SME (자동차 / 의료 / 금융 / 보험 / 임베디드) | #9~#13 (1.0.0 GA 예정) |
+
+> 📚 **상세 인벤토리** — 25 카테고리 × 110+ 표준 × ship status × persona 페어링 → [`docs/architecture/framework-coverage.md`](docs/architecture/framework-coverage.md).
+
+---
+
 ## 무엇을 받게 되나요
 
 - **10+ 개의 starter 프롬프트 팩** 기본 탑재(전략·PMO·ITIL·보안·그로스·UX 등)

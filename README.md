@@ -225,6 +225,52 @@ flowchart TB
 
 ---
 
+## Framework coverage — what Sillok integrates
+
+Sillok's **roadmap** covers **5 axes / 25 categories / 110+ global standards** under one registry, one router, one proposal-only governance gate. **`0.1.0a3` ships ~7 of those 25 categories (10 starter packs)**; the rest land additively per milestone.
+
+```
+[Axis 1] Governance     [Axis 2] Delivery       [Axis 3] Industry        [Axis 4] Business      [Axis 5] AI/Eng
+├─ ERM/EA            ✅  ├─ PMBOK 8         ✅  ├─ Automotive        ⏳ ├─ Strategy/BM    ✅  ├─ AI/LLM Eng    🚧
+├─ Risk Quant        🚧 ├─ SAFe 6.0        ✅  ├─ Medical Device    ⏳ ├─ M&A/Finance    ⏳ └─ Prompt Seq    ⏳
+├─ ITIL/ITSM         ✅  ├─ Change Mgmt     🚧 ├─ Banking           ⏳ ├─ SaaS/Pricing/GTM ◐
+└─ Security/Compl    🚧 └─ Org Design      🚧 ├─ Insurance         ⏳ ├─ Growth/Data    ⏳ [Aux] Output
+                                              └─ Embedded SW       ⏳ └─ UX/Discovery   ⏳ ├─ Ext delivery   ◐
+                                                                                          ├─ Content publish ⏳
+✅ ships in 0.1.0a3 today                                                                  ├─ Report quality ✅
+◐ partial ship in 0.1.0a3                                                                  ├─ Enterprise B2B ⏳
+🚧 queued for 0.2.0a1 (Phase 1)                                                            ├─ Design system  ⏳
+⏳ queued for 1.0.0 GA                                                                     └─ Diagram/Image  ⏳
+```
+
+### What ships in 0.1.0a3
+
+| Category | Pack(s) | Standards |
+|---|---|---|
+| ERM · IT Governance · EA | `governance-standards` | COSO ERM 2017 · ISO 31000 · COBIT 2019 · TOGAF 10 ADM · Three Lines |
+| ITIL · ITSM | `itil-operations` | ITIL v4 · 5-Why + Ishikawa · Blameless PM · BIA · DR runbook |
+| Project · Portfolio | `pm-enhanced` + `portfolio-governance` + `risk-uncertainty` | PMBOK 8 · Stage-Gate · Power-Interest · Kraljic |
+| SAFe Agile | `safe-agile-delivery` | SAFe 6.0 · PI Planning · WSJF · ROAM · Lean Portfolio · I&A |
+| Strategy · Market · BM | `consulting-strategy-audit` | Porter 5F · Ansoff · Blue Ocean · BMC · TAM/SAM/SOM · Pyramid · SCQA |
+| SaaS · Audit (partial) | `consulting-saas-audit` | SaaS audit lens — pricing/GTM packs queued for 1.0.0 GA |
+| Executive communication | `exec-communication` | Pyramid · SCQA · 10-slide Board · 1-Pager · Sequoia · MD&A |
+| Report quality | `report-quality` | CRAAP · AIMQ · IQF · Bond Triangulation |
+
+### Find your category fast — persona pairing (excerpt)
+
+| Your role | Category to start with |
+|---|---|
+| Strategy / Biz Consultant (A1) · Product Manager · CPO/CSO/CEO | **#14 Strategy/BM** + #16 SaaS + #21 Exec comms |
+| Project Consultant (PMP) · PjM/PMO Lead · COO/PfM | **#5 PMBOK** + #6 SAFe + #2 Risk |
+| ITO/ITIL Consultant · SRE/ITSM · CIO/CISO | **#3 ITIL** + #1 ERM + #4 Security (queued) |
+| Risk Consultant (FAIR) · Risk Engineer · CRO | **#1 ERM** + #2 Risk Quant (queued 0.2.0a1) |
+| AI Solution Architect · ML Engineer · CTO/CDO | #19 AI/LLM Eng (queued 0.2.0a1) |
+| Industry SME (Auto / Med / Banking / Insurance / Embedded) | #9~#13 (queued 1.0.0 GA) |
+
+> 📚 **Full inventory** — 25 categories × 110+ standards × ship status × persona pairing in [`docs/architecture/framework-coverage.md`](docs/architecture/framework-coverage.md).
+
+---
+
 ## What you get
 
 - **10+ starter prompt packs** out of the box (strategy, PMO, ITIL, security, growth, UX, ...)
