@@ -9,6 +9,8 @@ Short, single-purpose snippets. Each recipe is ≤ 1 screen and copy-pasteable.
 
 | Recipe | Status |
 |---|:-:|
+| [Search a vault with `bongsu`](search-vault-with-bongsu.md) | ✅ |
+| [Decide what's reusable with `yeonryun`](decide-reusability-with-yeonryun.md) | ✅ |
 | Print effective registry for a scope | ⏳ |
 | Replay a routing decision from telemetry | ⏳ |
 | Force-trigger a pack via env var | ⏳ |
