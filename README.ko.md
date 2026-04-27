@@ -270,6 +270,8 @@ Sillok 의 **로드맵** 은 **5축 / 25 카테고리 / 110+ 글로벌 표준** 
 | Industry SME (자동차 / 의료 / 금융 / 보험 / 임베디드) | #9~#13 (1.0.0 GA 예정) |
 
 > 📚 **상세 인벤토리** — 25 카테고리 × 110+ 표준 × ship status × persona 페어링 → [`docs/architecture/framework-coverage.md`](docs/architecture/framework-coverage.md).
+>
+> 🤝 **본인 도메인 pack 추가?** 아직 ship 되지 않은 17~18 카테고리는 도메인 SME 분들이 추가하실 수 있도록 의도적으로 비워둔 영역입니다. 단계별 가이드: [`docs/contributing/extending-with-your-domain.md`](docs/contributing/extending-with-your-domain.md) — pack anatomy, sanitization, 표준 인용, 5-step quality gate.
 
 ---
 

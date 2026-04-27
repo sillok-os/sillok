@@ -45,6 +45,16 @@ git commit -s -m "feat(bongsu): add dual_compare retrieval plan"
 - **vault-resident corpus only.** PRs reintroducing system-global or `.sillok/`-isolated corpus paths will be rejected. See K-6 ablation in the README.
 - **Top 10 Features are load-bearing.** Removing or weakening any of the 10 features requires an ADR.
 
+## Adding a pack for your domain / industry
+
+If you're contributing a new pack covering an industry (Banking, Insurance, Automotive, Medical Device, Embedded, …), a methodology family (NIST RMF, FAIR, Change Management, Org Design, …), or a specialty practice (M&A diligence, Pricing, GTM, Growth, UX research, …), follow the dedicated guide:
+
+→ [`docs/contributing/extending-with-your-domain.md`](docs/contributing/extending-with-your-domain.md)
+
+It covers pack anatomy, registry entry, sanitization checklist (the most common reason a PR gets sent back), standards-citation rule (nominative fair use), framework-coverage inventory update, the 5-step quality gate, and the PR workflow for external contributors and maintainer SMEs.
+
+The 17–18 of the 25 categories that are not yet shipped in the alpha are intentionally left for domain SMEs — your contribution lands additively.
+
 ## Issue triage
 
 - `type:bug` → reproduction steps mandatory

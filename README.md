@@ -268,6 +268,8 @@ Sillok's **roadmap** covers **5 axes / 25 categories / 110+ global standards** u
 | Industry SME (Auto / Med / Banking / Insurance / Embedded) | #9~#13 (queued 1.0.0 GA) |
 
 > 📚 **Full inventory** — 25 categories × 110+ standards × ship status × persona pairing in [`docs/architecture/framework-coverage.md`](docs/architecture/framework-coverage.md).
+>
+> 🤝 **Adding a pack for your domain?** The 17–18 categories not yet shipped are intentionally left for domain SMEs. Step-by-step in [`docs/contributing/extending-with-your-domain.md`](docs/contributing/extending-with-your-domain.md) — pack anatomy, sanitization, standards citation, and the 5-step quality gate.
 
 ---
 

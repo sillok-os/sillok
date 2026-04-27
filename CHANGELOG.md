@@ -11,6 +11,54 @@ adheres to [SemVer](https://semver.org/).
   semantic embeddings + calibration, deferred to 0.2.0; also pending
   FTS5 indexer for `pyeonchan` Phase 2)
 
+## [0.1.0a5] — 2026-04-27
+
+Documentation release. No code changes; new contribution guide and
+README cross-links only. Behaviorally identical to 0.1.0a4 at runtime.
+
+### Added
+- **`docs/contributing/extending-with-your-domain.md`** — single-page
+  guide for both contribution paths (external contributor + maintainer
+  SME). Covers:
+  1. What to add — pack vs. category vs. body vs. revision (with
+     effort estimates)
+  2. Pack anatomy — required frontmatter v1, body sections (Role,
+     Methodology, Output format, Constraints, Examples, Reason codes)
+  3. registry.yaml entry — required keys + schema validation
+  4. **Sanitization checklist** (5 categories: client identifiers,
+     confidential numbers, internal URLs, closed methodology IP,
+     jurisdiction-locked compliance) — most common reason a PR
+     gets sent back
+  5. Standards citation rule — nominative fair use boilerplate +
+     `NOTICE` append discipline
+  6. Framework coverage inventory update — README + framework-
+     coverage.md must move together
+  7. **5-step quality gate** — schema/registry validation,
+     sanitization sweep (zero-hit grep), tests, router discoverability,
+     bongsu searchability
+  8. PR workflow — separate sub-sections for external contributors
+     and maintainer SMEs (mirror operating model rules cited)
+  9. After-merge follow-ups — patch alpha release, eval probe,
+     persona-pairing review
+  10. Common pitfalls — 8-row table
+
+### Changed
+- `CONTRIBUTING.md` — added a section pointing at the new domain
+  extension guide. Calls out that the 17–18 not-yet-shipped categories
+  are intentionally left for domain SMEs.
+- README EN/KO — added a one-line cross-reference to the new guide
+  immediately after the framework-coverage inventory link.
+
+### Why this release exists
+The 0.1.0a4 inventory made the 17–18 unshipped categories visible
+but didn't tell a domain SME *how* to ship one. Without a guide, the
+sanitization, citation, and ship-status discipline that protects the
+defensive moat would erode the moment external PRs started landing.
+This release encodes the discipline.
+
+`pip install "sillok==0.1.0a4"` and `pip install "sillok==0.1.0a5"`
+are behaviorally identical at runtime.
+
 ## [0.1.0a4] — 2026-04-27
 
 Documentation release. No code changes; READMEs and architecture
