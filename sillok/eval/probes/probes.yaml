@@ -1,0 +1,105 @@
+# Sillok eval — golden probe set v1
+#
+# 10 probes across 6 families. Each probe asserts that
+# ``naru.router_2tier.tier1_match`` returns the expected pack as
+# top-1 (or within top_k) for the given query.
+#
+# Schema:
+#   version: int
+#   created_date: YYYY-MM-DD
+#   kpi_targets:
+#     retrieval_p50_ms: int       # pre-merge gate
+#     citation_coverage_pct: int  # 100 in v1
+#     token_reduction_pct: int    # vs naive load
+#   families:
+#     - id: <family-id>
+#       description: <one-line>
+#       queries:
+#         - id: <FX-QY>
+#           query: <natural-language string>
+#           expected_pack: <pack id, must exist in packs/registry.yaml>
+#           top_k: int (default 3)            # consider expected_pack within top-k
+#           require_top1: bool (default false)  # stricter — must be top-1
+#           kpi_target_seconds: int (optional, default from kpi_targets)
+#
+# Run:    python -m sillok.eval run
+# Filter: python -m sillok.eval run --family pm-lifecycle
+# Diff:   python -m sillok.eval run --baseline tests/fixtures/baseline-2026-05.json
+
+version: 1
+created_date: 2026-05-09
+basis: |
+  Adapted from upstream RAG golden probes for sillok router_2tier scoring.
+  v1 ships 10 probes; v2 will expand to 17+ once Wave 1b/1c packs land.
+
+kpi_targets:
+  retrieval_p50_ms: 100         # Tier-1 keyword match should be sub-millisecond per pack;
+                                # whole-set p50 ≤ 100ms is the v1 guard
+  citation_coverage_pct: 100
+  token_reduction_pct: 30       # vs always-load-all-packs naive baseline
+
+families:
+
+  - id: pm-lifecycle
+    description: PM lifecycle routing (pm-enhanced + adjacent ops packs)
+    queries:
+      - id: F1-Q1
+        query: "[pm] kickoff a new feature task"
+        expected_pack: pm-enhanced
+        require_top1: true
+      - id: F1-Q2
+        query: "create a release with milestone tracking"
+        expected_pack: pm-enhanced
+        top_k: 3
+      - id: F1-Q3
+        query: "draft a blameless post-mortem for the SEV-2 incident"
+        expected_pack: itil-operations
+        require_top1: true
+
+  - id: methodology
+    description: Methodology routing (risk + SAFe agile)
+    queries:
+      - id: F2-Q1
+        query: "build a 10-column risk register with EMV"
+        expected_pack: risk-uncertainty
+        require_top1: true
+      - id: F2-Q2
+        query: "PI Planning agenda for SAFe ART using WSJF"
+        expected_pack: safe-agile-delivery
+        require_top1: true
+
+  - id: governance
+    description: Governance routing (TOGAF / portfolio)
+    queries:
+      - id: F3-Q1
+        query: "map TOGAF ADM to current architecture, COSO ERM coverage"
+        expected_pack: governance-standards
+        require_top1: true
+      - id: F3-Q2
+        query: "Stage-Gate scoring for portfolio with Power-Interest stakeholder grid"
+        expected_pack: portfolio-governance
+        require_top1: true
+
+  - id: consulting
+    description: Consulting strategy routing
+    queries:
+      - id: F4-Q1
+        query: "Porter five forces analysis for B2B SaaS market entry"
+        expected_pack: consulting-strategy-audit
+        require_top1: true
+
+  - id: output-style
+    description: Executive communication output-style routing
+    queries:
+      - id: F5-Q1
+        query: "10-slide board deck for Q3 review using Pyramid Principle"
+        expected_pack: exec-communication
+        require_top1: true
+
+  - id: quality-guard
+    description: Report quality + Bond triangulation guard
+    queries:
+      - id: F6-Q1
+        query: "CRAAP test with AIMQ and IQF for evidence triangulation"
+        expected_pack: report-quality
+        require_top1: true

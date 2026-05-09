@@ -3,38 +3,39 @@ name: Eval (Gwageo)
 on:
   pull_request:
     branches: [main]
+    paths:
+      - "packs/**"
+      - "sillok/naru/**"
+      - "sillok/bongsu/**"
+      - "sillok/eval/**"
+      - ".github/workflows/eval.yml"
   schedule:
     # Daily nightly soak
     - cron: "0 3 * * *"
   workflow_dispatch:
 
 jobs:
-  goldens:
-    name: Router goldens (30) — warn-only until F0.7
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v3
-      - name: Run router goldens
-        run: |
-          echo "TODO: invoke 'sillok gwageo run --suite router-goldens --baseline last' once F0.7 lands."
-          echo "Skipping until eval module is wired (placeholder workflow)."
-
   rag-probes:
-    name: RAG probes (17 across 6 families) — warn-only until F0.7
+    name: RAG probes (10 / 6 families) + KPI gate
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v3
-      - name: Run RAG probes
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
         run: |
-          echo "TODO: invoke 'sillok gwageo run --suite rag-probes --baseline last' once F0.7 lands."
-          echo "Skipping until eval module is wired (placeholder workflow)."
-
-  kpi:
-    name: KPI gate (citation 100% / p50 ≤ 10s / token 30%↓) — warn-only until F0.7
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Placeholder
-        run: echo "KPI guard placeholder — to be wired with sillok gwageo kpi-check."
+          python -m pip install --upgrade pip
+          pip install -e .[dev] || pip install -e .
+      - name: Run probes (exit 1 on any failure)
+        run: python -m sillok.eval run
+      - name: Emit JSON summary as artifact
+        if: always()
+        run: python -m sillok.eval run --json > eval-summary.json
+      - name: Upload summary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: eval-summary-${{ github.run_id }}
+          path: eval-summary.json
+          retention-days: 30
