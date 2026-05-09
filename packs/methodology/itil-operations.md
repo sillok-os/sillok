@@ -12,6 +12,22 @@ references:
   - "ITIL 4 — Service Continuity Management practice"
   - "ISO 22301 — Business continuity management"
 top10_features: ["#3 typed registry", "#10 failure taxonomy + replay"]
+
+# agentskills.io v0.9 capability discovery (additive — docs/architecture/frontmatter-compatibility.md)
+name: itil-operations
+description: ITIL incident/problem/continuity playbooks — SEV1-4, RCA, blameless post-mortem, BIA RPO/RTO/RLO.
+capabilities:
+  - run-incident-playbook
+  - build-rca
+  - draft-post-mortem
+  - plan-bia
+triggers:
+  - "[itil]"
+  - "incident"
+  - "post-mortem"
+  - "RPO"
+  - "RTO"
+  - "BIA"
 ---
 
 # ITIL Operations Pack

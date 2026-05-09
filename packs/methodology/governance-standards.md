@@ -13,6 +13,22 @@ references:
   - "TOGAF 10 — The Open Group Architecture Framework"
   - "Three Lines Model 2020 — Institute of Internal Auditors"
 top10_features: ["#3 typed registry", "#4 governance gate"]
+
+# agentskills.io v0.9 capability discovery (additive — docs/architecture/frontmatter-compatibility.md)
+name: governance-standards
+description: Governance standards — COSO ERM 2017, ISO 31000, COBIT 2019, TOGAF 10, Three Lines, 12-36M roadmap.
+capabilities:
+  - map-coso-erm
+  - run-iso-31000
+  - score-cobit-objectives
+  - plan-togaf-adm
+triggers:
+  - "[governance]"
+  - "COSO"
+  - "ISO 31000"
+  - "COBIT"
+  - "TOGAF"
+  - "Three Lines"
 ---
 
 # Governance Standards Pack

@@ -15,6 +15,8 @@ Public re-exports for the canonical structured contracts used across Sillok:
   ``ScoresEnvelope``, ``ConfidenceBreakdownSchema``, ``CandidateScore``,
   ``RecallHit``)
 - Compression configuration (``CompressionConfigSchema``)
+- agentskills.io v0.9 frontmatter (``SkillsV09Frontmatter``) — additive
+  capability-discovery contract for Cursor / Continue / Codex CLI
 
 See ``adr/0001-initial-architecture-decisions.md`` for the design rationale.
 """
@@ -24,6 +26,7 @@ from ._base import BaseModel, ConfigDict, Field, HAS_PYDANTIC
 from .compression import CompressionConfigSchema
 from .overlay import RegistryOverlay, ScopeIdentifier, merge_with_global
 from .pack import RegistryPackSchema, RegistrySchema, RoutingHints, TriggerSignals
+from .skills_v09 import SkillsV09Frontmatter
 from .proposal import (
     ComboProposal,
     CompatEdgeProposal,
@@ -74,4 +77,5 @@ __all__ = [
     "ConfidenceBreakdownSchema",
     "RecallHit",
     "CompressionConfigSchema",
+    "SkillsV09Frontmatter",
 ]
