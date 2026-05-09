@@ -28,7 +28,7 @@ This README is organized as **value → use cases → install → use → mainta
 
 ### What you get
 
-- **10+ starter prompt packs** out of the box (strategy, PMO, ITIL, risk, SAFe, exec-comms, governance, report-quality, …)
+- **15 starter prompt packs** out of the box (strategy, PMO, ITIL, risk, SAFe, exec-comms, governance, report-quality, charter, change-mgmt, infographic, meeting-minutes, tool-adoption, …)
 - **2-stage router** — picks the right pack(s), then picks the right retrieval plan
 - **5 retrieval plans** — `wiki_first`, with-fallback, recovery-first, dual-compare, no-corpus
 - **Reason-coded output** — every routing decision tagged R1~R7 (audit-ready)
@@ -50,7 +50,7 @@ flowchart LR
     end
 
     subgraph SILLOK["Sillok 0.1.0a5"]
-        PACKS["📦 10 starter packs<br/>strategy · PMO · ITIL · risk ·<br/>SAFe · pricing · governance ·<br/>report-quality · exec-comm"]
+        PACKS["📦 15 starter packs<br/>strategy · PMO · ITIL · risk ·<br/>SAFe · governance · report-quality ·<br/>exec-comm · charter · change-mgmt ·<br/>infographic · meeting-minutes · …"]
         ROUTER["🧭 Naru<br/>2-stage router"]
         SEARCH["🔎 Bongsu<br/>vault search"]
         PROMOTE["🌱 Yeonryun<br/>disposition + atom promote"]
@@ -82,7 +82,7 @@ flowchart LR
 flowchart TB
     subgraph CORPUS["Knowledge layer"]
         VAULTROOT["vault root<br/>(.md + frontmatter v5.4)"]
-        REGISTRY["packs/registry.yaml<br/>(56-pack typed registry)"]
+        REGISTRY["packs/registry.yaml<br/>(15-pack typed registry, expanding)"]
     end
 
     subgraph INGEST["Ingest path"]
@@ -140,7 +140,7 @@ flowchart TB
 
 ### Framework coverage — what Sillok integrates
 
-Sillok's **roadmap** covers **5 axes / 25 categories / 110+ global standards** under one registry, one router, one proposal-only governance gate. **`0.1.0a5` ships ~7 of those 25 categories (10 starter packs)**; the rest land additively per milestone.
+Sillok's **roadmap** covers **5 axes / 25 categories / 110+ global standards** under one registry, one router, one proposal-only governance gate. **`0.2.0a1` ships ~9 of those 25 categories (15 starter packs)**; the rest land additively per milestone.
 
 ```
 [Axis 1] Governance     [Axis 2] Delivery       [Axis 3] Industry        [Axis 4] Business      [Axis 5] AI/Eng
@@ -446,7 +446,7 @@ python -m sillok.naru.router_2tier --message "Draft a Q3 strategy for Acme"
 # tier breakdown:       discovery_tier=2 → 10 packs scanned, 2 selected
 ```
 
-The 10 starter packs ship inside the wheel — find their full bodies at:
+The 15 starter packs ship inside the wheel — find their full bodies at:
 
 ```bash
 python -c "import sillok, os; print(os.path.dirname(sillok.__file__))"
@@ -582,7 +582,7 @@ Quick rule of thumb: if more than 10 people will use Sillok at your company, rea
 
 ### Adding a pack for your domain
 
-The 10 starter packs cover ~7 of the 25 categories in the framework coverage inventory. The remaining 17–18 categories (Banking / Insurance / Automotive / Medical Device / Embedded / M&A / Pricing / GTM / UX / Risk Quant / …) are intentionally left for **domain SMEs** to land additively.
+The 15 starter packs cover ~9 of the 25 categories in the framework coverage inventory. The remaining 15–16 categories (Banking / Insurance / Automotive / Medical Device / Embedded / M&A / Pricing / GTM / UX / Risk Quant / …) are intentionally left for **domain SMEs** to land additively.
 
 If you have a domain you want to contribute, the dedicated guide covers the entire procedure:
 
