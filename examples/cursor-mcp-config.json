@@ -1,0 +1,12 @@
+{
+  "_comment": "Cursor MCP config — add this entry under your global mcp.servers in ~/.cursor/mcp.json",
+  "mcpServers": {
+    "sillok": {
+      "command": "python",
+      "args": ["-m", "sillok.tongsa", "serve", "--transport", "stdio"],
+      "env": {
+        "PYTHONUNBUFFERED": "1"
+      }
+    }
+  }
+}
