@@ -1,0 +1,30 @@
+name: Status drift
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "STATUS.md"
+      - "packs/registry.yaml"
+      - "scripts/check-status-drift.py"
+      - ".github/workflows/status-drift.yml"
+  push:
+    branches: [main]
+    paths:
+      - "STATUS.md"
+      - "packs/registry.yaml"
+  workflow_dispatch:
+
+jobs:
+  check-drift:
+    name: STATUS.md ↔ packs/registry.yaml pack count
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install pyyaml
+        run: python -m pip install --upgrade pip pyyaml
+      - name: Check pack-count drift
+        run: python scripts/check-status-drift.py
