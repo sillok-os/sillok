@@ -11,6 +11,83 @@ adheres to [SemVer](https://semver.org/).
   semantic embeddings + calibration, deferred to 0.2.0; also pending
   FTS5 indexer for `pyeonchan` Phase 2)
 
+## [0.1.0a7] — 2026-05-13
+
+Phase F1 functional alpha. Five modules previously shipping as stubs or
+absent now ship with working implementations, tests, and docs:
+agentskills.io v0.9 capability discovery, 5 new packs (registry Wave
+1a), `gwageo` golden probes + CI gate, `sangso` proposal-only 4-gate
+pipeline, and `tongsa` MCP server bridge. Additive only — no breaking
+changes; `0.1.0a6` → `0.1.0a7` upgrades cleanly.
+
+### Added
+- **`sillok.schemas.SkillsV09Frontmatter`** (#7, closes #2) —
+  agentskills.io v0.9 frontmatter contract alongside Sillok's native
+  pack schema. Cursor / Continue / Codex CLI / ChatGPT Desktop and
+  other capability-aware MCP tools can now discover Sillok packs
+  without forking the native registry contract. All 10 starter packs
+  carry the additive v0.9 frontmatter; native fields untouched. New
+  `python -m sillok.schemas validate-skills` CLI + 6 unit tests
+  (full pack-body sweep). Design doc:
+  `docs/architecture/frontmatter-compatibility.md`.
+- **Registry Wave 1a — 5 new packs** (#8, refs #1, Wave 1a of 3) —
+  `meeting-minutes`, `change-management`, `tool-adoption-consulting`,
+  `project-charter`, `infographic-design`. Pack count 10 → 15.
+  Additive only; existing 10 starter packs untouched. Waves 1b/1c
+  follow in `0.2.0a2` / `0.2.0a3`.
+- **`sillok.eval` v1 — `gwageo` golden probes + KPI runner** (#9,
+  closes #3) — replaces 213-byte stub with a working probe runner.
+  10 probes / 6 families covering all 10 starter packs. `run` (probes)
+  + `triangulate` (Bond Evidence Principle #3) CLIs. `--baseline` JSON
+  regression diff. v1 run: **10/10 pass, 100% citation coverage,
+  p50/p95 = 0.01ms / 0.01ms**. CI gate (`.github/workflows/eval.yml`)
+  replaces 3 placeholder jobs with one real `rag-probes` job (PR
+  paths-filter, 30d JSON artifact retention). 9 unit tests.
+- **`sillok.sangso` — proposal-only 4-gate governance** (#10,
+  closes #5) — replaces 215-byte stub with working Lint / Diff /
+  Eval Δ / Approval pipeline. The repo description's "proposal-only
+  governance" and Top 10 Feature #4 ("hard guard against prompt
+  drift and corpus poisoning") now have code matching the claim.
+  `propose` / `list` / `show` / `accept` CLI. Eval gate gracefully
+  skips when `sillok.eval` is not importable. Auto-merge guard
+  invariant enforced by construction. 14 unit tests. Design doc:
+  `docs/architecture/proposal-only-governance.md`.
+- **`sillok.tongsa` — MCP server bridge** (#11, closes #4) — replaces
+  absent directory with a working FastMCP bridge exposing 3 tools
+  (`sillok.list_packs` / `sillok.route` / `sillok.search`). On-ramp
+  for Cursor / Claude Code / Continue / Codex CLI / ChatGPT Desktop
+  users — README Feature #6's single biggest differentiator now has
+  an end-to-end path under 5 minutes. R1-R7 reason-code audit map on
+  every `sillok.route` response. Refuses non-localhost binds. Lazy
+  `mcp` import with clear `pip install sillok[mcp]` hint on miss.
+  Copy-paste Cursor + Claude Code MCP configs in `examples/`. 12
+  unit tests. Quickstart: `docs/integrations/mcp-quickstart.md`.
+
+### Changed
+- Version `0.1.0a6` → `0.1.0a7` in `pyproject.toml` and
+  `sillok/__init__.py`.
+
+### Compatibility
+- Python 3.11+. No new required dependencies; `mcp` remains an
+  optional extra. No removed APIs.
+- `pip install "sillok==0.1.0a6"` users upgrading to `0.1.0a7`
+  gain the 5 new modules' functionality with no required code
+  changes. Existing pack registry consumers see 5 additional packs
+  in `list_packs()` but no schema change.
+
+### Validation
+- `python3 -c "import sillok; print(sillok.__version__)"` →
+  `0.1.0a7`
+- `python -m sillok.eval run` → 10/10 pass, 100% citation coverage
+- All 5 PRs landed CI-clean (mergeable / clean state at merge time)
+
+### Links
+- PR #7 — agentskills v0.9: https://github.com/sillok-os/sillok/pull/7
+- PR #8 — registry Wave 1a: https://github.com/sillok-os/sillok/pull/8
+- PR #9 — gwageo eval probes: https://github.com/sillok-os/sillok/pull/9
+- PR #10 — sangso 4-gate: https://github.com/sillok-os/sillok/pull/10
+- PR #11 — tongsa MCP: https://github.com/sillok-os/sillok/pull/11
+
 ## [0.1.0a6] — 2026-04-27
 
 Documentation release. README structural reorganization only — no
