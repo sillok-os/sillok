@@ -1,0 +1,12 @@
+{
+  "_comment": "Claude Code MCP config — add via `claude mcp add` or place under .claude/mcp.json",
+  "mcpServers": {
+    "sillok": {
+      "command": "python",
+      "args": ["-m", "sillok.tongsa", "serve", "--transport", "stdio"],
+      "env": {
+        "PYTHONUNBUFFERED": "1"
+      }
+    }
+  }
+}
