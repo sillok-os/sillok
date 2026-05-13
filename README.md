@@ -12,6 +12,8 @@
 
 ---
 
+> **Status**: `v0.1.0a7` alpha — 15 packs, 10 eval probes, 4-gate governance + MCP bridge live. See [`STATUS.md`](STATUS.md) for the per-feature live / partial / stub / planned matrix before adoption.
+
 ## Reading order
 
 This README is organized as **value → use cases → install → use → maintain**. Read top-to-bottom on first visit; jump by part on return visits.
