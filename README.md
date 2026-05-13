@@ -21,7 +21,7 @@ This README is organized as **value → use cases → install → use → mainta
 1. [Part 1 — Value & Overview](#part-1--value--overview) — what Sillok is and what you get
 2. [Part 2 — Business Use Cases](#part-2--business-use-cases) — find your role and a workflow that fits
 3. [Part 3 — Installation](#part-3--installation) — requirements and setup paths
-4. [Part 4 — Usage](#part-4--usage) — what actually works in `0.1.0a5` and how to drive it
+4. [Part 4 — Usage](#part-4--usage) — what actually works in `0.2.0a3` and how to drive it
 5. [Part 5 — Maintenance & Extension](#part-5--maintenance--extension) — troubleshoot, deploy at scale, extend with your domain
 6. [Part 6 — Appendix](#part-6--appendix) — license, prior art, citation
 
@@ -52,7 +52,7 @@ flowchart LR
         WORK["📝 New work<br/>research · debrief · retro"]
     end
 
-    subgraph SILLOK["Sillok 0.1.0a5"]
+    subgraph SILLOK["Sillok 0.2.0a3"]
         PACKS["📦 15 starter packs<br/>strategy · PMO · ITIL · risk ·<br/>SAFe · governance · report-quality ·<br/>exec-comm · charter · change-mgmt ·<br/>infographic · meeting-minutes · …"]
         ROUTER["🧭 Naru<br/>2-stage router"]
         SEARCH["🔎 Bongsu<br/>vault search"]
@@ -90,7 +90,7 @@ flowchart TB
 
     subgraph INGEST["Ingest path"]
         PYEON["pyeonchan.ingest_md<br/>(md → atoms · today)"]
-        PYEON_F["pyeonchan multi-format<br/>(pdf/docx/xlsx · 0.2.0a1)"]
+        PYEON_F["pyeonchan multi-format<br/>(pdf/docx/xlsx · Wave 2)"]
     end
 
     subgraph QUERY["Query path"]
@@ -139,11 +139,11 @@ flowchart TB
     class JIKJI,SANGSO,SAGWAN,GWAGEO,TONGSA,DURE,YEOK,PYEON_F stub
 ```
 
-**Legend:** green solid = production-path in `0.1.0a5` · red dashed = stub / Phase 1 / `0.2.0a1`. Every solid node has a `python -m sillok.<module>...` CLI you can run today.
+**Legend:** green solid = production-path in `0.2.0a3` (Wave 1 complete) · red dashed = stub / planned. Every solid node has a `python -m sillok.<module>...` CLI you can run today.
 
 ### Framework coverage — what Sillok integrates
 
-Sillok's **roadmap** covers **5 axes / 25 categories / 110+ global standards** under one registry, one router, one proposal-only governance gate. **`0.2.0a1` ships ~9 of those 25 categories (15 starter packs)**; the rest land additively per milestone.
+Sillok's **roadmap** covers **5 axes / 25 categories / 110+ global standards** under one registry, one router, one proposal-only governance gate. **`0.2.0a3` ships 25 packs (Wave 1 complete) across 4 sub-categories** — methodology, consulting, business/visual, output-styles; the rest land additively per Wave (Wave 2 targets ~40 packs).
 
 ```
 [Axis 1] Governance     [Axis 2] Delivery       [Axis 3] Industry        [Axis 4] Business      [Axis 5] AI/Eng
@@ -153,13 +153,13 @@ Sillok's **roadmap** covers **5 axes / 25 categories / 110+ global standards** u
 └─ Security/Compl    🚧 └─ Org Design      🚧 ├─ Insurance         ⏳ ├─ Growth/Data    ⏳ [Aux] Output
                                               └─ Embedded SW       ⏳ └─ UX/Discovery   ⏳ ├─ Ext delivery   ◐
                                                                                           ├─ Content publish ⏳
-✅ ships in 0.1.0a5 today                                                                  ├─ Report quality ✅
-◐ partial ship in 0.1.0a5                                                                  ├─ Enterprise B2B ⏳
-🚧 queued for 0.2.0a1 (Phase 1)                                                            ├─ Design system  ⏳
+✅ ships in 0.2.0a3 today (Wave 1 complete, 25 packs)                                      ├─ Report quality ✅
+◐ partial ship in 0.2.0a3                                                                  ├─ Enterprise B2B ⏳
+🚧 queued for Wave 2 (~0.3.0a1)                                                            ├─ Design system  ⏳
 ⏳ queued for 1.0.0 GA                                                                     └─ Diagram/Image  ⏳
 ```
 
-#### What ships in 0.1.0a5
+#### What ships in 0.2.0a3 (Wave 1 complete)
 
 | Category | Pack(s) | Standards |
 |---|---|---|
@@ -185,7 +185,7 @@ The 10 capabilities below are what differentiate Sillok from a plain RAG noteboo
 | 3 | **Typed Pack Registry + 5 Retrieval Plans** | Every pack declares its `corpus_affinity.retrieval_plan`: `vault_first`, `vault_then_llmwiki_fallback`, `llmwiki_recovery_first`, `dual_compare`, or `no_corpus`. Routing is data-driven, not heuristic. | `jikji` + `bongsu` |
 | 4 | **Proposal-Only 4-Gate Governance** | Auto-growth and eval feedback **never** overwrite system prompts or pack bodies directly. All changes land in `prompts/system/proposals/` and pass a 4-gate review (lint → diff → eval delta → human approval). Hard guard against prompt drift and corpus poisoning. | `sangso` |
 | 5 | **Multi-Tenant Overlay (scoped corpora)** | Personal vault + team vault + per-client vault are composed as permission-scoped layers. The same router serves a solo user and a 1,000-person org without re-architecting. | `beopjeon` (scope) + `janggyeong` |
-| 6 | **MCP Bridge** | The same corpus and packs are exposed over Model Context Protocol — usable from Claude Code, Cursor, Codex CLI, Continue, ChatGPT Desktop. **3 tools shipped in v0.2.0a1**: `sillok.list_packs`, `sillok.route`, `sillok.search`. Run via `python -m sillok.tongsa serve`. See [`docs/integrations/mcp-quickstart.md`](docs/integrations/mcp-quickstart.md). | `tongsa` |
+| 6 | **MCP Bridge** | The same corpus and packs are exposed over Model Context Protocol — usable from Claude Code, Cursor, Codex CLI, Continue, ChatGPT Desktop. **3 tools shipped in v0.1.0a7**: `sillok.list_packs`, `sillok.route`, `sillok.search`. Run via `python -m sillok.tongsa serve`. See [`docs/integrations/mcp-quickstart.md`](docs/integrations/mcp-quickstart.md). | `tongsa` |
 | 7 | **Plugin System** | Third-party capabilities (WAF-aware web fetch, symbolic code search, browser automation, doc-fetch) are registered like packs and selectable by the router. Extending Sillok does not require forking it. | `dure` |
 | 8 | **Eval Golden Probes + KPI Guard** | Built-in **10-probe v1** regression suite across 6 query families (expanding to 17+ as Wave 1b/1c packs land). CI gate: citation coverage 100%, retrieval p50 ≤ 100 ms, pass rate ≥ 80%. Run via `python -m sillok.eval run`. | `gwageo` (`sillok/eval/`) |
 | 9 | **Cross-Tool Plan SSoT** | `docs/plans/<ID>-plan.md` is shared across Claude Code, Codex, Cursor — start a plan in one tool, finish it in another. The router reads the same plan as the executor. | `madang` + `tongsa` |
@@ -206,8 +206,8 @@ Match yourself to a row, then jump to the matching workflow archetype below.
 | Strategy / Biz Consultant (A1) · Product Manager · CPO/CSO/CEO | **#14 Strategy/BM** + #16 SaaS + #21 Exec comms | ✅ today |
 | Project Consultant (PMP) · PjM/PMO Lead · COO/PfM | **#5 PMBOK** + #6 SAFe + #2 Risk | ✅ today |
 | ITO/ITIL Consultant · SRE/ITSM · CIO/CISO | **#3 ITIL** + #1 ERM + #4 Security (queued) | ✅ today |
-| Risk Consultant (FAIR) · Risk Engineer · CRO | **#1 ERM** + #2 Risk Quant | ✅ + 🚧 0.2.0a1 |
-| AI Solution Architect · ML Engineer · CTO/CDO | #19 AI/LLM Eng | 🚧 0.2.0a1 |
+| Risk Consultant (FAIR) · Risk Engineer · CRO | **#1 ERM** + #2 Risk Quant | ✅ + 🚧 Wave 2 |
+| AI Solution Architect · ML Engineer · CTO/CDO | #19 AI/LLM Eng | ✅ `consulting-ai-engineering-audit` (Wave 1b · v0.2.0a2) |
 | Industry SME (Auto / Med / Banking / Insurance / Embedded) | #9~#13 | ⏳ 1.0.0 GA |
 
 > 🤝 **Adding a pack for your domain?** The 17–18 categories not yet shipped are intentionally left for domain SMEs. Step-by-step in [`docs/contributing/extending-with-your-domain.md`](docs/contributing/extending-with-your-domain.md) — pack anatomy, sanitization, standards citation, and the 5-step quality gate.
@@ -244,7 +244,7 @@ print(result.confidence)           # 'high'
 EOF
 ```
 
-> Workflows above describe the **GA experience** (`>=1.0.0`). For what works in the current alpha (`0.1.0a5`), see [Part 4 — Usage](#part-4--usage).
+> Workflows above describe the **GA experience** (`>=1.0.0`). For what works in the current alpha (`0.2.0a3`, Wave 1 complete), see [Part 4 — Usage](#part-4--usage).
 
 ---
 
@@ -263,7 +263,7 @@ Optional:
 
 ### Quickstart (60 seconds) — *GA target*
 
-> **Status (2026-04-27)**: this Quickstart describes the **GA experience** (`>=1.0.0`). The current shipped version is `0.1.0a5` (alpha). For what works **today**, jump to [Part 4 — Usage](#part-4--usage).
+> **Status (2026-05-13)**: this Quickstart describes the **GA experience** (`>=1.0.0`). The current shipped version is `0.2.0a3` (alpha — Wave 1 complete, 25 packs). For what works **today**, jump to [Part 4 — Usage](#part-4--usage).
 
 ```bash
 pip install sillok               # 1.0.0+ (GA target)
@@ -421,14 +421,14 @@ sillok route "B2B SaaS tier-pricing case studies" --show-corpus
 
 ## Part 4 — Usage
 
-### Consultant Quickstart for 0.1.0a5 — *what works today*
+### Consultant Quickstart for 0.2.0a3 — *what works today*
 
-If you're a Biz / Product / Project / IT / ITO consultant and you only want to **point Sillok at your own RAG repository** and use it now, this section is the entire story for `0.1.0a5`. The unified `sillok` command and `@sillok` IDE bridge are still alpha-stubs — but the **Python module CLIs** below are production-path.
+If you're a Biz / Product / Project / IT / ITO consultant and you only want to **point Sillok at your own RAG repository** and use it now, this section is the entire story for `0.2.0a3` (Wave 1 complete, 25 packs). The unified `sillok` command is still alpha-stub — but **`tongsa` MCP bridge** (3 tools) and the **Python module CLIs** below are production-path.
 
 #### A. Index your own vault (5 min)
 
 ```bash
-pip install "sillok>=0.1.0a5"
+pip install --pre "sillok>=0.2.0a3"
 
 # Your vault = any folder of .md files with YAML frontmatter
 # (Obsidian, plain notes, docs site, your case bank — all work).
@@ -494,7 +494,7 @@ python -m sillok.pyeonchan.ingest_md \
     --out ~/.sillok/index.jsonl
 ```
 
-> Multi-format ingest (`pdf` / `docx` / `xlsx` / `pptx` / `hwpx`) and watch/cron daemonization land in `0.2.0a1` (Pyeonchan Phase 2). For now, anything you can express as `.md` + frontmatter is indexed.
+> Multi-format ingest (`pdf` / `docx` / `xlsx` / `pptx` / `hwpx`) and watch/cron daemonization land in Wave 2 (Pyeonchan Phase 2 · target `~0.3.0a1`). For now, anything you can express as `.md` + frontmatter is indexed.
 
 ### Common commands (GA target)
 
@@ -526,16 +526,16 @@ sillok telemetry tail   ≡   sillok sagwan tail
 sillok eval run         ≡   sillok gwageo run
 ```
 
-### What 0.1.0a5 does **not** yet provide
+### What 0.2.0a3 does **not** yet provide
 
 | Capability | Status | Lands in |
 |---|:-:|:-:|
-| `sillok ...` unified command | ⏳ stub | `0.2.0a1` |
-| `sillok corpus install --starter` | ⏳ not implemented | `0.2.0a1` |
-| `@sillok` MCP bridge for IDEs | ⏳ Tongsa stub | Phase 1 PR-D |
-| Multi-format ingest (pdf/docx/xlsx/pptx/hwpx) | ⏳ md only | `0.2.0a1` (Pyeonchan Phase 2) |
-| Proposal-only 4-gate governance executor | ⏳ Sangso stub | Phase 1 PR-A |
-| Eval CI blocking gate | ⏳ probes only, runner missing | Phase 1 PR-B |
+| `sillok ...` unified command | ⏳ stub | Wave 2 (~`0.3.0a1`) |
+| `sillok corpus install --starter` | ⏳ not implemented | Wave 2 |
+| `@sillok` MCP bridge for IDEs | ✅ shipped (v0.1.0a7, `tongsa` 3 tools) | done |
+| Multi-format ingest (pdf/docx/xlsx/pptx/hwpx) | ⏳ md only | Wave 2 (Pyeonchan Phase 2) |
+| Proposal-only 4-gate governance executor | ✅ shipped (v0.1.0a7, `sangso`) | done |
+| Eval CI blocking gate | ✅ shipped (v0.1.0a7, `gwageo` 10-probe v1) | done |
 
 If any of those are dealbreakers, stay on the alpha and watch the milestones — the Python module CLIs in §A–E above will keep working once the unified surface lands.
 
