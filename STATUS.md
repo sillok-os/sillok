@@ -3,7 +3,7 @@
 Authoritative status of each [Top 10 Feature](README.md#top-10-features) at the latest published release.
 First-time readers — use this page to verify what is shipped before adopting.
 
-- **Released**: `v0.2.0a2` (2026-05-13) — [GitHub Release](https://github.com/sillok-os/sillok/releases/tag/v0.2.0a2) · [PyPI](https://pypi.org/project/sillok/0.2.0a2/)
+- **Released**: `v0.2.0a3` (2026-05-13) — [GitHub Release](https://github.com/sillok-os/sillok/releases/tag/v0.2.0a3) · [PyPI](https://pypi.org/project/sillok/0.2.0a3/)
 - **Status legend**: `live` = working code + tests + docs · `partial` = working but missing a documented sub-feature · `stub` = directory or file present, no functional code · `planned` = not yet present
 
 ## Feature matrix
@@ -23,11 +23,11 @@ First-time readers — use this page to verify what is shipped before adopting.
 
 ## Pack registry
 
-- Current count: **20 packs** across 4 sub-categories (`methodology`, `consulting`, `business`/`visual`, `core`)
+- Current count: **25 packs** across 4 sub-categories (`methodology`, `consulting`, `business`/`visual`, `core`)
 - Wave 1a (`0.1.0a7`): +5 packs — `meeting-minutes`, `change-management`, `tool-adoption-consulting`, `project-charter`, `infographic-design`
 - Wave 1b (`0.2.0a2`): +5 — `consulting-uxui-audit`, `consulting-ai-engineering-audit`, `consulting-security-audit`, `consulting-growth-audit`, `consulting-crossanalysis`
-- Wave 1c (`0.2.0a3`, planned): +5 — `pack-maintenance`, `prompt-sequencing-meta`, `agent-1on1`, `worklog`, `everyday-health-symptom`
-- See [#1](https://github.com/sillok-os/sillok/issues/1) for the full Wave 1 umbrella.
+- Wave 1c (`0.2.0a3`): +5 — `pack-maintenance`, `prompt-sequencing-meta`, `agent-1on1`, `worklog`, `everyday-health-symptom`
+- Wave 1 (10 → 25 packs) **complete** — see [#1](https://github.com/sillok-os/sillok/issues/1).
 
 ## How this page is kept honest
 
