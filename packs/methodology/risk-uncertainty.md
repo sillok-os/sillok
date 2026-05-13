@@ -11,6 +11,22 @@ references:
   - "ISO 31000:2018 — Risk management"
   - "IEC 31010:2019 — Risk assessment techniques (31 techniques)"
 top10_features: ["#3 typed registry", "#4 governance gate"]
+
+# agentskills.io v0.9 capability discovery (additive — docs/architecture/frontmatter-compatibility.md)
+name: risk-uncertainty
+description: PMBOK PD8 risk register, EMV/Monte Carlo, appetite/tolerance/threshold separation.
+capabilities:
+  - build-risk-register
+  - score-emv
+  - run-monte-carlo
+  - define-risk-appetite
+triggers:
+  - "[risk]"
+  - "risk register"
+  - "EMV"
+  - "Monte Carlo"
+  - "appetite"
+  - "tolerance"
 ---
 
 # Risk & Uncertainty Management Pack

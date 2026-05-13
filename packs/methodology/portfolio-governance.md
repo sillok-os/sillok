@@ -11,6 +11,22 @@ references:
   - "ITIL 4 — Service Portfolio Management"
   - "Kraljic Matrix (1983) — Supplier strategy"
 top10_features: ["#3 typed registry", "#5 multi-tenant overlay"]
+
+# agentskills.io v0.9 capability discovery (additive — docs/architecture/frontmatter-compatibility.md)
+name: portfolio-governance
+description: Portfolio governance — 4-dim scoring, Stage-Gate, Power-Interest, Kraljic, SLA/OLA/UC chain.
+capabilities:
+  - score-portfolio-4dim
+  - run-stage-gate
+  - map-power-interest
+  - classify-suppliers-kraljic
+triggers:
+  - "[portfolio]"
+  - "stage gate"
+  - "stakeholder"
+  - "Kraljic"
+  - "SLA"
+  - "OLA"
 ---
 
 # Portfolio Governance Pack

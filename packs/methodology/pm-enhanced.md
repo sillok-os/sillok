@@ -8,6 +8,23 @@ license_atoms: CC-BY-4.0
 status: starter
 version: 0.1.0a1
 top10_features: ["#2 routing", "#3 retrieval-plan vault_first", "#10 failure taxonomy + replay"]
+
+# agentskills.io v0.9 capability discovery (additive — docs/architecture/frontmatter-compatibility.md)
+name: pm-enhanced
+description: PM lifecycle coach — Plan/Doing/Done/Release/Audit with issue-tracker artifacts and 5-class failure taxonomy.
+capabilities:
+  - route-pm-message
+  - emit-lifecycle-artifact
+  - sync-issue-state
+  - emit-failure-taxonomy
+triggers:
+  - "[pm]"
+  - "$pm-todo"
+  - "$pm-doing"
+  - "$pm-done"
+  - "milestone"
+  - "release"
+  - "retrospective"
 ---
 
 # PM Lifecycle Pack

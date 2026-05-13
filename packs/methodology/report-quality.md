@@ -12,6 +12,22 @@ references:
   - "Wang & Strong — Information Quality Framework (IQF, 1996)"
   - "Bond — Evidence Principles for citation-grade reports"
 top10_features: ["#3 typed registry (quality-guard)", "#4 governance gate"]
+
+# agentskills.io v0.9 capability discovery (additive — docs/architecture/frontmatter-compatibility.md)
+name: report-quality
+description: Report quality guard — CRAAP, AIMQ, IQF 3-framework + Bond triangulation count gate.
+capabilities:
+  - run-craap-test
+  - run-aimq-assessment
+  - run-iqf-framework
+  - gate-triangulation
+triggers:
+  - "[report-quality]"
+  - "CRAAP"
+  - "AIMQ"
+  - "IQF"
+  - "triangulation"
+  - "evidence"
 ---
 
 # Report Quality Pack

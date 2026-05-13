@@ -12,6 +12,21 @@ references:
   - "IIBA — Business Analysis Body of Knowledge (BABOK)"
   - "INCOSE — Systems Engineering Body of Knowledge (SEBOK)"
 top10_features: ["#3 typed registry", "#4 governance gate"]
+
+# agentskills.io v0.9 capability discovery (additive — docs/architecture/frontmatter-compatibility.md)
+name: consulting-saas-audit
+description: SaaS architecture/business audit — PMP/SAFe/BABOK/SEBOK 5-part with evidence labels and Moat 3-axis.
+capabilities:
+  - run-saas-5-part-audit
+  - label-evidence
+  - verify-claims
+  - score-moat-3-axis
+triggers:
+  - "[saas-audit]"
+  - "PMP"
+  - "BABOK"
+  - "SEBOK"
+  - "5-part audit"
 ---
 
 # SaaS Audit (Lens 1)

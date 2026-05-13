@@ -8,6 +8,7 @@
 [![PyPI](https://img.shields.io/pypi/v/sillok.svg)](https://pypi.org/project/sillok/)
 [![License: Apache 2.0](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![Tests](https://github.com/sillok-os/sillok/actions/workflows/eval.yml/badge.svg)](https://github.com/sillok-os/sillok/actions)
+[![agentskills.io v0.9](https://img.shields.io/badge/agentskills.io-v0.9-blue)](docs/architecture/frontmatter-compatibility.md)
 
 ---
 

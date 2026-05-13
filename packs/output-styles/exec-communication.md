@@ -11,6 +11,22 @@ references:
   - "Bain — SCR / SCQA narrative pattern"
   - "Sequoia — Pitch Deck template"
 top10_features: ["#3 typed registry", "#9 cross-tool plan SSoT (board deck via plan files)"]
+
+# agentskills.io v0.9 capability discovery (additive — docs/architecture/frontmatter-compatibility.md)
+name: exec-communication
+description: Executive comms — Pyramid Principle, SCR/SCQA, 10-slide Board deck, 1-Pager, Sequoia, MD&A.
+capabilities:
+  - structure-pyramid
+  - build-scr-narrative
+  - draft-board-deck-10-slide
+  - draft-exec-1-pager
+triggers:
+  - "[exec-comms]"
+  - "board deck"
+  - "Pyramid Principle"
+  - "SCR"
+  - "1-pager"
+  - "Sequoia"
 ---
 
 # Executive Communication Pack

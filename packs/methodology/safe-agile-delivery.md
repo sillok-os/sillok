@@ -11,6 +11,22 @@ references:
   - "WSJF (Weighted Shortest Job First) — SAFe Inc."
   - "Lean Portfolio Management — SAFe Inc."
 top10_features: ["#3 typed registry", "#5 multi-tenant overlay"]
+
+# agentskills.io v0.9 capability discovery (additive — docs/architecture/frontmatter-compatibility.md)
+name: safe-agile-delivery
+description: SAFe 6.0 ART/PI Planning/LPM — WSJF, ROAM, Epic Hypothesis, Lean Portfolio 3 Horizons.
+capabilities:
+  - run-pi-planning
+  - score-wsjf
+  - run-roam
+  - plan-lean-portfolio
+triggers:
+  - "[safe]"
+  - "PI Planning"
+  - "ART"
+  - "WSJF"
+  - "ROAM"
+  - "Lean Portfolio"
 ---
 
 # SAFe 6.0 Agile Delivery Pack

@@ -13,6 +13,24 @@ references:
   - "Osterwalder & Pigneur — Business Model Canvas (2010)"
   - "Porter — Value Chain (1985)"
 top10_features: ["#3 typed registry"]
+
+# agentskills.io v0.9 capability discovery (additive — docs/architecture/frontmatter-compatibility.md)
+name: consulting-strategy-audit
+description: Strategy/market-entry/BMC — Porter, Ansoff, Blue Ocean, BMC, TAM/SAM/SOM dual derivation.
+capabilities:
+  - run-porter-5-forces
+  - draft-bmc-9-block
+  - derive-tam-sam-som
+  - design-strategic-options
+triggers:
+  - "[strategy]"
+  - "Porter"
+  - "Ansoff"
+  - "Blue Ocean"
+  - "BMC"
+  - "TAM"
+  - "SAM"
+  - "SOM"
 ---
 
 # Strategy Audit (Lens 0)
