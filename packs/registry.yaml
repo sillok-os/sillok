@@ -267,6 +267,86 @@ packs:
       - "10 pattern catalog (flat / iso / dataviz / process / comparison / icon / hero / timeline / map / pyramid)"
       - "13-slot assembly + Tufte/Cairo/IIB/EAA self-eval gates"
 
+  - id: consulting-uxui-audit
+    title: UX/UI Heuristic Audit Pack (Lens 2) — Nielsen 10 + Friction Numbering + ASCII Wireframes
+    path: packs/consulting/consulting-uxui-audit.md
+    category: domain
+    sub_category: consulting
+    trigger_signals:
+      explicit: ["[uxui-audit]", "[ux-audit]"]
+      contains: ["Nielsen 10", "heuristic audit", "UX 감사", "사용성 감사", "friction"]
+    intent_tags: ["consulting", "uxui-audit", "lens-2", "nielsen-heuristics"]
+    output_contracts: ["uxui-audit-8-section.md", "friction-numbered-table.md", "ascii-wireframes.md", "quick-wins-top3.md"]
+    precedence: 70
+    visibility_label: UX/UI Audit
+    summary_overlay:
+      - "Nielsen 10 Heuristics quantitative+qualitative scoring, Friction numbering, ASCII wireframes"
+      - "4 redesign principles + Quick Wins Top 3 + 4-sprint roadmap (Lens 2 of 6-lens stack)"
+
+  - id: consulting-ai-engineering-audit
+    title: AI / Prompt Engineering Audit Pack (Lens 3) — 4-Element Prompt + 4-Axis Eval
+    path: packs/consulting/consulting-ai-engineering-audit.md
+    category: domain
+    sub_category: consulting
+    trigger_signals:
+      explicit: ["[ai-audit]", "[prompt-audit]", "[llm-audit]"]
+      contains: ["prompt engineering audit", "RAG 감사", "Claim Verification", "hallucination", "AI 엔진 감사"]
+    intent_tags: ["consulting", "ai-audit", "lens-3", "prompt-engineering", "rag", "eval"]
+    output_contracts: ["ai-audit-6-section.md", "system-prompt-diff.md", "claim-verification-pipeline.md", "model-mix-matrix.md", "eval-rubric-4-axis.md"]
+    precedence: 70
+    visibility_label: AI Audit
+    summary_overlay:
+      - "4-element prompt review (Role·Context·Task·Constraints), Claim Verification 5-stage pipeline"
+      - "Model mix matrix + 3-layer caching + 4-axis eval rubric (Lens 3 of 6-lens stack)"
+
+  - id: consulting-security-audit
+    title: Security & Infra Audit Pack (Lens 4) — STRIDE + Token Lifecycle + GDPR/CCPA Matrix
+    path: packs/consulting/consulting-security-audit.md
+    category: domain
+    sub_category: consulting
+    trigger_signals:
+      explicit: ["[security-audit]", "[sec-audit]"]
+      contains: ["STRIDE", "GDPR", "CCPA", "보안 감사", "토큰 수명주기", "least privilege"]
+    intent_tags: ["consulting", "security-audit", "lens-4", "stride", "gdpr", "ccpa", "ciso"]
+    output_contracts: ["security-audit-8-section.md", "stride-table.md", "token-lifecycle-table.md", "compliance-matrix.md", "incident-runbook.md"]
+    precedence: 70
+    visibility_label: Security Audit
+    summary_overlay:
+      - "STRIDE threat model + Token lifecycle + Least-privilege + Rate limit/Circuit breaker"
+      - "GDPR + CCPA/CPRA + PIPA compliance matrix + 5-step incident runbook (Lens 4 of 6-lens stack)"
+
+  - id: consulting-growth-audit
+    title: Growth & Data Strategy Audit Pack (Lens 5) — AARRR + NSM + ICE Backlog
+    path: packs/consulting/consulting-growth-audit.md
+    category: domain
+    sub_category: consulting
+    trigger_signals:
+      explicit: ["[growth-audit]", "[growth]"]
+      contains: ["AARRR", "NSM", "Aha Moment", "ICE Score", "Retention Loop", "그로스 감사", "리텐션", "활성화"]
+    intent_tags: ["consulting", "growth-audit", "lens-5", "aarrr", "nsm", "retention-loop"]
+    output_contracts: ["growth-audit-7-section.md", "event-taxonomy-checks.md", "aarrr-funnel-table.md", "ice-backlog-top10.csv"]
+    precedence: 70
+    visibility_label: Growth Audit
+    summary_overlay:
+      - "Event taxonomy + AARRR + NSM 3-test + Aha Moment locator + 6-stage Retention Loop"
+      - "ICE Score backlog (Top 10) with measurable outcome statements (Lens 5 of 6-lens stack)"
+
+  - id: consulting-crossanalysis
+    title: Multi-Lens Cross-Analysis Pack — Synthesize 2+ Audits into a Reusable Strategy Frame
+    path: packs/consulting/consulting-crossanalysis.md
+    category: domain
+    sub_category: consulting
+    trigger_signals:
+      explicit: ["[crossanalysis]", "[cross-analysis]", "[meta-audit]"]
+      contains: ["cross-lens", "교차분석", "재사용 전략 프레임", "다중 컨설팅 관점"]
+    intent_tags: ["consulting", "meta-audit", "cross-analysis", "strategy-frame"]
+    output_contracts: ["crossanalysis-7-section.md", "cross-lens-themes-5.md", "disagreement-resolution-table.md", "reusable-strategy-frames.md"]
+    precedence: 75
+    visibility_label: Cross-Analysis
+    summary_overlay:
+      - "Synthesize 2+ Lens audits — 5 themes + axis-by-axis disagreements + correction proposals"
+      - "≤3 Reusable Strategy Frames (Pattern + Decision Rule + Telemetry) + composite-ranked recommendations"
+
 retrieval_plans:
   - id: vault_first
     description: "Vault search only (default for most queries)"

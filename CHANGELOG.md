@@ -7,9 +7,78 @@ adheres to [SemVer](https://semver.org/).
 ## [Unreleased]
 
 ### Added
-- (none yet — pending F0.3 step 2 cherry-pick of full v2 router with
-  semantic embeddings + calibration, deferred to 0.2.0; also pending
-  FTS5 indexer for `pyeonchan` Phase 2)
+- (none yet — pending Wave 1c packs `pack-maintenance`,
+  `prompt-sequencing-meta`, `agent-1on1`, `worklog`,
+  `everyday-health-symptom` targeted for `0.2.0a3`; also pending
+  F0.3 step 2 semantic-embedding router + FTS5 indexer for
+  `pyeonchan` Phase 2)
+
+## [0.2.0a2] — 2026-05-13
+
+Registry **Wave 1b** — `15 → 20 packs`. Five new consulting Lens packs
+ship under `packs/consulting/`, completing Lens 2–5 + meta cross-analysis
+of the 6-lens consulting stack. Additive only — `0.1.0a7` → `0.2.0a2`
+upgrades cleanly with no breaking changes.
+
+### Added
+- **`consulting-uxui-audit` (Lens 2)** — Nielsen 10 Heuristics
+  quantitative + qualitative scoring · Friction numbering · ASCII
+  wireframes · 4 redesign principles · Quick Wins Top 3. Triggers:
+  `[uxui-audit]`, `[ux-audit]`, `Nielsen 10`, `UX 감사`, `사용성 감사`,
+  `friction`.
+- **`consulting-ai-engineering-audit` (Lens 3)** — 4-element prompt
+  review (Role · Context · Task · Constraints) · Claim Verification
+  5-stage pipeline · Model mix matrix · 3-layer caching · 4-axis eval
+  rubric (Correctness · Faithfulness · Style · Safety). Triggers:
+  `[ai-audit]`, `[prompt-audit]`, `[llm-audit]`, `RAG 감사`,
+  `Claim Verification`.
+- **`consulting-security-audit` (Lens 4)** — STRIDE threat model ·
+  Token lifecycle audit · Least-privilege scope diff · Rate-limit +
+  circuit-breaker design · GDPR/CCPA/CPRA (+ PIPA) compliance matrix ·
+  5-step incident runbook. Triggers: `[security-audit]`, `[sec-audit]`,
+  `STRIDE`, `GDPR`, `CCPA`, `토큰 수명주기`.
+- **`consulting-growth-audit` (Lens 5)** — Event taxonomy 6-check
+  audit · AARRR funnel table · NSM 3-test scoring · Aha Moment locator
+  (SQL pattern) · 6-stage Retention Loop · ICE Score backlog (Top 10
+  with measurable outcomes). Triggers: `[growth-audit]`, `[growth]`,
+  `AARRR`, `NSM`, `Aha Moment`, `리텐션`.
+- **`consulting-crossanalysis` (meta)** — Synthesize 2+ Lens audits
+  into 5 cross-lens themes · axis-by-axis disagreement table +
+  correction proposals · ≤ 3 Reusable Strategy Frames (Pattern +
+  Decision Rule + Telemetry per frame) · composite-ranked cross-lens
+  recommendations. Triggers: `[crossanalysis]`, `[cross-analysis]`,
+  `[meta-audit]`, `교차분석`.
+- **`STATUS.md` pack registry section** updated — current count
+  `15 → 20`; Wave 1a / 1b done; Wave 1c (`0.2.0a3`) planned.
+- **README status banner** updated to `v0.2.0a2` / 20 packs.
+
+### Changed
+- Version `0.1.0a7` → `0.2.0a2` in `pyproject.toml` and
+  `sillok/__init__.py`.
+- The Wave 1b minor-version bump (`0.1.x` → `0.2.x`) reflects the
+  consulting-lens completeness milestone agreed in Issue #1.
+
+### Compatibility
+- Python 3.11+. No new required dependencies; `mcp` remains an
+  optional extra. No removed APIs.
+- `pip install "sillok==0.1.0a7"` → `0.2.0a2` upgraders gain 5 new
+  consulting Lens packs callable via the standard `naru` router /
+  `tongsa` MCP `sillok.list_packs`. No schema change to the registry.
+
+### Validation
+- `python3 -c "import sillok; print(sillok.__version__)"` →
+  `0.2.0a2`
+- `python -m sillok.eval run` → 10/10 pass (10-probe v1 set unchanged;
+  Wave 1b-targeted probes deferred to `0.2.0a3`)
+- `python scripts/check-status-drift.py` → OK (STATUS.md and
+  packs/registry.yaml agree on 20 packs)
+- `python3 -c "import yaml,sillok.schemas as s; \
+   s.RegistrySchema.model_validate(yaml.safe_load(open('packs/registry.yaml')))"` →
+  passes
+
+### Links
+- Issue #1 (Wave 1 umbrella): https://github.com/sillok-os/sillok/issues/1
+- Wave 1a release (`0.1.0a7`): https://github.com/sillok-os/sillok/releases/tag/v0.1.0a7
 
 ## [0.1.0a7] — 2026-05-13
 
