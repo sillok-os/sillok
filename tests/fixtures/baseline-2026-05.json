@@ -1,0 +1,176 @@
+{
+  "total": 10,
+  "passed": 10,
+  "failed": 0,
+  "pass_rate_pct": 100.0,
+  "citation_coverage_pct": 100.0,
+  "retrieval_p50_ms": 0.011,
+  "retrieval_p95_ms": 0.013,
+  "per_probe": [
+    {
+      "family": "pm-lifecycle",
+      "probe_id": "F1-Q1",
+      "query": "[pm] kickoff a new feature task",
+      "expected_pack": "pm-enhanced",
+      "require_top1": true,
+      "top_k": 3,
+      "matched": true,
+      "matched_rank": 1,
+      "candidate_pack_ids": [
+        "pm-enhanced",
+        "consulting-strategy-audit",
+        "consulting-saas-audit"
+      ],
+      "elapsed_ms": 0.025
+    },
+    {
+      "family": "pm-lifecycle",
+      "probe_id": "F1-Q2",
+      "query": "create a release with milestone tracking",
+      "expected_pack": "pm-enhanced",
+      "require_top1": false,
+      "top_k": 3,
+      "matched": true,
+      "matched_rank": 1,
+      "candidate_pack_ids": [
+        "pm-enhanced",
+        "consulting-strategy-audit",
+        "consulting-saas-audit"
+      ],
+      "elapsed_ms": 0.013
+    },
+    {
+      "family": "pm-lifecycle",
+      "probe_id": "F1-Q3",
+      "query": "draft a blameless post-mortem for the SEV-2 incident",
+      "expected_pack": "itil-operations",
+      "require_top1": true,
+      "top_k": 3,
+      "matched": true,
+      "matched_rank": 1,
+      "candidate_pack_ids": [
+        "itil-operations",
+        "pm-enhanced",
+        "consulting-strategy-audit"
+      ],
+      "elapsed_ms": 0.012
+    },
+    {
+      "family": "methodology",
+      "probe_id": "F2-Q1",
+      "query": "build a 10-column risk register with EMV",
+      "expected_pack": "risk-uncertainty",
+      "require_top1": true,
+      "top_k": 3,
+      "matched": true,
+      "matched_rank": 1,
+      "candidate_pack_ids": [
+        "risk-uncertainty",
+        "pm-enhanced",
+        "consulting-strategy-audit"
+      ],
+      "elapsed_ms": 0.011
+    },
+    {
+      "family": "methodology",
+      "probe_id": "F2-Q2",
+      "query": "PI Planning agenda for SAFe ART using WSJF",
+      "expected_pack": "safe-agile-delivery",
+      "require_top1": true,
+      "top_k": 3,
+      "matched": true,
+      "matched_rank": 1,
+      "candidate_pack_ids": [
+        "safe-agile-delivery",
+        "consulting-saas-audit",
+        "pm-enhanced"
+      ],
+      "elapsed_ms": 0.011
+    },
+    {
+      "family": "governance",
+      "probe_id": "F3-Q1",
+      "query": "map TOGAF ADM to current architecture, COSO ERM coverage",
+      "expected_pack": "governance-standards",
+      "require_top1": true,
+      "top_k": 3,
+      "matched": true,
+      "matched_rank": 1,
+      "candidate_pack_ids": [
+        "governance-standards",
+        "pm-enhanced",
+        "consulting-strategy-audit"
+      ],
+      "elapsed_ms": 0.012
+    },
+    {
+      "family": "governance",
+      "probe_id": "F3-Q2",
+      "query": "Stage-Gate scoring for portfolio with Power-Interest stakeholder grid",
+      "expected_pack": "portfolio-governance",
+      "require_top1": true,
+      "top_k": 3,
+      "matched": true,
+      "matched_rank": 1,
+      "candidate_pack_ids": [
+        "portfolio-governance",
+        "pm-enhanced",
+        "consulting-strategy-audit"
+      ],
+      "elapsed_ms": 0.012
+    },
+    {
+      "family": "consulting",
+      "probe_id": "F4-Q1",
+      "query": "Porter five forces analysis for B2B SaaS market entry",
+      "expected_pack": "consulting-strategy-audit",
+      "require_top1": true,
+      "top_k": 3,
+      "matched": true,
+      "matched_rank": 1,
+      "candidate_pack_ids": [
+        "consulting-strategy-audit",
+        "pm-enhanced",
+        "consulting-saas-audit"
+      ],
+      "elapsed_ms": 0.011
+    },
+    {
+      "family": "output-style",
+      "probe_id": "F5-Q1",
+      "query": "10-slide board deck for Q3 review using Pyramid Principle",
+      "expected_pack": "exec-communication",
+      "require_top1": true,
+      "top_k": 3,
+      "matched": true,
+      "matched_rank": 1,
+      "candidate_pack_ids": [
+        "exec-communication",
+        "pm-enhanced",
+        "consulting-strategy-audit"
+      ],
+      "elapsed_ms": 0.011
+    },
+    {
+      "family": "quality-guard",
+      "probe_id": "F6-Q1",
+      "query": "CRAAP test with AIMQ and IQF for evidence triangulation",
+      "expected_pack": "report-quality",
+      "require_top1": true,
+      "top_k": 3,
+      "matched": true,
+      "matched_rank": 1,
+      "candidate_pack_ids": [
+        "report-quality",
+        "pm-enhanced",
+        "consulting-strategy-audit"
+      ],
+      "elapsed_ms": 0.011
+    }
+  ],
+  "kpi_targets": {
+    "retrieval_p50_ms": 100,
+    "citation_coverage_pct": 100,
+    "token_reduction_pct": 30
+  }
+}
