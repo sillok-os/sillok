@@ -347,6 +347,86 @@ packs:
       - "Synthesize 2+ Lens audits — 5 themes + axis-by-axis disagreements + correction proposals"
       - "≤3 Reusable Strategy Frames (Pattern + Decision Rule + Telemetry) + composite-ranked recommendations"
 
+  - id: pack-maintenance
+    title: Pack Maintenance Pack — Author/Maintain a Sillok Pack (4-Phase × 5-Question Gate)
+    path: packs/methodology/pack-maintenance.md
+    category: domain
+    sub_category: methodology
+    trigger_signals:
+      explicit: ["[pack-maintenance]", "[pack-author]"]
+      contains: ["pack 작성", "pack 보강", "pack 신규"]
+    intent_tags: ["meta", "pack-authoring", "registry-maintenance"]
+    output_contracts: ["pack-body.md", "registry-entry.yaml", "5q-quality-gate.md", "freshness-audit.md"]
+    precedence: 80
+    visibility_label: Pack Maintenance
+    summary_overlay:
+      - "4-Phase workflow (Rubric → TOP3 research → Draft → Validate) for authoring/refreshing packs"
+      - "5-Question Quality Gate + freshness guard (<50% pre-2024 sources) + 2-schema frontmatter validation"
+
+  - id: prompt-sequencing-meta
+    title: Prompt Sequencing Meta Pack — Layer 1 Task · Layer 2 Lifecycle · Layer 3 Dev Sub-Sequence
+    path: packs/methodology/prompt-sequencing-meta.md
+    category: domain
+    sub_category: methodology
+    trigger_signals:
+      explicit: ["[sequence]", "[seq]", "[meta-sequence]"]
+      contains: ["어느 순서로", "어떤 팩 먼저", "프롬프트 시퀀싱"]
+    intent_tags: ["meta", "orchestration", "lifecycle-sequencing"]
+    output_contracts: ["sequence-plan-visual.md", "per-step-rationale.md", "skip-flag-table.md"]
+    precedence: 88
+    visibility_label: Sequencing
+    summary_overlay:
+      - "Decide which packs to invoke in which order — 3-layer (task / lifecycle / dev) sequencing meta"
+      - "Stage 0–5 lifecycle aligned with PMBOK 8 PD1–PD8; D0–D3 dev sub-sequence loop"
+
+  - id: agent-1on1
+    title: Agent 1-on-1 Pack — Refine .claude/agents/*.md via 5-Phase × GROW × AAR Coaching
+    path: packs/methodology/agent-1on1.md
+    category: domain
+    sub_category: methodology
+    trigger_signals:
+      explicit: ["[agent-1on1]", "[agent-coach]"]
+      contains: ["agent 코칭", "agent 정제", "subagent 정의", "agent refinement"]
+    intent_tags: ["meta", "agent-coaching", "subagent-refinement"]
+    output_contracts: ["grow-dialog-transcript.md", "aar-debrief.md", "frontmatter-diff.patch", "body-diff.patch"]
+    precedence: 82
+    visibility_label: Agent 1on1
+    summary_overlay:
+      - "5-Phase coaching workflow (Discovery → Selection → Roleplay → GROW → AAR + Diff)"
+      - "Anthropic 4-field frontmatter audit + agentskills.io v0.9 3-layer disclosure check"
+
+  - id: worklog
+    title: Worklog Pack — Claude Code Session Logs → Day / Week / Manager Report / Brag Doc
+    path: packs/output-styles/worklog.md
+    category: output-style
+    sub_category: business
+    trigger_signals:
+      explicit: ["[worklog]", "[work-log]", "[bragdoc]"]
+      contains: ["워크로그", "주간 보고", "매니저 보고", "brag document"]
+    intent_tags: ["worklog", "telemetry", "manager-report", "brag-doc"]
+    output_contracts: ["worklog-weekly.md", "manager-3-highlight.md", "brag-doc-monthly.md", "day-log.md"]
+    precedence: 62
+    visibility_label: Worklog
+    summary_overlay:
+      - "ccusage --json (T1) → 7-category auto-labeled day/week/manager/brag output"
+      - "Anthropic 8-field whitelist enforced; PII/secrets/proprietary code never echoed"
+
+  - id: everyday-health-symptom
+    title: Everyday Health Symptom Pack — 8-Section MECE Analysis with Red-Flag Routing
+    path: packs/methodology/everyday-health-symptom.md
+    category: domain
+    sub_category: methodology
+    trigger_signals:
+      explicit: ["[symptom]", "[health]"]
+      contains: ["수족냉증", "불면", "소화불량", "요통", "만성피로", "증상 분석"]
+    intent_tags: ["health", "symptom-analysis", "consumer-health", "non-prescriptive"]
+    output_contracts: ["8-section-analysis.md", "mece-5-axis.md", "red-flag-routing.md", "tiered-references-t1-t4.md"]
+    precedence: 65
+    visibility_label: Health Symptom
+    summary_overlay:
+      - "8-section MECE 5-axis cause analysis with Red-Flag routing as first response line"
+      - "No diagnosis / no prescription / no dosage — special-population auto-injection (pregnant/pediatric/geriatric/chronic)"
+
 retrieval_plans:
   - id: vault_first
     description: "Vault search only (default for most queries)"

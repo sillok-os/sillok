@@ -7,11 +7,93 @@ adheres to [SemVer](https://semver.org/).
 ## [Unreleased]
 
 ### Added
-- (none yet — pending Wave 1c packs `pack-maintenance`,
-  `prompt-sequencing-meta`, `agent-1on1`, `worklog`,
-  `everyday-health-symptom` targeted for `0.2.0a3`; also pending
-  F0.3 step 2 semantic-embedding router + FTS5 indexer for
-  `pyeonchan` Phase 2)
+- (none yet — pending F0.3 step 2 semantic-embedding router + FTS5
+  indexer for `pyeonchan` Phase 2; per-pack eval probes for Wave 1b/1c
+  packs to expand `gwageo` golden set from 10 → 17+ probes)
+
+## [0.2.0a3] — 2026-05-13
+
+Registry **Wave 1c** — `20 → 25 packs`. Five new meta / output-style /
+health packs ship, **completing Wave 1 of the registry expansion
+plan** (10 starter → 25 packs across Wave 1a/1b/1c, closing
+[sillok #1](https://github.com/sillok-os/sillok/issues/1)). Additive
+only; `0.2.0a2` → `0.2.0a3` upgrades cleanly.
+
+### Added
+- **`pack-maintenance`** (`packs/methodology/`) — author/maintain a
+  Sillok pack via 4-Phase workflow (Rubric → TOP3 research → Draft →
+  Validate) + 5-Question Quality Gate + freshness guard. Triggers:
+  `[pack-maintenance]`, `[pack-author]`, `pack 작성`, `pack 보강`.
+- **`prompt-sequencing-meta`** (`packs/methodology/`) — decide which
+  packs to invoke in which order — 3-layer (task / lifecycle / dev)
+  sequencing meta. Layer 1 5-pattern task micro-sequences; Layer 2
+  6-stage PMBOK 8 lifecycle; Layer 3 D0–D3 dev sub-sequence loop.
+  Triggers: `[sequence]`, `[seq]`, `[meta-sequence]`, `어느 순서로`,
+  `프롬프트 시퀀싱`.
+- **`agent-1on1`** (`packs/methodology/`) — coach
+  `.claude/agents/<name>.md` subagent definitions via 5-Phase × GROW
+  × AAR. Anthropic 4-field frontmatter audit + agentskills.io v0.9
+  3-layer progressive-disclosure drill. Emits frontmatter + body
+  diff patches, not rewrites. Triggers: `[agent-1on1]`,
+  `[agent-coach]`, `agent 코칭`, `agent 정제`.
+- **`worklog`** (`packs/output-styles/`) — Claude Code session
+  telemetry → day / week / manager 3-highlight / monthly brag-doc.
+  ccusage `--json` T1 source; Anthropic 8-field whitelist enforced
+  (no raw prompts, no PII, no proprietary code echo). Pragmatic
+  Engineer 7-category auto-labeling. Triggers: `[worklog]`,
+  `[work-log]`, `[bragdoc]`, `워크로그`, `주간 보고`.
+- **`everyday-health-symptom`** (`packs/methodology/`) — consumer-
+  health analyst pack producing 8-section MECE 5-axis symptom
+  analysis with mandatory Red-Flag routing as **first response
+  line**. No diagnosis / no prescription / no dosage hard
+  constraints; special-population auto-injection (pregnant /
+  pediatric / geriatric / chronic). T1–T4 tiered references.
+  Triggers: `[symptom]`, `[health]`, `수족냉증`, `불면`,
+  `소화불량`, `요통`, `만성피로`.
+
+### Changed
+- Version `0.2.0a2` → `0.2.0a3` in `pyproject.toml` and
+  `sillok/__init__.py`.
+- `STATUS.md` pack count `20 → 25`; Wave 1 marked **complete**.
+- README Status banner updated to `v0.2.0a3` / 25 packs.
+- `scripts/check-status-drift.py` extended to also enforce
+  README banner ↔ registry.yaml pack-count agreement (Wave 1b retro
+  action P1).
+
+### Compatibility
+- Python 3.11+. No new required dependencies; `mcp` remains an
+  optional extra. No removed APIs.
+- `pip install --pre 'sillok==0.2.0a2'` → `0.2.0a3` upgraders gain
+  5 new meta / output-style / health packs callable via the standard
+  `naru` router or `tongsa` MCP `sillok.list_packs`. No schema change
+  to the registry.
+
+### Wave 1 retrospective (10 → 25 packs)
+- Wave 1a (`0.1.0a7`): +5 packs (`meeting-minutes`,
+  `change-management`, `tool-adoption-consulting`,
+  `project-charter`, `infographic-design`)
+- Wave 1b (`0.2.0a2`): +5 consulting Lens packs (Lens 2–5 + meta)
+- Wave 1c (`0.2.0a3`, this release): +5 meta / output / health packs
+- Total Wave 1 contribution: **15 new packs across 5 sub-categories**
+  with 2,945 lines of upstream-anchored body content. All packs
+  carry both the native Sillok schema and the additive agentskills.io
+  v0.9 frontmatter.
+
+### Validation
+- `python3 -c "import sillok; print(sillok.__version__)"` →
+  `0.2.0a3`
+- `python scripts/check-status-drift.py` → OK on **both**
+  STATUS.md and README.md banner (25 packs, three-way agreement)
+- `python -m sillok.eval run` → 10/10 pass (v1 probe set unchanged;
+  Wave 2 may expand probes per-pack)
+- `python3 -c "import yaml,sillok.schemas as s; \
+   s.RegistrySchema.model_validate(yaml.safe_load(open('packs/registry.yaml')))"` →
+  passes (25 packs)
+
+### Links
+- Wave 1 umbrella issue (closing with this release): https://github.com/sillok-os/sillok/issues/1
+- Wave 1b release (`0.2.0a2`): https://github.com/sillok-os/sillok/releases/tag/v0.2.0a2
+- Wave 1a release (`0.1.0a7`): https://github.com/sillok-os/sillok/releases/tag/v0.1.0a7
 
 ## [0.2.0a2] — 2026-05-13
 

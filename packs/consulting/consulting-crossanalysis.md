@@ -157,6 +157,46 @@ Markdown document, sections in the order above. Source-audit finding IDs (e.g., 
 - `R2` — keyword contains: `cross-lens`, `교차분석`, `재사용 전략 프레임`, `다중 컨설팅 관점`
 - `R3` — precedence boost when ≥ 2 source Lens audits are referenced in the user message
 
+## Worked-example fragment — a complete frame
+
+> **Frame F-2 — "AI cost is the leading indicator of AI quality decline."**
+>
+> **Pattern**: Lens 3 audits typically frame model-cost growth as a finance problem ("cost per request rose 40% MoM"); Lens 5 audits frame retention dips as a product problem ("week-4 retention fell 3 pp"). Cross-analysis surfaces a third pattern: when the team responds to cost pressure by silently downgrading the model under a flag, the quality dip lags by 2–4 weeks. The cost movement is the leading indicator; the retention movement is the lag.
+>
+> **Decision rule**: Any model-mix change driven by cost requires (a) eval-axis baseline run before flag flip, (b) feature-flag percentage rollout, (c) a 4-week retention shadow check before 100%.
+>
+> **Telemetry**: `model_mix_change_audit_log_count` (per quarter, target ≥ 1 per quarter — zero means cost decisions are happening invisibly) **and** `retention_w4_post_mix_change` ≥ baseline – 1pp at flag = 100%.
+
+Frame F-2 is what the cross-analysis is for. A single-lens reader of either source audit would not have arrived at this rule.
+
+## Governance link (`sangso` 4-gate)
+
+When this pack composes recommendations that change a system prompt body or a registry pack, the deliverable **emits proposal artifacts** rather than direct edits — the recommendations land in `prompts/system/proposals/` and pass through `sangso`'s 4-gate review. This preserves the proposal-only governance promise: even a cross-analysis with three Reusable Strategy Frames cannot bypass the gate.
+
+Cross-analysis output therefore comes in two parts:
+- **Narrative** (this pack's normal output) — read by exec / stakeholders
+- **Proposal manifest** (machine-readable sidecar) — consumed by `sangso accept` to materialize changes
+
+## Anti-patterns (what cross-analysis is **not**)
+
+| Anti-pattern | Why it fails | Replacement |
+|---|---|---|
+| Restating each source audit's exec summary as the cross-analysis exec summary | Cross-analysis exec must name the **frames**, not the underlying findings | Lead with ≤ 3 frame headlines; supporting findings appear in §3–4 |
+| "Both audits agree on X" without naming a frame | Agreement is not insight; the frame is what makes it usable | Convert each agreement into a frame with pattern + rule + telemetry |
+| Picking one lens as "right" in a disagreement | Disagreements are usually about different constraints, not about correctness | Each disagreement gets a **proposed resolution** that honors both |
+| Listing > 3 reusable frames | More than three signals failure to abstract | Cap at 3; demote the rest to §3 themes |
+| Skipping the "Open Questions" section | The cross-analysis surfaces gaps the source audits cannot answer; those become the next audit's scope | Always end with explicit Open Questions; they justify the next engagement |
+
+## Cross-link to other consulting packs
+
+- `consulting-strategy-audit` (Lens 0) — feeds the strategy lens; cross-analysis often uses Lens 0 as the **first** source audit
+- `consulting-saas-audit` (Lens 1) — architecture/business audit
+- `consulting-uxui-audit` (Lens 2) — UX/UI audit
+- `consulting-ai-engineering-audit` (Lens 3) — AI engineering audit
+- `consulting-security-audit` (Lens 4) — security audit
+- `consulting-growth-audit` (Lens 5) — growth audit
+- `consulting-audit-magazine-html` (output style) — C-Suite delivery format; cross-analysis output frequently composes into this magazine HTML
+
 ## References
 
 - Top-tier consulting firm deliverable conventions — McKinsey · BCG · Bain · Deloitte · Accenture (`docs/handbooks/consulting-deliverables-handbook.md` summarizes the 11 cross-cutting standards: SCR opening, action titles, layered citation, from-to shift, pseudonym + outcome range, method box, frame attribution, etc.).
