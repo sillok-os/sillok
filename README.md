@@ -12,7 +12,7 @@
 
 ---
 
-> **Status**: `v0.1.0a7` alpha — 15 packs, 10 eval probes, 4-gate governance + MCP bridge live. See [`STATUS.md`](STATUS.md) for the per-feature live / partial / stub / planned matrix before adoption.
+> **Status**: `v0.2.0a2` alpha — 20 packs (Wave 1b landed: 5 consulting Lens packs · UX/UI · AI Eng · Security · Growth · Cross-Analysis), 10 eval probes, 4-gate governance + MCP bridge live. See [`STATUS.md`](STATUS.md) for the per-feature live / partial / stub / planned matrix before adoption.
 
 ## Reading order
 
