@@ -185,6 +185,88 @@ packs:
       - "Pyramid Principle, SCR/SCQA, 10-slide Board deck, 1-Pager"
       - "Sequoia Pitch, Quarterly MD&A, Communication Cadence"
 
+  # Wave 1a — added in v0.2.0a1 (Issue #1)
+
+  - id: meeting-minutes
+    title: Meeting Minutes Pack — Transcript → 8-Section Structured Minutes
+    path: packs/methodology/meeting-minutes.md
+    category: domain
+    sub_category: methodology
+    trigger_signals:
+      explicit: ["[meeting]", "[minutes]"]
+      contains: ["회의록", "transcript", "meeting minutes", "녹취록"]
+    intent_tags: ["meeting", "minutes", "transcript"]
+    output_contracts: ["meeting-minutes-8-section.md", "d-a-o-register.md"]
+    precedence: 65
+    visibility_label: Meeting Minutes
+    summary_overlay:
+      - "Raw transcript → 8-section structured minutes"
+      - "D/A/O register + verbatim quotes + dual-pass attribution verification"
+
+  - id: change-management
+    title: Change Management Pack — ADKAR · Kotter · Team Topologies · MVT
+    path: packs/methodology/change-management.md
+    category: domain
+    sub_category: methodology
+    trigger_signals:
+      explicit: ["[change]", "[cm]", "[adkar]"]
+      contains: ["change management", "변화 관리", "ADKAR", "Kotter", "Team Topologies", "AX 전환", "DX 전환"]
+    intent_tags: ["change-management", "org-design", "minimum-viable-team", "remote-first"]
+    output_contracts: ["adkar-matrix.md", "kotter-timeline.md", "team-topology-map.md", "mvt-canvas.md"]
+    precedence: 68
+    visibility_label: Change Mgmt
+    summary_overlay:
+      - "ADKAR weakest-link first, Kotter 8-step (1-3 cannot be skipped)"
+      - "Team Topologies 4 types + 3 interaction modes, MVT for early-stage"
+
+  - id: tool-adoption-consulting
+    title: Tool Adoption Consulting Pack — Top 5 Insights × 4-Phase × Lead User
+    path: packs/consulting/tool-adoption-consulting.md
+    category: domain
+    sub_category: consulting
+    trigger_signals:
+      explicit: ["[tool-adoption]"]
+      contains: ["Jira vs", "도구 도입", "변화관리", "Lead User", "tool comparison"]
+    intent_tags: ["consulting", "tool-adoption", "change-management"]
+    output_contracts: ["top-5-insights.md", "4-phase-roadmap.md", "4-gate-decision-matrix.md", "vendor-pricing-table.md"]
+    precedence: 72
+    visibility_label: Tool Adoption
+    summary_overlay:
+      - "Top 5 Insights: tool-fixation avoidance, Risk vs Issue, capability-based selection"
+      - "4-Phase × 4-Gate, Lead User negotiation 4 stages, Cost of Inaction"
+
+  - id: project-charter
+    title: Project Charter Pack — PMBOK 8 + SAFe 6.0 + BABOK v3 9-Section
+    path: packs/output-styles/project-charter.md
+    category: output-style
+    sub_category: business
+    trigger_signals:
+      explicit: ["[charter]"]
+      contains: ["Charter", "프로젝트 제안서", "Project Proposal", "Steering Committee", "임원 결재용"]
+    intent_tags: ["charter", "proposal", "external-client", "executive"]
+    output_contracts: ["charter-9-section.md", "roi-3-scenario.md", "raci-6x6.md", "steering-deck-10-slide.html"]
+    precedence: 78
+    visibility_label: Charter
+    summary_overlay:
+      - "PMBOK 8 + SAFe 6.0 + BABOK v3 9-section (5 core + 4 supplement)"
+      - "ROI 3-Scenario, 4-Phase × 4-Gate, RACI 6×6, 3-Lens self-review"
+
+  - id: infographic-design
+    title: Infographic Design Pack — 10 Pattern × 13-Slot × EAA/IIB Self-Eval
+    path: packs/output-styles/infographic-design.md
+    category: output-style
+    sub_category: visual
+    trigger_signals:
+      explicit: ["[infographic]", "[infogr]", "[info-design]"]
+      contains: ["infographic", "인포그래픽", "정보 시각화", "데이터 시각화", "data viz"]
+    intent_tags: ["infographic", "data-viz", "image-generation"]
+    output_contracts: ["prompt-template-13-slot.md", "pattern-rationale.md", "eaa-self-eval.md", "iib-8axis-score.md"]
+    precedence: 60
+    visibility_label: Infographic
+    summary_overlay:
+      - "10 pattern catalog (flat / iso / dataviz / process / comparison / icon / hero / timeline / map / pyramid)"
+      - "13-slot assembly + Tufte/Cairo/IIB/EAA self-eval gates"
+
 retrieval_plans:
   - id: vault_first
     description: "Vault search only (default for most queries)"
