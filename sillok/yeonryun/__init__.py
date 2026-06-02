@@ -44,10 +44,20 @@ from .disposition import (
     scan_directory,
     score_reusability,
 )
+from .optimizer import (
+    DEFAULT_MUTATIONS,
+    MutationOptimizer,
+    OptimizationProposal,
+    Optimizer,
+)
 
 __all__ = [
     "CROSS_REPO_THRESHOLD",
+    "DEFAULT_MUTATIONS",
     "DEFAULT_STOPWORDS",
+    "MutationOptimizer",
+    "OptimizationProposal",
+    "Optimizer",
     "EPHEMERAL_PATTERNS",
     "LOCAL_THRESHOLD",
     "MIN_CONTENT_LENGTH",
