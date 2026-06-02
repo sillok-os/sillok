@@ -1,7 +1,17 @@
-"""sillok.telemetry — module stub.
+"""sillok.telemetry — telemetry write path.
 
-Real implementation lands during Phase 0 cherry-pick (roadmap F0.3~F0.7).
-See https://github.com/sillok-os/sillok/blob/main/adr/ for design decisions.
+Ships the schema-enforced write-gate (:mod:`sillok.telemetry.gate`), which
+validates every row against ``sillok.schemas.telemetry`` before append so the
+eval / self-improvement corpus never ingests a malformed row.
 """
 
-__all__: list[str] = []
+from __future__ import annotations
+
+from .gate import validate_legacy, validate_v2, write_legacy, write_v2
+
+__all__: list[str] = [
+    "validate_v2",
+    "validate_legacy",
+    "write_v2",
+    "write_legacy",
+]
