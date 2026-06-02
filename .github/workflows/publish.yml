@@ -1,0 +1,68 @@
+name: Publish to PyPI
+
+# Build sdist + wheel and publish to PyPI when a GitHub Release is published.
+# Uses PyPI Trusted Publishing (OIDC) — no API token stored as a secret.
+#
+# One-time setup (PyPI side, maintainer):
+#   PyPI → project `sillok` → Settings → Publishing → Add a trusted publisher
+#     Owner:            sillok-os
+#     Repository:       sillok
+#     Workflow name:    publish.yml
+#     Environment:      pypi
+# Then create a GitHub Release (the tag must match pyproject `version`, e.g. v0.3.0a1)
+# and this workflow uploads the matching dist automatically.
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:        # allow manual re-run if a release predates this workflow
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build distributions
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Build sdist + wheel
+        run: |
+          python -m pip install --upgrade build twine
+          python -m build
+      - name: Check metadata
+        run: python -m twine check dist/*
+      - name: Verify tag matches package version
+        if: github.event_name == 'release'
+        run: |
+          PKG_VERSION="$(python -c 'import tomllib,pathlib; print(tomllib.loads(pathlib.Path("pyproject.toml").read_text())["project"]["version"])')"
+          TAG="${GITHUB_REF_NAME#v}"
+          echo "package=$PKG_VERSION tag=$TAG"
+          if [ "$PKG_VERSION" != "$TAG" ]; then
+            echo "::error::tag ($TAG) does not match pyproject version ($PKG_VERSION)"
+            exit 1
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  publish:
+    name: Publish to PyPI
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/sillok/
+    permissions:
+      id-token: write        # required for Trusted Publishing (OIDC)
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - name: Publish
+        uses: pypa/gh-action-pypi-publish@release/v1
