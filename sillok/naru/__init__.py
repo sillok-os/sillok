@@ -11,8 +11,15 @@ Public API:
 
 CLI: ``python -m sillok.naru.router_2tier --help``
 """
+
 from __future__ import annotations
 
+from .action_layer import (
+    DEFAULT_ACTION_TAXONOMY,
+    ActionMatch,
+    ActionResult,
+    classify_action,
+)
 from .router_2tier import (
     discovery_tier,
     load_registry,
@@ -23,6 +30,10 @@ from .router_2tier import (
 )
 
 __all__ = [
+    "DEFAULT_ACTION_TAXONOMY",
+    "ActionMatch",
+    "ActionResult",
+    "classify_action",
     "discovery_tier",
     "load_registry",
     "shadow_dump",
