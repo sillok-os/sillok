@@ -11,8 +11,18 @@ CLI: ``python -m sillok.eval run``.
 
 See ``probes/probes.yaml`` for the v1 probe set (10 probes / 6 families).
 """
+
 from __future__ import annotations
 
+from .calibration import (
+    CalibrationCase,
+    CalibrationReport,
+    CalibrationVerdict,
+    brier_score,
+    calibrate,
+    cases_from_routing,
+    top_pack_match_rate,
+)
 from .runner import (
     EvalSummary,
     ProbeResult,
@@ -22,9 +32,16 @@ from .runner import (
 )
 
 __all__ = [
+    "CalibrationCase",
+    "CalibrationReport",
+    "CalibrationVerdict",
     "EvalSummary",
     "ProbeResult",
+    "brier_score",
+    "calibrate",
+    "cases_from_routing",
     "load_baseline",
     "load_probes",
     "run_probes",
+    "top_pack_match_rate",
 ]
