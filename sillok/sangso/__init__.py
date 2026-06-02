@@ -12,8 +12,19 @@ and must pass through:
 
 CLI: ``python -m sillok.sangso``.
 """
+
 from __future__ import annotations
 
+from .canary import (
+    Threshold,
+    Verdict,
+    aggregate,
+    compare,
+    evaluate_verdict,
+    load_rounds,
+    record,
+    render_evidence,
+)
 from .gates import (
     GateResult,
     gate_approval_artifact,
@@ -28,9 +39,17 @@ __all__ = [
     "GateResult",
     "Proposal",
     "ProposalSummary",
+    "Threshold",
+    "Verdict",
+    "aggregate",
+    "compare",
+    "evaluate_verdict",
     "gate_approval_artifact",
     "gate_diff",
     "gate_eval_delta",
     "gate_lint",
+    "load_rounds",
+    "record",
+    "render_evidence",
     "run_all_gates",
 ]
