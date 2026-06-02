@@ -23,6 +23,13 @@ from .calibration import (
     cases_from_routing,
     top_pack_match_rate,
 )
+from .probe_seeder import (
+    DEFAULT_REDACTIONS,
+    ProbeStub,
+    RedactionRule,
+    redact,
+    seed_probes,
+)
 from .runner import (
     EvalSummary,
     ProbeResult,
@@ -32,16 +39,21 @@ from .runner import (
 )
 
 __all__ = [
+    "DEFAULT_REDACTIONS",
     "CalibrationCase",
     "CalibrationReport",
     "CalibrationVerdict",
     "EvalSummary",
     "ProbeResult",
+    "ProbeStub",
+    "RedactionRule",
     "brier_score",
     "calibrate",
     "cases_from_routing",
     "load_baseline",
     "load_probes",
+    "redact",
     "run_probes",
+    "seed_probes",
     "top_pack_match_rate",
 ]
