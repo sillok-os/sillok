@@ -15,8 +15,19 @@ lives in :mod:`sillok.bongsu`.
 Public API mirrors :mod:`sillok.yeonryun.disposition` so callers can
 import the high-traffic helpers directly from the package root.
 """
+
 from __future__ import annotations
 
+from .coverage import (
+    DEFAULT_STOPWORDS,
+    CoverageReport,
+    EmptyMessage,
+    GapCluster,
+    cluster_gaps,
+    extract_empty_messages,
+    find_coverage_gaps,
+    tokenize,
+)
 from .disposition import (
     CROSS_REPO_THRESHOLD,
     EPHEMERAL_PATTERNS,
@@ -36,12 +47,19 @@ from .disposition import (
 
 __all__ = [
     "CROSS_REPO_THRESHOLD",
+    "DEFAULT_STOPWORDS",
     "EPHEMERAL_PATTERNS",
     "LOCAL_THRESHOLD",
     "MIN_CONTENT_LENGTH",
     "REUSABLE_PATTERNS",
+    "CoverageReport",
+    "EmptyMessage",
+    "GapCluster",
+    "cluster_gaps",
     "determine_disposition",
     "extract_body",
+    "extract_empty_messages",
+    "find_coverage_gaps",
     "format_report",
     "generate_atomic_note",
     "identify_extractable_atoms",
@@ -49,4 +67,5 @@ __all__ = [
     "process_file",
     "scan_directory",
     "score_reusability",
+    "tokenize",
 ]
