@@ -8,8 +8,55 @@ adheres to [SemVer](https://semver.org/).
 
 ### Added
 - (none yet — pending F0.3 step 2 semantic-embedding router + FTS5
-  indexer for `pyeonchan` Phase 2; per-pack eval probes for Wave 1b/1c
-  packs to expand `gwageo` golden set from 10 → 17+ probes)
+  indexer for `pyeonchan` Phase 2)
+
+## [0.3.0a1] — 2026-06-02
+
+**Wave 2 — observability, governance evidence, and self-growth scaffolding.**
+Seven new provider-neutral modules land across `telemetry` / `sangso` /
+`yeonryun` / `eval` / `naru`, plus the previously-stub unified `sillok` CLI is
+now functional. Additive only; `0.2.0a3` → `0.3.0a1` upgrades cleanly.
+
+### Added
+- **`sillok.telemetry.gate`** — schema-enforced telemetry write-gate: validates
+  every row against `sillok.schemas.telemetry` before append so the eval /
+  self-growth corpus never ingests a malformed row. Optional `divergence_hook`
+  extension point. ([#17](https://github.com/sillok-os/sillok/pull/17))
+- **`sillok.sangso.canary`** — shadow-vs-prod KPI canary that produces the
+  evidence for the governance **Shadow** stage: record eval rounds, compare
+  medians, render a markdown verdict against configurable thresholds.
+  Metric-agnostic; the caller supplies metrics (e.g. `EvalSummary.to_dict()`).
+  ([#18](https://github.com/sillok-os/sillok/pull/18))
+- **`sillok.yeonryun.coverage`** — coverage-gap detection: cluster
+  empty-selection (router-miss) messages by shared vocabulary into candidate
+  trigger proposals. The gap-detection half of the auto-growth loop. Handles
+  both v2-envelope and legacy telemetry shapes.
+  ([#19](https://github.com/sillok-os/sillok/pull/19))
+- **`sillok.eval.calibration`** — routing-confidence calibration: Brier score
+  + top-pack match rate with a pass/fail verdict. Pure; pluggable `route_fn`.
+  ([#20](https://github.com/sillok-os/sillok/pull/20))
+- **`sillok.naru.action_layer`** — the *action* axis of 2-D routing
+  (`domain × action`): classifies a message into universal action types
+  (edit / explain / generate / summarize / diagram / review / plan). The
+  taxonomy is domain-agnostic and overridable.
+  ([#21](https://github.com/sillok-os/sillok/pull/21))
+- **`sillok.yeonryun.optimizer`** — a dependency-free `Optimizer` protocol +
+  reference `MutationOptimizer` for the auto-growth *improve* step.
+  Proposal-only (never auto-applies); a DSPy/GEPA optimizer can implement the
+  same protocol with no caller change.
+  ([#22](https://github.com/sillok-os/sillok/pull/22))
+- **`sillok.eval.probe_seeder`** — seed unlabelled candidate probes from a
+  conversation export: redacted first-user-messages of deep conversations, with
+  `expected_pack` left for human labelling. Pluggable generic-PII redaction.
+  ([#23](https://github.com/sillok-os/sillok/pull/23))
+
+### Changed
+- **`sillok` unified CLI is now functional** (previously an alpha stub that
+  raised `ImportError`). `sillok.cli:main` is a lazy, dependency-tolerant
+  dispatcher: `sillok --version`, `sillok route "<msg>"`, and the mounted module
+  groups `sillok eval` / `sangso` / `schemas` / `tongsa`. A module whose optional
+  dependency is missing degrades to a clear per-subcommand error instead of
+  breaking the whole command.
 
 ## [0.2.0a3] — 2026-05-13
 

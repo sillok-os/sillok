@@ -12,7 +12,9 @@
 
 ---
 
-> **Status**: `v0.2.0a3` alpha — 25 packs (Wave 1 complete: Wave 1a 5 packs · Wave 1b 5 consulting Lens packs · Wave 1c 5 meta / health / worklog packs), 10 eval probes, 4-gate governance + MCP bridge live. See [`STATUS.md`](STATUS.md) for the per-feature live / partial / stub / planned matrix before adoption.
+> **Status**: `v0.3.0a1` alpha — 25 packs (Wave 1 registry: 1a/1b/1c), 10 eval probes, 4-gate governance + MCP bridge live, **plus Wave 2 modules** and a **functional unified `sillok` CLI**. See [`STATUS.md`](STATUS.md) for the per-feature live / partial / stub / planned matrix before adoption.
+>
+> **New in `0.3.0a1` (Wave 2)** — seven provider-neutral modules: `sillok.telemetry.gate` (schema-enforced telemetry write-gate) · `sillok.sangso.canary` (shadow-vs-prod KPI canary) · `sillok.yeonryun.coverage` (coverage-gap detection) · `sillok.eval.calibration` (Brier confidence calibration) · `sillok.naru.action_layer` (action axis of 2-D routing) · `sillok.yeonryun.optimizer` (DSPy/GEPA-ready optimizer interface) · `sillok.eval.probe_seeder` (unlabelled probe seeder). The unified `sillok` command now dispatches `route` / `eval` / `sangso` / `schemas` / `tongsa`. See [`CHANGELOG.md`](CHANGELOG.md).
 
 ## Reading order
 
@@ -21,7 +23,7 @@ This README is organized as **value → use cases → install → use → mainta
 1. [Part 1 — Value & Overview](#part-1--value--overview) — what Sillok is and what you get
 2. [Part 2 — Business Use Cases](#part-2--business-use-cases) — find your role and a workflow that fits
 3. [Part 3 — Installation](#part-3--installation) — requirements and setup paths
-4. [Part 4 — Usage](#part-4--usage) — what actually works in `0.2.0a3` and how to drive it
+4. [Part 4 — Usage](#part-4--usage) — what actually works in `0.3.0a1` and how to drive it
 5. [Part 5 — Maintenance & Extension](#part-5--maintenance--extension) — troubleshoot, deploy at scale, extend with your domain
 6. [Part 6 — Appendix](#part-6--appendix) — license, prior art, citation
 
@@ -52,7 +54,7 @@ flowchart LR
         WORK["📝 New work<br/>research · debrief · retro"]
     end
 
-    subgraph SILLOK["Sillok 0.2.0a3"]
+    subgraph SILLOK["Sillok 0.3.0a1"]
         PACKS["📦 15 starter packs<br/>strategy · PMO · ITIL · risk ·<br/>SAFe · governance · report-quality ·<br/>exec-comm · charter · change-mgmt ·<br/>infographic · meeting-minutes · …"]
         ROUTER["🧭 Naru<br/>2-stage router"]
         SEARCH["🔎 Bongsu<br/>vault search"]
@@ -139,11 +141,11 @@ flowchart TB
     class JIKJI,SANGSO,SAGWAN,GWAGEO,TONGSA,DURE,YEOK,PYEON_F stub
 ```
 
-**Legend:** green solid = production-path in `0.2.0a3` (Wave 1 complete) · red dashed = stub / planned. Every solid node has a `python -m sillok.<module>...` CLI you can run today.
+**Legend:** green solid = production-path in `0.3.0a1` (Wave 1 complete) · red dashed = stub / planned. Every solid node has a `python -m sillok.<module>...` CLI you can run today.
 
 ### Framework coverage — what Sillok integrates
 
-Sillok's **roadmap** covers **5 axes / 25 categories / 110+ global standards** under one registry, one router, one proposal-only governance gate. **`0.2.0a3` ships 25 packs (Wave 1 complete) across 4 sub-categories** — methodology, consulting, business/visual, output-styles; the rest land additively per Wave (Wave 2 targets ~40 packs).
+Sillok's **roadmap** covers **5 axes / 25 categories / 110+ global standards** under one registry, one router, one proposal-only governance gate. **`0.3.0a1` ships 25 packs (Wave 1 complete) across 4 sub-categories** — methodology, consulting, business/visual, output-styles; the rest land additively per Wave (Wave 2 targets ~40 packs).
 
 ```
 [Axis 1] Governance     [Axis 2] Delivery       [Axis 3] Industry        [Axis 4] Business      [Axis 5] AI/Eng
@@ -153,13 +155,13 @@ Sillok's **roadmap** covers **5 axes / 25 categories / 110+ global standards** u
 └─ Security/Compl    🚧 └─ Org Design      🚧 ├─ Insurance         ⏳ ├─ Growth/Data    ⏳ [Aux] Output
                                               └─ Embedded SW       ⏳ └─ UX/Discovery   ⏳ ├─ Ext delivery   ◐
                                                                                           ├─ Content publish ⏳
-✅ ships in 0.2.0a3 today (Wave 1 complete, 25 packs)                                      ├─ Report quality ✅
-◐ partial ship in 0.2.0a3                                                                  ├─ Enterprise B2B ⏳
+✅ ships in 0.3.0a1 today (Wave 1 complete, 25 packs)                                      ├─ Report quality ✅
+◐ partial ship in 0.3.0a1                                                                  ├─ Enterprise B2B ⏳
 🚧 queued for Wave 2 (~0.3.0a1)                                                            ├─ Design system  ⏳
 ⏳ queued for 1.0.0 GA                                                                     └─ Diagram/Image  ⏳
 ```
 
-#### What ships in 0.2.0a3 (Wave 1 complete)
+#### What ships in 0.3.0a1 (Wave 1 complete)
 
 | Category | Pack(s) | Standards |
 |---|---|---|
@@ -244,7 +246,7 @@ print(result.confidence)           # 'high'
 EOF
 ```
 
-> Workflows above describe the **GA experience** (`>=1.0.0`). For what works in the current alpha (`0.2.0a3`, Wave 1 complete), see [Part 4 — Usage](#part-4--usage).
+> Workflows above describe the **GA experience** (`>=1.0.0`). For what works in the current alpha (`0.3.0a1`, Wave 1 complete), see [Part 4 — Usage](#part-4--usage).
 
 ---
 
@@ -263,7 +265,7 @@ Optional:
 
 ### Quickstart (60 seconds) — *GA target*
 
-> **Status (2026-05-13)**: this Quickstart describes the **GA experience** (`>=1.0.0`). The current shipped version is `0.2.0a3` (alpha — Wave 1 complete, 25 packs). For what works **today**, jump to [Part 4 — Usage](#part-4--usage).
+> **Status (2026-06-02)**: this Quickstart describes the **GA experience** (`>=1.0.0`). The current shipped version is `0.3.0a1` (alpha — Wave 1 complete, 25 packs). For what works **today**, jump to [Part 4 — Usage](#part-4--usage).
 
 ```bash
 pip install sillok               # 1.0.0+ (GA target)
@@ -421,14 +423,14 @@ sillok route "B2B SaaS tier-pricing case studies" --show-corpus
 
 ## Part 4 — Usage
 
-### Consultant Quickstart for 0.2.0a3 — *what works today*
+### Consultant Quickstart for 0.3.0a1 — *what works today*
 
-If you're a Biz / Product / Project / IT / ITO consultant and you only want to **point Sillok at your own RAG repository** and use it now, this section is the entire story for `0.2.0a3` (Wave 1 complete, 25 packs). The unified `sillok` command is still alpha-stub — but **`tongsa` MCP bridge** (3 tools) and the **Python module CLIs** below are production-path.
+If you're a Biz / Product / Project / IT / ITO consultant and you only want to **point Sillok at your own RAG repository** and use it now, this section is the entire story for `0.3.0a1` (Wave 1 registry, 25 packs; Wave 2 modules). The unified `sillok` command is now functional (`sillok route` / `eval` / `sangso` / `schemas` / `tongsa`); the GA-only piece is the `route --execute` auto-run. The **`tongsa` MCP bridge** (3 tools) and the **Python module CLIs** below are production-path.
 
 #### A. Index your own vault (5 min)
 
 ```bash
-pip install --pre "sillok>=0.2.0a3"
+pip install --pre "sillok>=0.3.0a1"
 
 # Your vault = any folder of .md files with YAML frontmatter
 # (Obsidian, plain notes, docs site, your case bank — all work).
@@ -526,7 +528,7 @@ sillok telemetry tail   ≡   sillok sagwan tail
 sillok eval run         ≡   sillok gwageo run
 ```
 
-### What 0.2.0a3 does **not** yet provide
+### What 0.3.0a1 does **not** yet provide
 
 | Capability | Status | Lands in |
 |---|:-:|:-:|

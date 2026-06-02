@@ -3,7 +3,7 @@
 Authoritative status of each [Top 10 Feature](README.md#top-10-features) at the latest published release.
 First-time readers — use this page to verify what is shipped before adopting.
 
-- **Released**: `v0.2.0a3` (2026-05-13) — [GitHub Release](https://github.com/sillok-os/sillok/releases/tag/v0.2.0a3) · [PyPI](https://pypi.org/project/sillok/0.2.0a3/)
+- **Released**: `v0.3.0a1` (2026-06-02) — [GitHub Release](https://github.com/sillok-os/sillok/releases/tag/v0.3.0a1) · [PyPI](https://pypi.org/project/sillok/0.3.0a1/) · adds Wave 2 modules + functional `sillok` CLI (previous: `v0.2.0a3`, 2026-05-13)
 - **Status legend**: `live` = working code + tests + docs · `partial` = working but missing a documented sub-feature · `stub` = directory or file present, no functional code · `planned` = not yet present
 
 ## Feature matrix
@@ -18,8 +18,22 @@ First-time readers — use this page to verify what is shipped before adopting.
 | 6 | MCP Bridge | `tongsa` | `live` | 3 tools (`sillok.list_packs` / `sillok.route` / `sillok.search`) shipped in `0.1.0a7` (PR #11, closed #4). |
 | 7 | Plugin System | `dure` | `stub` | `sillok/plugins/__init__.py` placeholder only; plugin loader + registry deferred. |
 | 8 | Eval Golden Probes + KPI Guard | `gwageo` (`sillok/eval/`) | `live` | 10 probes / 6 families. v1 run: 10/10 pass, 100% citation coverage. CI gate active (`.github/workflows/eval.yml`). Shipped in `0.1.0a7` (PR #9, closed #3). |
-| 9 | Cross-Tool Plan SSoT | `madang` + `tongsa` | `partial` | `tongsa` MCP bridge live; `madang` (`sillok/cli/`) minimal — plan SSoT pattern works in practice but lacks a dedicated CLI. |
-| 10 | Failure Taxonomy + Replay Pointer | `sagwan` + `gwageo` | `partial` | `gwageo` eval emits `EvalSummary` JSON; `sagwan` (`sillok/telemetry/`) is a stub. 5-class taxonomy documented in pack bodies, not yet emitted as structured tags. |
+| 9 | Cross-Tool Plan SSoT | `madang` + `tongsa` | `live` | `tongsa` MCP bridge live; the unified `sillok` CLI (`sillok/cli/`) is now functional in `0.3.0a1` — `sillok route` + lazy `eval`/`sangso`/`schemas`/`tongsa` dispatch (was a stub raising `ImportError`). |
+| 10 | Failure Taxonomy + Replay Pointer | `sagwan` + `gwageo` | `partial` | `gwageo` eval emits `EvalSummary` JSON; `sagwan` (`sillok/telemetry/`) now ships a schema-enforced write-gate (`sillok.telemetry.gate`, `0.3.0a1`). 5-class taxonomy documented in pack bodies, not yet emitted as structured tags. |
+
+## Wave 2 modules (`0.3.0a1`)
+
+Provider-neutral building blocks for observability, governance evidence, and self-growth. All `live` with unit tests; pure/optional-dependency-tolerant.
+
+| Module | Status | Purpose | PR |
+|---|:-:|---|---|
+| `sillok.telemetry.gate` | `live` | schema-enforced telemetry write-gate (+ `divergence_hook`) | [#17](https://github.com/sillok-os/sillok/pull/17) |
+| `sillok.sangso.canary` | `live` | shadow-vs-prod KPI canary → Shadow-stage evidence | [#18](https://github.com/sillok-os/sillok/pull/18) |
+| `sillok.yeonryun.coverage` | `live` | coverage-gap detection from router-miss telemetry | [#19](https://github.com/sillok-os/sillok/pull/19) |
+| `sillok.eval.calibration` | `live` | Brier routing-confidence calibration | [#20](https://github.com/sillok-os/sillok/pull/20) |
+| `sillok.naru.action_layer` | `live` | action axis of 2-D routing (universal taxonomy) | [#21](https://github.com/sillok-os/sillok/pull/21) |
+| `sillok.yeonryun.optimizer` | `live` | dependency-free `Optimizer` protocol + reference impl | [#22](https://github.com/sillok-os/sillok/pull/22) |
+| `sillok.eval.probe_seeder` | `live` | seed unlabelled probes from conversation logs (redacted) | [#23](https://github.com/sillok-os/sillok/pull/23) |
 
 ## Pack registry
 

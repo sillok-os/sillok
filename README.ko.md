@@ -11,6 +11,10 @@
 
 > **알림**: 본 README는 [영문 README](README.md)의 동격(同格) 한국어판입니다. 코드·로그·CLI 출력 자체는 영어로 통일되어 있으나, 핵심 어휘에 한해 우리 전통 용어 — *실록·나루·봉수·직지·상소·장경·연륜·사관·법전·편찬·과거·마당·두레·통사·역참* — 을 그대로 살려 표기합니다.
 
+> **상태(v0.3.0a1, 2026-06-02)**: 25 packs(Wave 1 레지스트리) · 10 eval probes · 4-gate 거버넌스 · MCP 브리지 live, 여기에 **Wave 2 모듈 7종**과 **동작하는 통합 `sillok` CLI**가 추가되었습니다. 채택 전 기능별 live/partial/stub 매트릭스는 [`STATUS.md`](STATUS.md) 참고. (본 한국어판 본문 일부는 이전 버전 기준이며 영문판이 최신 정본입니다.)
+>
+> **`0.3.0a1` 신규(Wave 2)** — provider-neutral 모듈 7종: `sillok.telemetry.gate`(스키마 강제 telemetry write-gate) · `sillok.sangso.canary`(shadow vs prod KPI canary) · `sillok.yeonryun.coverage`(coverage-gap 탐지) · `sillok.eval.calibration`(Brier confidence 보정) · `sillok.naru.action_layer`(2D 라우팅의 action축) · `sillok.yeonryun.optimizer`(DSPy/GEPA-ready optimizer 인터페이스) · `sillok.eval.probe_seeder`(unlabeled probe seeder). 통합 `sillok` 명령은 이제 `route`/`eval`/`sangso`/`schemas`/`tongsa`를 디스패치합니다. 상소(sangso)·사관(telemetry)·과거(gwageo/eval) 모듈은 더 이상 stub이 아니라 live이며 Wave 2 기능이 더해졌습니다. 자세한 내역: [`CHANGELOG.md`](CHANGELOG.md).
+
 ---
 
 ## 읽는 순서
