@@ -14,6 +14,7 @@ import sys
 
 import click
 
+from sillok._console import enable_utf8_console
 from sillok.tongsa.tools import (
     REASON_CODES,
     sillok_list_packs,
@@ -25,6 +26,7 @@ from sillok.tongsa.tools import (
 @click.group()
 def cli() -> None:
     """Sillok MCP bridge — `tongsa`."""
+    enable_utf8_console()
 
 
 @cli.command("serve")

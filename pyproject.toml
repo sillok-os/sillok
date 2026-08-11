@@ -49,7 +49,11 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-mcp = ["mcp>=0.1.0"]
+# MCP SDK 2.0 removed `mcp.server.fastmcp`, which sillok.tongsa.server
+# imports. The unbounded `mcp>=0.1.0` floor silently resolved to 2.x and
+# broke every fresh install. Pin to the 1.x line until tongsa ports to
+# the 2.x MCPServer API.
+mcp = ["mcp>=1.2,<2"]
 otel = [
   "opentelemetry-api>=1.20",
   "opentelemetry-sdk>=1.20",
@@ -88,6 +92,13 @@ Changelog = "https://github.com/sillok-os/sillok/blob/main/CHANGELOG.md"
 
 [tool.hatch.build.targets.wheel]
 packages = ["sillok"]
+
+# Ship the pack registry inside the wheel. Without this the wheel carries
+# code but no packs, and `load_registry()` can only work when the process
+# happens to be launched from a Sillok checkout — which an MCP server
+# started by an IDE never is (it inherits the host project's cwd).
+[tool.hatch.build.targets.wheel.force-include]
+"packs" = "sillok/_packs"
 
 [tool.hatch.build.targets.sdist]
 include = [

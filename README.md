@@ -220,7 +220,7 @@ Three archetypes covering most consulting / PM / AI-builder usage today.
 
 #### Senior consultant
 ```bash
-pip install sillok sillok-mcp
+pip install 'sillok[mcp]'
 sillok init
 sillok corpus install --starter
 sillok overlay create --client acme    # client-scoped customization
@@ -229,14 +229,14 @@ sillok overlay create --client acme    # client-scoped customization
 
 #### Team lead / internal PM
 ```bash
-pip install sillok
+pip install --pre sillok
 sillok init --registry https://internal.example.com/sillok-registry.yaml
 # Pulls your company's standard pack registry on init.
 ```
 
 #### AI agent builder
 ```bash
-pip install sillok sillok-mcp
+pip install 'sillok[mcp]'
 python - <<'EOF'
 from sillok import route_message
 result = route_message("Generate a risk register for a Phase-2 ERP rollout")
@@ -268,7 +268,7 @@ Optional:
 > **Status (2026-06-02)**: this Quickstart describes the **GA experience** (`>=1.0.0`). The current shipped version is `0.3.0a1` (alpha — Wave 1 complete, 25 packs). For what works **today**, jump to [Part 4 — Usage](#part-4--usage).
 
 ```bash
-pip install sillok               # 1.0.0+ (GA target)
+pip install sillok               # 1.0.0+ (GA target; today use the --pre line below)
 sillok init
 sillok route "Draft a Q3 strategy report for Acme Corp"
 
@@ -288,8 +288,8 @@ Three stages. Each builds on the previous. Stop wherever you have what you need.
 #### 1. Basic Setup — solo user (≈ 5 min)
 
 ```bash
-# Install
-pip install sillok
+# Install (alpha — without --pre pip resolves to the 0.0.1 placeholder)
+pip install --pre 'sillok[mcp]'
 
 # Create a workspace and initialize
 mkdir my-work && cd my-work
@@ -324,21 +324,36 @@ That's the whole basic workflow. The starter packs cover most everyday consultin
 Use Sillok routing directly from your IDE chat through the **MCP Server (통사;Tongsa)**.
 
 ```bash
-pip install sillok-mcp
+pip install 'sillok[mcp]'
 ```
 
-**Claude Code** — add to `~/.claude/settings.json` or project `.mcp.json`:
+**Claude Code** — either run
+
+```bash
+claude mcp add sillok -- python -m sillok.tongsa serve --transport stdio
+```
+
+or save this as `.mcp.json` **in your project root** (not `.claude/mcp.json`,
+and not `settings.json` — Claude Code does not read `mcpServers` from there):
 
 ```json
 {
   "mcpServers": {
     "sillok": {
-      "command": "sillok-mcp",
-      "args": ["serve", "--stdio"]
+      "command": "python",
+      "args": ["-m", "sillok.tongsa", "serve", "--transport", "stdio"],
+      "env": {
+        "PYTHONUNBUFFERED": "1",
+        "PYTHONIOENCODING": "utf-8"
+      }
     }
   }
 }
 ```
+
+**Restart Claude Code after writing `.mcp.json`.** MCP servers are
+connected at startup, so a file written mid-session is not picked up —
+the tools stay invisible until the next launch.
 
 **Cursor** — same shape, save to `~/.cursor/mcp.json`.
 
@@ -555,7 +570,7 @@ Corpus not found
   → sillok corpus install --starter
 
 MCP server timeout in IDE
-  → pip install sillok-mcp; restart the IDE
+  → pip install 'sillok[mcp]'; restart the IDE
 
 Overlay validation failed
   → sillok overlay validate <name>      # see exact field error
