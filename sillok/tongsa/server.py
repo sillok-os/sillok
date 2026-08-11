@@ -18,6 +18,40 @@ from sillok.tongsa.tools import (
     sillok_search,
 )
 
+#: MCP SDK 2.0 dropped ``mcp.server.fastmcp``. Until Sillok ports to the
+#: 2.x ``MCPServer`` API, the bridge requires the 1.x line — the dependency
+#: is pinned in pyproject, but an environment can still hold a stale 2.x.
+SUPPORTED_MCP_SPEC = "mcp>=1.2,<2"
+
+
+def _mcp_import_hint() -> str:
+    """Distinguish 'mcp missing' from 'mcp present but incompatible'.
+
+    Reporting both cases as "not installed" sends users into a loop:
+    they run ``pip install sillok[mcp]``, pip says the requirement is
+    already satisfied, and the server still refuses to start.
+    """
+    try:
+        import mcp  # type: ignore[import-not-found]
+    except ImportError:
+        return (
+            "sillok.tongsa.server requires the optional 'mcp' package. "
+            "Install with: pip install 'sillok[mcp]'"
+        )
+
+    try:
+        from importlib.metadata import version
+
+        installed = version("mcp")
+    except Exception:  # pragma: no cover — metadata is best-effort
+        installed = getattr(mcp, "__version__", "unknown")
+
+    return (
+        f"'mcp' {installed} is installed but does not expose "
+        "'mcp.server.fastmcp'. MCP SDK 2.0 removed that module; Sillok's "
+        f"tongsa bridge targets the 1.x API. Fix: pip install '{SUPPORTED_MCP_SPEC}'"
+    )
+
 
 def build_server(name: str = "sillok"):
     """Construct an MCP server with the three Sillok tools registered.
@@ -32,10 +66,7 @@ def build_server(name: str = "sillok"):
     try:
         from mcp.server.fastmcp import FastMCP  # type: ignore[import-not-found]
     except ImportError as exc:  # pragma: no cover — exercised at runtime only
-        raise ImportError(
-            "sillok.tongsa.server requires the optional 'mcp' package. "
-            "Install with: pip install sillok[mcp]"
-        ) from exc
+        raise ImportError(_mcp_import_hint()) from exc
 
     server = FastMCP(name)
 

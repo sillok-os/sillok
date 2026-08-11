@@ -35,23 +35,81 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import sys
 from datetime import datetime
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from typing import Any
 
 import yaml
 
-# Defaults are relative to the current working directory; override via
-# environment variables or pass explicit Path arguments to the helper
-# functions below for testability.
+from sillok._console import enable_utf8_console
+
+# Registry resolution order (see :func:`resolve_registry`):
+#   explicit argument > $SILLOK_REGISTRY > ./packs/registry.yaml > bundled
+# ``DEFAULT_REGISTRY`` stays for backwards compatibility — it names the
+# in-repo location only, and is no longer the sole lookup path.
 DEFAULT_REGISTRY = Path("packs") / "registry.yaml"
 DEFAULT_SHADOW_DIR = Path(".sillok") / "shadow-2tier"
 
+#: Env var pointing at a registry.yaml — set this when Sillok runs with a
+#: working directory that is not a Sillok checkout (MCP servers, IDE
+#: plugins and cron jobs all inherit the *host's* cwd, not Sillok's).
+REGISTRY_ENV_VAR = "SILLOK_REGISTRY"
 
-def load_registry(registry_path: Path = DEFAULT_REGISTRY) -> list[dict[str, Any]]:
-    """Load and return the packs list from ``packs/registry.yaml``."""
-    payload = yaml.safe_load(registry_path.read_text(encoding="utf-8")) or {}
+
+def bundled_registry() -> Path | None:
+    """Return the registry shipped inside the installed wheel, if present."""
+    candidate = Path(__file__).resolve().parent.parent / "_packs" / "registry.yaml"
+    return candidate if candidate.is_file() else None
+
+
+def resolve_registry(registry_path: Path | None = None) -> Path:
+    """Resolve which ``registry.yaml`` to read.
+
+    Order: explicit argument > ``$SILLOK_REGISTRY`` > ``./packs/registry.yaml``
+    (a Sillok checkout as cwd) > the copy bundled in the installed wheel.
+
+    Raises:
+        FileNotFoundError: when no registry can be located, with the full
+            list of paths tried — a bare ``packs/registry.yaml`` message
+            is unactionable for anyone running outside a checkout.
+    """
+    if registry_path is not None:
+        return Path(registry_path)
+
+    tried: list[str] = []
+
+    from_env = os.environ.get(REGISTRY_ENV_VAR)
+    if from_env:
+        env_path = Path(from_env)
+        if env_path.is_file():
+            return env_path
+        tried.append(f"${REGISTRY_ENV_VAR}={from_env}")
+
+    cwd_path = Path.cwd() / DEFAULT_REGISTRY
+    if cwd_path.is_file():
+        return cwd_path
+    tried.append(str(cwd_path))
+
+    bundled = bundled_registry()
+    if bundled is not None:
+        return bundled
+    tried.append("<bundled sillok/_packs/registry.yaml — not in this install>")
+
+    raise FileNotFoundError(
+        "No Sillok pack registry found. Tried:\n  - "
+        + "\n  - ".join(tried)
+        + f"\nFix: set {REGISTRY_ENV_VAR}=/path/to/packs/registry.yaml, or run "
+        "from a Sillok checkout, or reinstall a wheel that bundles the packs "
+        "(pip install --pre --force-reinstall 'sillok[mcp]')."
+    )
+
+
+def load_registry(registry_path: Path | None = None) -> list[dict[str, Any]]:
+    """Load and return the packs list from the resolved registry."""
+    resolved = resolve_registry(registry_path)
+    payload = yaml.safe_load(resolved.read_text(encoding="utf-8")) or {}
     return payload.get("packs", []) or []
 
 
@@ -116,10 +174,29 @@ def tier1_match(
     return candidates[:top_k]
 
 
+def resolve_pack_body(pack_path: str, repo_root: Path | None = None) -> Path:
+    """Resolve a registry ``path`` entry to a pack body on disk.
+
+    Registry entries are written repo-relative (``packs/<sub>/<id>.md``).
+    When ``repo_root`` is omitted the path is resolved against whichever
+    registry :func:`resolve_registry` picked, so a wheel-bundled registry
+    at ``sillok/_packs/registry.yaml`` finds ``sillok/_packs/<sub>/<id>.md``
+    instead of looking for a ``packs/`` directory under the caller's cwd.
+    """
+    rel = PurePosixPath(pack_path)
+    if repo_root is not None:
+        return repo_root / Path(*rel.parts)
+
+    registry_dir = resolve_registry().parent
+    if rel.parts and rel.parts[0] == "packs":
+        return registry_dir.joinpath(*rel.parts[1:])
+    return registry_dir.parent.joinpath(*rel.parts)
+
+
 def tier2_load_full(
     candidates: list[dict[str, Any]],
     packs: list[dict[str, Any]],
-    repo_root: Path = Path.cwd(),
+    repo_root: Path | None = None,
 ) -> dict[str, Any]:
     """Tier 2: load body of selected candidates and account for token cost."""
     pack_index = {p["id"]: p for p in packs}
@@ -129,7 +206,7 @@ def tier2_load_full(
         pack = pack_index.get(c["pack_id"])
         if not pack:
             continue
-        body_path = repo_root / pack["path"]
+        body_path = resolve_pack_body(pack["path"], repo_root)
         if not body_path.exists():
             full_loaded[c["pack_id"]] = {"loaded": False, "reason": "missing"}
             continue
@@ -149,7 +226,7 @@ def tier2_load_full(
 
 def tier_breakdown(
     packs: list[dict[str, Any]],
-    repo_root: Path = Path.cwd(),
+    repo_root: Path | None = None,
 ) -> dict[str, Any]:
     """Distribution of ``discovery_tier`` across all packs (for capacity planning)."""
     counts = {"summary": 0, "full": 0}
@@ -157,7 +234,7 @@ def tier_breakdown(
     for p in packs:
         t = discovery_tier(p)
         counts[t] += 1
-        body_path = repo_root / p["path"]
+        body_path = resolve_pack_body(p["path"], repo_root)
         if body_path.exists():
             sz = body_path.stat().st_size
             if t == "summary":
@@ -227,12 +304,21 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--registry",
         type=Path,
-        default=DEFAULT_REGISTRY,
-        help="path to packs/registry.yaml",
+        default=None,
+        help=(
+            "path to packs/registry.yaml "
+            f"(default: ${REGISTRY_ENV_VAR} > ./packs/registry.yaml > bundled)"
+        ),
     )
     args = parser.parse_args(argv)
 
-    packs = load_registry(args.registry)
+    enable_utf8_console()
+
+    try:
+        packs = load_registry(args.registry)
+    except FileNotFoundError as exc:
+        print(str(exc), file=sys.stderr)
+        return 2
 
     if args.breakdown:
         bd = tier_breakdown(packs)

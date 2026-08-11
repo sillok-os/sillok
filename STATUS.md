@@ -3,7 +3,7 @@
 Authoritative status of each [Top 10 Feature](README.md#top-10-features) at the latest published release.
 First-time readers — use this page to verify what is shipped before adopting.
 
-- **Released**: `v0.3.0a1` (2026-06-02) — [GitHub Release](https://github.com/sillok-os/sillok/releases/tag/v0.3.0a1) · [PyPI](https://pypi.org/project/sillok/0.3.0a1/) · adds Wave 2 modules + functional `sillok` CLI (previous: `v0.2.0a3`, 2026-05-13)
+- **Released**: `v0.3.0a2` (2026-08-11) — [GitHub Release](https://github.com/sillok-os/sillok/releases/tag/v0.3.0a2) · [PyPI](https://pypi.org/project/sillok/0.3.0a2/) · install/MCP-setup fixes: `mcp<2` pin, packs bundled into the wheel, cwd-independent registry resolution, UTF-8 console (previous: `v0.3.0a1`, 2026-06-02)
 - **Status legend**: `live` = working code + tests + docs · `partial` = working but missing a documented sub-feature · `stub` = directory or file present, no functional code · `planned` = not yet present
 
 ## Feature matrix

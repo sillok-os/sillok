@@ -28,18 +28,40 @@ Codex Desktop) sees the same packs and corpus. This directory will hold
 
 ## Generic MCP setup (works today)
 
-Add to `~/.claude/settings.json` or a project-local `.mcp.json`:
+```bash
+pip install --pre 'sillok[mcp]'
+claude mcp add sillok -- python -m sillok.tongsa serve --transport stdio
+```
+
+Or save this as **`.mcp.json` in your project root** and restart Claude Code:
 
 ```json
 {
   "mcpServers": {
     "sillok": {
-      "command": "sillok-tongsa",
-      "args": ["serve", "--stdio"]
+      "command": "python",
+      "args": ["-m", "sillok.tongsa", "serve", "--transport", "stdio"],
+      "env": {
+        "PYTHONUNBUFFERED": "1",
+        "PYTHONIOENCODING": "utf-8"
+      }
     }
   }
 }
 ```
+
+Three things this snippet gets right, and earlier drafts of this file did not:
+
+- **`python -m sillok.tongsa`, not `sillok-tongsa`.** The only console
+  script the distribution installs is `sillok`; `sillok-tongsa` and
+  `sillok-mcp` were never published to PyPI.
+- **`--transport stdio`, not `--stdio`.** The latter exits with
+  `Error: No such option '--stdio'`.
+- **`.mcp.json` at the project root** — not `.claude/mcp.json`, and not
+  `settings.json`. Claude Code does not read `mcpServers` from settings.
+
+Restart the host after writing the file: MCP servers are connected at
+startup, so a config added mid-session stays invisible until relaunch.
 
 This works for **all** seven supported AI clients with the appropriate
 file location. See the public README's matrix for client-by-client

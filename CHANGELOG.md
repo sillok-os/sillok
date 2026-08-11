@@ -10,6 +10,63 @@ adheres to [SemVer](https://semver.org/).
 - (none yet — pending F0.3 step 2 semantic-embedding router + FTS5
   indexer for `pyeonchan` Phase 2)
 
+## [0.3.0a2] — 2026-08-11
+
+**Install repair.** A fresh `pip install` could not reach a working MCP
+bridge. Four independent defects compounded, and the first masked the rest,
+so the visible symptom was "the MCP tools never appear" with no actionable
+error. No API changes; `0.3.0a1` → `0.3.0a2` upgrades cleanly.
+
+### Fixed
+- **MCP SDK 2.0 incompatibility.** The `mcp` extra had no upper bound, so
+  fresh installs resolved to SDK 2.0, which removed `mcp.server.fastmcp` —
+  the module `sillok.tongsa.server` imports. `python -m sillok.tongsa serve`
+  exited immediately on every new install. Pinned to `mcp>=1.2,<2`.
+- **Misleading import error.** That failure was reported as "the mcp package
+  is not installed", so users ran `pip install 'sillok[mcp]'`, pip reported
+  the requirement already satisfied, and nothing changed. `build_server()`
+  now distinguishes *missing* from *incompatible* and names the version that
+  fixes it.
+- **Registry unreachable outside a checkout.** The wheel shipped code but not
+  `packs/`, and the registry was read from the cwd-relative
+  `packs/registry.yaml`. An MCP server inherits the *host project's* working
+  directory, never Sillok's, so `list_packs` / `route` / `search` raised
+  `FileNotFoundError` even after the SDK pin. `packs/` is now bundled into
+  the wheel as `sillok/_packs/`, and resolution follows explicit argument >
+  `$SILLOK_REGISTRY` > cwd checkout > bundled — with an error that names
+  every path tried. Pack bodies resolve relative to the registry that
+  declared them.
+- **`UnicodeEncodeError` on Windows consoles.** cp949 / cp1252 cannot encode
+  the em dash and arrows the CLI prints, so the documented CLI fallback died
+  too. CLI entry points re-wrap stdout/stderr as UTF-8. Only the text layer
+  is touched — the MCP stdio transport wraps the raw buffer and is
+  unaffected.
+
+### Changed
+- Docs corrected across `README.md`, `docs/integrations/mcp-quickstart.md`,
+  `integrations/claude-code/README.md`, `mcp_server/README.md`, and
+  `examples/claude-code-mcp-config.json`. They advertised the packages
+  `sillok-mcp` and `sillok-tongsa` (neither published to PyPI), console
+  scripts of the same names (only `sillok` is declared), a `--stdio` flag
+  (the option is `--transport stdio`), and `.claude/mcp.json` /
+  `settings.json` as Claude Code MCP config locations (neither is read —
+  it is `.mcp.json` at the project root). Install lines now use `--pre`,
+  since plain `pip install sillok` resolves to the `0.0.1` name-reservation
+  placeholder, which has no submodules.
+
+### Added
+- `SILLOK_REGISTRY` environment variable — point Sillok at a registry when
+  the working directory is not a checkout. Previously documented in a code
+  comment but never implemented.
+- `sillok.naru.router_2tier.resolve_registry` / `resolve_pack_body` /
+  `bundled_registry` — public helpers for the resolution order above.
+- `docs/integrations/claude-code-install-prompt.md` — a prompt that installs
+  Sillok correctly from Claude Code, including a verify-before-declaring-
+  success step.
+- `tests/unit/test_install_contract.py` — 12 regression guards covering the
+  packaging contract, registry resolution, MCP diagnostics, and console
+  encoding.
+
 ## [0.3.0a1] — 2026-06-02
 
 **Wave 2 — observability, governance evidence, and self-growth scaffolding.**

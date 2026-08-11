@@ -1,11 +1,12 @@
 {
-  "_comment": "Claude Code MCP config — add via `claude mcp add` or place under .claude/mcp.json",
+  "_comment": "Claude Code MCP config — run `claude mcp add sillok -- python -m sillok.tongsa serve --transport stdio`, or save this file as .mcp.json in your PROJECT ROOT and restart Claude Code. PYTHONIOENCODING keeps the CLI readable on Windows consoles (cp949/cp1252).",
   "mcpServers": {
     "sillok": {
       "command": "python",
       "args": ["-m", "sillok.tongsa", "serve", "--transport", "stdio"],
       "env": {
-        "PYTHONUNBUFFERED": "1"
+        "PYTHONUNBUFFERED": "1",
+        "PYTHONIOENCODING": "utf-8"
       }
     }
   }

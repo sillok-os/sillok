@@ -71,6 +71,9 @@ def main() -> None:
     Run a subcommand below, or use the per-module form
     ``python -m sillok.<module>`` for anything not yet surfaced here.
     """
+    from sillok._console import enable_utf8_console
+
+    enable_utf8_console()
 
 
 @main.command()
