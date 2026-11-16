@@ -1,6 +1,6 @@
 site_name: Sillok
 site_description: "Productized LLM Wiki pattern + typed pack registry + proposal-only governance"
-site_url: https://sillok.dev
+site_url: https://sillok-os.github.io/sillok/
 repo_url: https://github.com/sillok-os/sillok
 repo_name: sillok-os/sillok
 edit_uri: edit/main/docs/
