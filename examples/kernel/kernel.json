@@ -1,0 +1,10 @@
+{
+  "state_dir": "~/.sillok/state",
+  "profiles": "work-types.json",
+  "playbook": {"mode": "shadow", "items": "playbook-items.json"},
+  "recall": {
+    "memory_dir": "~/.sillok/memory",
+    "db": "~/.sillok/recall.db",
+    "exposure_log": "~/.sillok/recall-exposure.jsonl"
+  }
+}
