@@ -573,6 +573,87 @@ packs:
       - "Action titles proven by exhibits; numbers and URLs only from verified sources"
       - "Finished means verified as the real file; Limits & Assumptions always present"
 
+  # ── Wave 2c (visual production + quality) ─────────────────────────────
+  - id: design-artifact-production
+    title: Design Artifact Production — one brief, every format, shipped with QA and provenance
+    path: packs/visual/design-artifact-production.md
+    category: workflow
+    sub_category: visual
+    trigger_signals:
+      explicit: ["[design-artifact]", "[artifact-design]"]
+      contains: ["design brief", "brochure", "leaflet", "brand guide", "banner design", "landing page design", "Figma", "피그마", "시안", "로고 디자인", "랜딩 페이지 디자인", "브로셔", "리플릿", "브랜드 가이드"]
+    intent_tags: ["visual", "design-system", "brand", "print", "office", "provenance"]
+    output_contracts: ["artifact-brief.yaml", "claim-ledger.md", "format-adapter-spec.md", "qa-report.md"]
+    precedence: 78
+    visibility_label: Design Artifact
+    summary_overlay:
+      - "One brief → claim ledger → tokens → format adapter → render → QA → sign-off"
+      - "No text in generated rasters; unverified claims never ship; publish only within approved scope"
+
+  - id: diagram-design
+    title: Diagram Design — editorial diagrams with one accent, hairlines and a 4-unit grid
+    path: packs/visual/diagram-design.md
+    category: workflow
+    sub_category: visual
+    trigger_signals:
+      explicit: ["[diagram]"]
+      contains: ["architecture diagram", "flowchart", "sequence diagram", "state diagram", "swimlane", "ER diagram", "entity relationship", "venn diagram", "다이어그램", "아키텍처 그림", "플로우차트", "순서도", "시퀀스 다이어그램", "스윔레인"]
+    intent_tags: ["visual", "diagram", "svg", "accessibility"]
+    output_contracts: ["diagram.html", "token-table.md", "check-report.md"]
+    precedence: 74
+    visibility_label: Diagram Design
+    summary_overlay:
+      - "Behaviour first, then type; one accent, 1 px hairlines, 4-unit grid, tokens not hex"
+      - "Structure, geometry and palette checks; measured AA contrast; exact data geometry"
+
+  - id: visual-quality
+    title: Visual Quality — hierarchy, contrast, accessibility, states, motion, print and release gate
+    path: packs/visual/visual-quality.md
+    category: quality-guard
+    sub_category: visual
+    trigger_signals:
+      explicit: ["[visual]", "[v-quality]"]
+      contains: ["visual quality", "color contrast", "colour contrast", "WCAG", "axe-core", "reduced motion", "시각 품질", "색 대비", "접근성 점검"]
+    intent_tags: ["quality-guard", "visual", "accessibility", "release-gate"]
+    output_contracts: ["visual-check.md", "release-gate.yaml", "DESIGN.md"]
+    precedence: 85
+    visibility_label: Visual Quality
+    summary_overlay:
+      - "V1–V5 on every visual (hierarchy, contrast, a11y, 5 UI states, motion); V6–V8 for print/publish"
+      - "Report a check as passed only when measured; release gate for metadata, prompt residue, privacy"
+
+  - id: image-prompt-playbook
+    title: Image Prompt Playbook — fill the brief, assemble 8 slots, iterate one variable at a time
+    path: packs/visual/image-prompt-playbook.md
+    category: workflow
+    sub_category: visual
+    trigger_signals:
+      explicit: ["[img]", "[image-prompt]"]
+      contains: ["image prompt", "midjourney", "thumbnail image", "key visual", "nano banana", "이미지 프롬프트", "나노바나나", "이미지 생성", "이미지 만들어", "썸네일", "키비주얼", "상세페이지"]
+    intent_tags: ["visual", "image-generation", "prompting", "marketing"]
+    output_contracts: ["prompt-template.md", "variant-set.md", "safety-note.md"]
+    precedence: 65
+    visibility_label: Image Prompt
+    summary_overlay:
+      - "Brief checklist → 8-slot sentence (single scene) or JSON (multi-panel); anchors first"
+      - "One variable per iteration, four-role A/B, no long in-image copy, standing safety rules"
+
+  - id: gpt-image-2-reference
+    title: GPT-Image-2 Reference — external prompt catalogue as a cited, adapted fallback
+    path: packs/visual/gpt-image-2-reference.md
+    category: workflow
+    sub_category: visual
+    trigger_signals:
+      explicit: ["[gpt-image-2]", "[awesome-gpt-image-2]"]
+      contains: ["awesome-gpt-image-2", "gpt-image-2 prompt", "reference prompts", "참고 프롬프트"]
+    intent_tags: ["visual", "image-generation", "external-catalogue", "attribution"]
+    output_contracts: ["adapted-prompts.md", "provenance-record.yaml"]
+    precedence: 40
+    visibility_label: GPT-Image-2 Reference
+    summary_overlay:
+      - "Fallback only after the playbook; ≤ 5 candidates, adapt not copy"
+      - "Keep CC BY 4.0 attribution and three-axis taxonomy tags; never hide the fallback"
+
 retrieval_plans:
   - id: vault_first
     description: "Vault search only (default for most queries)"
