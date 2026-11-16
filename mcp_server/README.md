@@ -4,7 +4,7 @@ Sillok's Model Context Protocol bridge ships **in-tree** as
 `sillok.tongsa`, behind the optional `mcp` extra:
 
 ```bash
-pip install --pre 'sillok[mcp]'
+pip install 'sillok[mcp]>=0.3.1'
 python -m sillok.tongsa serve --transport stdio
 ```
 

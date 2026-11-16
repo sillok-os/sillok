@@ -12,7 +12,7 @@
 
 ---
 
-> **Status**: `v0.3.0a2` alpha — 25 packs (Wave 1 registry: 1a/1b/1c), 10 eval probes, 4-gate governance + MCP bridge live, **plus Wave 2 modules** and a **functional unified `sillok` CLI**. See [`STATUS.md`](STATUS.md) for the per-feature live / partial / stub / planned matrix before adoption.
+> **Status**: `v0.3.1` alpha — 25 packs (Wave 1 registry: 1a/1b/1c), 10 eval probes, 4-gate governance + MCP bridge live, **plus Wave 2 modules** and a **functional unified `sillok` CLI**. See [`STATUS.md`](STATUS.md) for the per-feature live / partial / stub / planned matrix before adoption.
 >
 > **New in `0.3.0a1` (Wave 2)** — seven provider-neutral modules: `sillok.telemetry.gate` (schema-enforced telemetry write-gate) · `sillok.sangso.canary` (shadow-vs-prod KPI canary) · `sillok.yeonryun.coverage` (coverage-gap detection) · `sillok.eval.calibration` (Brier confidence calibration) · `sillok.naru.action_layer` (action axis of 2-D routing) · `sillok.yeonryun.optimizer` (DSPy/GEPA-ready optimizer interface) · `sillok.eval.probe_seeder` (unlabelled probe seeder). The unified `sillok` command now dispatches `route` / `eval` / `sangso` / `schemas` / `tongsa`. See [`CHANGELOG.md`](CHANGELOG.md).
 
@@ -229,7 +229,7 @@ sillok overlay create --client acme    # client-scoped customization
 
 #### Team lead / internal PM
 ```bash
-pip install --pre sillok
+pip install 'sillok>=0.3.1'
 sillok init --registry https://internal.example.com/sillok-registry.yaml
 # Pulls your company's standard pack registry on init.
 ```
@@ -265,10 +265,10 @@ Optional:
 
 ### Quickstart (60 seconds) — *GA target*
 
-> **Status (2026-06-02)**: this Quickstart describes the **GA experience** (`>=1.0.0`). The current shipped version is `0.3.0a1` (alpha — Wave 1 complete, 25 packs). For what works **today**, jump to [Part 4 — Usage](#part-4--usage).
+> **Status (2026-06-02)**: this Quickstart describes the **GA experience** (`>=1.0.0`). The current shipped version is `0.3.1` (alpha-stage 0.x — Wave 1 complete, 25 packs). For what works **today**, jump to [Part 4 — Usage](#part-4--usage).
 
 ```bash
-pip install sillok               # 1.0.0+ (GA target; today use the --pre line below)
+pip install sillok               # 1.0.0+ (GA target; today see Part 4 — Usage)
 sillok init
 sillok route "Draft a Q3 strategy report for Acme Corp"
 
@@ -288,8 +288,8 @@ Three stages. Each builds on the previous. Stop wherever you have what you need.
 #### 1. Basic Setup — solo user (≈ 5 min)
 
 ```bash
-# Install (alpha — without --pre pip resolves to the 0.0.1 placeholder)
-pip install --pre 'sillok[mcp]'
+# Install (0.3.1+ is an untagged 0.x release — no --pre needed)
+pip install 'sillok[mcp]>=0.3.1'
 
 # Create a workspace and initialize
 mkdir my-work && cd my-work
@@ -445,7 +445,7 @@ If you're a Biz / Product / Project / IT / ITO consultant and you only want to *
 #### A. Index your own vault (5 min)
 
 ```bash
-pip install --pre "sillok>=0.3.0a1"
+pip install "sillok>=0.3.1"
 
 # Your vault = any folder of .md files with YAML frontmatter
 # (Obsidian, plain notes, docs site, your case bank — all work).

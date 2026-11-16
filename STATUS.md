@@ -3,7 +3,7 @@
 Authoritative status of each [Top 10 Feature](README.md#top-10-features) at the latest published release.
 First-time readers — use this page to verify what is shipped before adopting.
 
-- **Released**: `v0.3.0a2` (2026-08-11) — [GitHub Release](https://github.com/sillok-os/sillok/releases/tag/v0.3.0a2) · [PyPI](https://pypi.org/project/sillok/0.3.0a2/) · install/MCP-setup fixes: `mcp<2` pin, packs bundled into the wheel, cwd-independent registry resolution, UTF-8 console (previous: `v0.3.0a1`, 2026-06-02)
+- **Released**: `v0.3.1` — [GitHub Release](https://github.com/sillok-os/sillok/releases/tag/v0.3.1) · [PyPI](https://pypi.org/project/sillok/0.3.1/) · router no-match fix, abbreviation token matching, router golden + gating CI, untagged `0.x` versioning so `pip install sillok` gets the real package (previous: `v0.3.0a2`, 2026-08-11 — install/MCP-setup fixes)
 - **Status legend**: `live` = working code + tests + docs · `partial` = working but missing a documented sub-feature · `stub` = directory or file present, no functional code · `planned` = not yet present
 
 ## Feature matrix
@@ -11,8 +11,8 @@ First-time readers — use this page to verify what is shipped before adopting.
 | # | Feature | Module(s) | Status | Notes / linked issue |
 |---|---|---|:-:|---|
 | 1 | Multi-format Auto-Ingest RAG | `pyeonchan` + `janggyeong` | `partial` | `pyeonchan` ships md ingest + watcher; FTS5 indexer deferred to Phase 2. `janggyeong` (corpus store) not yet a module. |
-| 2 | Two-Stage Routing | `naru` | `live` | `router_2tier.tier1_match` shipped; Tier 2 LLM classifier live for `route` CLI. |
-| 3 | Typed Pack Registry + 5 Retrieval Plans | `jikji` + `bongsu` | `live` | 15 packs in `packs/registry.yaml`. `bongsu` vault search + 5 retrieval plans shipped in `0.1.0a2`. |
+| 2 | Two-Stage Routing | `naru` | `live` | `router_2tier.tier1_match` shipped (0.3.1: unmatched packs no longer returned on precedence alone; upper-case abbreviations match whole tokens only; 34-row router golden gates CI); Tier 2 LLM classifier live for `route` CLI. |
+| 3 | Typed Pack Registry + 5 Retrieval Plans | `jikji` + `bongsu` | `live` | 25 packs in `packs/registry.yaml`. `bongsu` vault search + 5 retrieval plans shipped in `0.1.0a2`. |
 | 4 | Proposal-Only 4-Gate Governance | `sangso` | `live` | Lint / Diff / Eval Δ / Approval pipeline shipped in `0.1.0a7` (PR #10, closed #5). |
 | 5 | Multi-Tenant Overlay (scoped corpora) | `beopjeon` + `janggyeong` | `planned` | Overlay schema present in `sillok.schemas.overlay`; runtime composition not yet wired. |
 | 6 | MCP Bridge | `tongsa` | `live` | 3 tools (`sillok.list_packs` / `sillok.route` / `sillok.search`) shipped in `0.1.0a7` (PR #11, closed #4). |

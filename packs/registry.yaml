@@ -128,7 +128,7 @@ packs:
     sub_category: consulting
     trigger_signals:
       explicit: ["[saas-audit]"]
-      contains: ["PMP", "SAFe", "BABOK", "SEBOK", "5-part audit"]
+      contains: ["PMP", "SAFe", "BABOK", "SEBOK", "5-part audit", "SaaS", "moat", "Claim Verification"]
     intent_tags: ["consulting", "saas", "lens-1"]
     output_contracts: ["audit-report.md", "moat-3-axis.md"]
     precedence: 85
@@ -176,7 +176,7 @@ packs:
     sub_category: business
     trigger_signals:
       explicit: ["[exec-comms]"]
-      contains: ["board deck", "Pyramid Principle", "SCR", "1-pager", "Sequoia"]
+      contains: ["board deck", "Pyramid Principle", "SCR", "1-pager", "Sequoia", "SCQA", "MD&A"]
     intent_tags: ["communication", "executive", "board"]
     output_contracts: ["board-deck-10.md", "exec-1pager.md"]
     precedence: 75

@@ -28,3 +28,7 @@
 {"id": "G28", "message": "[exec-comms] 10-slide board deck on Q4 plan", "expected_pack_ids": ["exec-communication"], "expected_min_confidence": "high", "tags": ["single-pack", "explicit", "exec"], "notes": "explicit"}
 {"id": "G29", "message": "Pyramid Principle structure for the 1-pager", "expected_pack_ids": ["exec-communication"], "expected_min_confidence": "medium", "tags": ["single-pack", "exec", "pyramid"], "notes": "Pyramid Principle"}
 {"id": "G30", "message": "SCQA hook for the quarterly MD&A", "expected_pack_ids": ["exec-communication"], "expected_min_confidence": "medium", "tags": ["single-pack", "exec", "scqa"], "notes": "SCQA"}
+{"id": "G31", "message": "what's the weather in Seoul tomorrow?", "expected_pack_ids": [], "expected_min_confidence": "none", "tags": ["negative"], "notes": "unrelated request must load no pack (0.3.1)"}
+{"id": "G32", "message": "translate this sentence into French", "expected_pack_ids": [], "expected_min_confidence": "none", "tags": ["negative"], "notes": "unrelated request must load no pack (0.3.1)"}
+{"id": "G33", "message": "오늘 점심 메뉴 추천해 줘", "expected_pack_ids": [], "expected_min_confidence": "none", "tags": ["negative", "korean"], "notes": "unrelated Korean request must load no pack (0.3.1)"}
+{"id": "G34", "message": "fix the build script so the tests pass", "expected_pack_ids": [], "expected_min_confidence": "none", "tags": ["negative", "abbreviation"], "notes": "'SCR' must not match inside 'script' (0.3.1)"}

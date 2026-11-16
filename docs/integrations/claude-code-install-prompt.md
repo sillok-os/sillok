@@ -25,14 +25,15 @@ session whether it worked.
 >
 > ```
 > python -m venv <clone>/.venv
-> <clone>/.venv/bin/pip install --pre "sillok[mcp]" "mcp<2"
+> <clone>/.venv/bin/pip install "sillok[mcp]>=0.3.1" "mcp<2"
 > ```
 >
 > On Windows the interpreter is `<clone>/.venv/Scripts/python.exe`.
 >
 > Three constraints that are not optional:
-> - `--pre` is required. Plain `pip install sillok` resolves to the `0.0.1`
->   name-reservation placeholder, which contains no submodules.
+> - `>=0.3.1` is required. Older indexes and caches resolve plain
+>   `pip install sillok` to the `0.0.1` name-reservation placeholder, which
+>   contains no submodules; the floor makes that a loud error instead.
 > - `"mcp<2"` is required. MCP SDK 2.0 removed `mcp.server.fastmcp`, which
 >   the Sillok bridge imports; with 2.x the server exits immediately.
 > - Install into the venv, not globally, so the `mcp<2` pin cannot collide

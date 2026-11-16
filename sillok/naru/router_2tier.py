@@ -36,6 +36,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import sys
 from datetime import datetime
 from pathlib import Path, PurePosixPath
@@ -102,7 +103,7 @@ def resolve_registry(registry_path: Path | None = None) -> Path:
         + "\n  - ".join(tried)
         + f"\nFix: set {REGISTRY_ENV_VAR}=/path/to/packs/registry.yaml, or run "
         "from a Sillok checkout, or reinstall a wheel that bundles the packs "
-        "(pip install --pre --force-reinstall 'sillok[mcp]')."
+        "(pip install --force-reinstall 'sillok[mcp]>=0.3.1')."
     )
 
 
@@ -124,12 +125,36 @@ def discovery_tier(pack: dict[str, Any]) -> str:
     return "summary"
 
 
+#: Upper-case ASCII abbreviations (``SK``, ``RTM``, ``SCR``) match as whole
+#: tokens only — as substrings they fire inside ordinary words
+#: (``risk``, ``script``). Lower-case and multi-word keywords keep substring
+#: semantics so plurals and inflections (``risk`` → ``risks``) still match.
+_ABBREVIATION = re.compile(r"^[A-Z0-9][A-Z0-9&./+-]{0,5}$")
+
+
+def keyword_hit(keyword: str, message: str) -> bool:
+    """Return True when ``keyword`` occurs in ``message`` under Tier-1 rules."""
+    kw = keyword.strip()
+    if not kw:
+        return False
+    if _ABBREVIATION.match(kw) and any(c.isalpha() for c in kw):
+        pattern = r"(?<![A-Za-z0-9])" + re.escape(kw) + r"(?![A-Za-z0-9])"
+        return re.search(pattern, message, re.IGNORECASE) is not None
+    return kw.lower() in message.lower()
+
+
 def tier1_match(
     message: str,
     packs: list[dict[str, Any]],
     top_k: int = 5,
 ) -> list[dict[str, Any]]:
-    """Tier 1: select candidates via ``trigger_signals`` + ``summary_overlay``."""
+    """Tier 1: select candidates via ``trigger_signals`` + ``summary_overlay``.
+
+    A pack is a candidate only when at least one explicit trigger or keyword
+    matches. ``precedence`` breaks ties between matched packs; it never makes
+    an unmatched pack a candidate on its own (before 0.3.1 every pack with a
+    non-zero precedence was returned for any message).
+    """
     msg_lower = message.lower()
     candidates: list[dict[str, Any]] = []
     for pack in packs:
@@ -141,20 +166,21 @@ def tier1_match(
 
         # Explicit triggers (highest weight)
         for explicit in sig.get("explicit", []) or []:
-            if explicit.lower() in msg_lower:
+            if explicit and explicit.lower() in msg_lower:
                 score += 200
                 reasons.append(f"explicit:{explicit}")
 
         # Contains keywords
         matches: list[str] = []
         for kw in sig.get("contains", []) or []:
-            if not kw:
-                continue
-            if kw.lower() in msg_lower:
+            if kw and keyword_hit(kw, message):
                 matches.append(kw)
                 score += 25
         if matches:
             reasons.append(f"keyword:{','.join(matches[:5])}")
+
+        if not reasons:
+            continue
 
         # Precedence as tie-breaker (10% weight)
         score += (pack.get("precedence") or 0) * 0.1
