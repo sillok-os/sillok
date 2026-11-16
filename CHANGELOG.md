@@ -6,6 +6,18 @@ adheres to [SemVer](https://semver.org/).
 
 ## [Unreleased]
 
+### Added — packs Wave 2a (engineering ops + cold-domain guard)
+- `sw-engineering-operations` — EARS requirements → ADR/design → RTM → red-team,
+  AI-assisted development rules (D1–D9) and a delivery baseline (SD1–SD8).
+- `github-operations` — choose GitHub features by repository purpose and
+  observed state; staged branch protection; permission gaps stay unknown.
+- `github-actions-ops` — CI execution path, honest monthly bill estimate,
+  first-error-line failure triage, cost-framed human decisions.
+- `cold-domain-grounding` (quality guard) — ground first in unfamiliar
+  domains; codes and enums only from primary sources; mandatory
+  `## Limits & Assumptions`.
+- Router golden: +4 positive rows (G35–G38). Negative rows still load no pack.
+
 ### Added
 - (none yet — pending F0.3 step 2 semantic-embedding router + FTS5
   indexer for `pyeonchan` Phase 2)
