@@ -6,6 +6,19 @@ adheres to [SemVer](https://semver.org/).
 
 ## [Unreleased]
 
+### Added — packs Wave 2b (business strategy + deck builder)
+- `gtm-launch-playbook` — launch tier, positioning canvas, messaging
+  hierarchy, 30-60-90 plan, chasm sequencing, day-90 gate.
+- `unit-economics-modeling` — exact metric formulas, segment CAC/LTV,
+  cohorts, Rule of 40/X, burn multiple, mandatory 3-scenario model.
+- `saas-pricing-packaging` — price metric, good-better-best tiers,
+  Van Westendorp and conjoint, hybrid models, price-change playbook.
+- `platform-strategy` — platform canvas, typed network effects, cold start
+  with graduation condition, liquidity, take rate, platform risks.
+- `deck-builder` (output style) — one request to a verified deck: action
+  titles, cite-from-context, decision devices, Limits & Assumptions.
+- Router golden: +5 positive rows (G39–G43).
+
 ### Added — packs Wave 2a (engineering ops + cold-domain guard)
 - `sw-engineering-operations` — EARS requirements → ADR/design → RTM → red-team,
   AI-assisted development rules (D1–D9) and a delivery baseline (SD1–SD8).
