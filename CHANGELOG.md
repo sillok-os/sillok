@@ -6,6 +6,14 @@ adheres to [SemVer](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.3.2] — 2026-11-17
+
+**Packs Wave 2: 25 → 43 packs.** No API or router changes; `0.3.1` →
+`0.3.2` upgrades cleanly. 18 packs were ported from the upstream harness in
+four waves of at most five packs (#29–#32). The engine, the 4 gates and the
+MCP bridge are the same as in `0.3.1`. The kernel managers (`0.4.0`) are not
+in this release.
+
 ### Added — packs Wave 2d (health + travel)
 - `running-injury-prevention` (domain/health) — emergency and red-flag
   routing first, four frames per injury, prevention pillars, load spikes as
