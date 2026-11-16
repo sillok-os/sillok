@@ -10,7 +10,7 @@ adheres to [SemVer](https://semver.org/).
 - (none yet — pending F0.3 step 2 semantic-embedding router + FTS5
   indexer for `pyeonchan` Phase 2)
 
-## [0.3.1] — unreleased
+## [0.3.1] — 2026-11-16
 
 **Routing correctness + honest CI.** No API changes; `0.3.0a2` → `0.3.1`
 upgrades cleanly. This is the first untagged `0.x` release: `pip install
