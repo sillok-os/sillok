@@ -1,0 +1,7 @@
+[
+  {"id": "test-first", "work_type": "code-change", "title": "Reproduce the bug in a failing test before fixing it", "path": "docs/contributing.md"},
+  {"id": "small-diff", "work_type": "code-change", "title": "Keep the diff to the files the request names", "path": "docs/contributing.md"},
+  {"id": "decision-first", "work_type": "report", "title": "Open with the decision and the evidence for it", "path": "docs/templates/report.md"},
+  {"id": "number-every-item", "work_type": "report", "title": "Answer every numbered request item and tally N/N", "path": "docs/templates/report.md"},
+  {"id": "verify-wheel", "work_type": "release", "title": "Install the built wheel in a fresh venv before tagging", "path": "docs/release.md"}
+]

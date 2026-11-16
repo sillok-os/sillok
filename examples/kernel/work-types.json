@@ -1,0 +1,61 @@
+[
+  {
+    "id": "code-change",
+    "label": "Code change",
+    "action_signals": {
+      "path_prefixes": [
+        "src/",
+        "tests/"
+      ]
+    },
+    "guide_refs": [
+      "docs/contributing.md"
+    ],
+    "triggers": [
+      "bug",
+      "refactor",
+      "failing test",
+      "PR"
+    ]
+  },
+  {
+    "id": "report",
+    "label": "Report writing",
+    "action_signals": {
+      "path_prefixes": [
+        "docs/reports/"
+      ],
+      "engagement_types": [
+        "consulting"
+      ]
+    },
+    "guide_refs": [
+      "docs/templates/report.md"
+    ],
+    "priority": 5,
+    "triggers": [
+      "report",
+      "memo",
+      "executive summary"
+    ]
+  },
+  {
+    "id": "release",
+    "label": "Release",
+    "action_signals": {
+      "path_prefixes": [
+        "CHANGELOG.md",
+        ".github/workflows/"
+      ]
+    },
+    "guide_refs": [
+      "docs/release.md"
+    ],
+    "triggers": [
+      "release",
+      "changelog",
+      "tag",
+      "PyPI"
+    ]
+  }
+]

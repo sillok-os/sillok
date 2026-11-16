@@ -35,6 +35,23 @@ Provider-neutral building blocks for observability, governance evidence, and sel
 | `sillok.yeonryun.optimizer` | `live` | dependency-free `Optimizer` protocol + reference impl | [#22](https://github.com/sillok-os/sillok/pull/22) |
 | `sillok.eval.probe_seeder` | `live` | seed unlabelled probes from conversation logs (redacted) | [#23](https://github.com/sillok-os/sillok/pull/23) |
 
+## Kernel managers (`0.4.0`, experimental — **not in any published release yet**)
+
+Ported from the upstream harness; publication waits for the upstream effect
+measurement. Each has an off switch; the playbook starts in shadow mode.
+
+| Module | Status | Purpose |
+|---|:-:|---|
+| `sillok.sacho` | `partial` | work context across turns (explicit > action > inherited) |
+| `sillok.seungjeongwon` | `partial` | context budget — collapse repeats to pointers, fail open |
+| `sillok.gyeongyeon` | `partial` | playbook per work type, outcome counters, shadow → auto |
+| `sillok.chunchugwan` | `partial` | memory/episode recall (FTS5), pointer-only output |
+| `sillok.kernel.hook` | `partial` | Claude Code hook wiring the four (`examples/kernel/`) |
+| `sillok.eval.evidence` | `partial` | execution-evidence record checker + contract |
+| `sillok.eval.request_coverage` | `partial` | numbered-request coverage Stop hook |
+
+`partial` here means: working code and tests, effect not yet measured.
+
 ## Pack registry
 
 - Current count: **43 packs** across 8 sub-categories (`methodology`, `consulting`, `engineering`, `business`, `visual`, `lifestyle`, `output-styles`, `core`)

@@ -4,7 +4,12 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project
 adheres to [SemVer](https://semver.org/).
 
-## [Unreleased]
+## [Unreleased] — 0.4.0 kernel (experimental, not yet published)
+
+**Four kernel managers that act between messages, ported from the upstream
+harness.** Every one is experimental: each has its own off switch, the
+playbook starts in shadow mode, and their effect on answer quality is still
+being measured upstream. Publication waits for that measurement.
 
 ## [0.3.2] — 2026-11-17
 
@@ -65,8 +70,45 @@ in this release.
 - Router golden: +4 positive rows (G35–G38). Negative rows still load no pack.
 
 ### Added
-- (none yet — pending F0.3 step 2 semantic-embedding router + FTS5
-  indexer for `pyeonchan` Phase 2)
+- **`sillok.sacho` — work context.** Holds which kind of work a session is
+  doing across turns: explicit (router or profile `triggers`) > action (≥ 2
+  recent writes, ≥ 70 % in one profile's path prefixes, after the last
+  explicit turn) > inherited (gap ≤ 2 h, anchor ≤ 4 h). Upstream replay of 30
+  days lifted work-type attribution of human turns from 31.4 % to 65.9 %.
+  State is per hashed session ID, written atomically under a lock; stale
+  writers cannot overwrite newer state. `SILLOK_WORK_CONTEXT=off`.
+- **`sillok.seungjeongwon` — context budget.** Collapses blocks already shown
+  in this session (30-min window, content hash) into pointers that keep the
+  path to re-read; never grows a block; fails open; reset on compaction.
+  Upstream, 22.4 % of injected context repeated within a session.
+  `SILLOK_CONTEXT_BUDGET=off`.
+- **`sillok.gyeongyeon` — playbook.** Lessons per work type ranked by the
+  Beta mean `(h+1)/(h+x+2)`, learned from the human's next input
+  (approval → helpful, correction → harmful), counted once per session ×
+  item × outcome. `shadow` mode writes control counters only; `auto` shows
+  ≤ 900 bytes. `promote_candidates()` lists lessons helpful in ≥ 3 sessions
+  with no harm. `SILLOK_PLAYBOOK_MODE=off|shadow|auto`.
+- **`sillok.chunchugwan` — memory recall.** SQLite FTS5 over memory notes
+  (one chunk per heading path) and past episodes; returns ≤ 5 lines /
+  900 bytes of pointers (never note bodies), with a title/heading-match gate,
+  Korean particle stripping, opt-out tags, a 0.25 s refresh budget and
+  best-effort redaction of secrets and contact details. Upstream recall@3
+  against later opens started at 34 % — a path to measure, not a solved
+  problem. `SILLOK_MEMORY_RECALL=off`.
+- **`sillok.kernel.hook`** — one Claude Code `UserPromptSubmit` /
+  `SessionStart(compact)` hook wiring the four managers from a JSON config.
+  Synthetic example in `examples/kernel/`.
+- **`sillok.eval.evidence`** — execution-evidence checker (stages, claims,
+  observed basis, artifact SHA binding; batch records with a frozen ID set)
+  plus its JSON contract in `sillok/eval/contracts/`.
+- **`sillok.eval.request_coverage`** — Stop-hook check that every numbered
+  request item (1..N) is visible in the final answer; sends the turn back
+  once. `SILLOK_REQUEST_COVERAGE=off`.
+
+### Fixed (found while porting)
+- Recall hook raised `FileExistsError`/`PermissionError` when the index
+  folder could not be created (only `sqlite3.Error` was caught); it now
+  returns no block.
 
 ## [0.3.1] — 2026-11-16
 

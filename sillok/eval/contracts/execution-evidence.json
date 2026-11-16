@@ -1,0 +1,363 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:sillok:execution-evidence-v1",
+  "title": "Sillok execution evidence contract",
+  "description": "Supplied-record consistency only; not a grant or independent verification of observations. Runtime identity, installation, auth and real use are distinct stages.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "task_id",
+    "attempt_id",
+    "observed_at",
+    "context",
+    "checks",
+    "claims"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "execution-evidence-v1"
+    },
+    "task_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:@/-]*$"
+    },
+    "attempt_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:@/-]*$"
+    },
+    "observed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_host",
+        "target_host",
+        "surface",
+        "permission",
+        "actor"
+      ],
+      "properties": {
+        "source_host": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "target_host": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "surface": {
+          "enum": [
+            "browser",
+            "claude",
+            "codex",
+            "user_terminal",
+            "remote_desktop",
+            "external_agent",
+            "ci"
+          ]
+        },
+        "permission": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "actor": {
+          "enum": [
+            "agent",
+            "user",
+            "unknown"
+          ]
+        }
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ref",
+        "sha256"
+      ],
+      "properties": {
+        "ref": {
+          "$ref": "#/$defs/reference"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{7,64}$"
+        }
+      }
+    },
+    "checks": {
+      "type": "array",
+      "maxItems": 50,
+      "items": {
+        "$ref": "#/$defs/check"
+      }
+    },
+    "claims": {
+      "type": "array",
+      "maxItems": 8,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "installation_verified",
+          "runtime_verified",
+          "release_verified",
+          "cli_authenticated",
+          "cli_usable",
+          "remote_execution_verified",
+          "transfer_verified",
+          "static_review_completed"
+        ]
+      }
+    }
+  },
+  "$defs": {
+    "batch": {
+      "description": "Frozen item/stage receipt reconciliation. Validate this fragment plus check-batch; references are not independently opened. This is not an execution grant.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "task_id",
+        "attempt_id",
+        "observed_at",
+        "context",
+        "scope",
+        "expected_ids",
+        "required_stages",
+        "receipts",
+        "cleanup",
+        "pending",
+        "data_complete",
+        "final_complete"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "execution-batch-v1"
+        },
+        "task_id": {
+          "$ref": "#/properties/task_id"
+        },
+        "attempt_id": {
+          "$ref": "#/properties/attempt_id"
+        },
+        "observed_at": {
+          "$ref": "#/properties/observed_at"
+        },
+        "context": {
+          "$ref": "#/properties/context"
+        },
+        "scope": {
+          "$ref": "#/properties/artifact"
+        },
+        "expected_ids": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 10000,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/properties/task_id"
+          }
+        },
+        "required_stages": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 50,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/properties/task_id"
+          }
+        },
+        "receipts": {
+          "type": "array",
+          "maxItems": 500000,
+          "items": {
+            "$ref": "#/$defs/batch_receipt"
+          }
+        },
+        "cleanup": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "required",
+            "status",
+            "basis",
+            "evidence"
+          ],
+          "properties": {
+            "required": {
+              "type": "boolean"
+            },
+            "status": {
+              "enum": [
+                "pass",
+                "fail",
+                "unverified",
+                "unavailable",
+                "not_required"
+              ]
+            },
+            "basis": {
+              "$ref": "#/$defs/check/properties/basis"
+            },
+            "evidence": {
+              "$ref": "#/$defs/check/properties/evidence"
+            }
+          }
+        },
+        "pending": {
+          "type": "array",
+          "maxItems": 100,
+          "items": {
+            "$ref": "#/$defs/reference"
+          }
+        },
+        "data_complete": {
+          "type": "boolean"
+        },
+        "final_complete": {
+          "type": "boolean"
+        }
+      }
+    },
+    "batch_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "stage",
+        "status",
+        "basis",
+        "evidence"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/properties/task_id"
+        },
+        "stage": {
+          "$ref": "#/properties/task_id"
+        },
+        "status": {
+          "$ref": "#/$defs/check/properties/status"
+        },
+        "basis": {
+          "$ref": "#/$defs/check/properties/basis"
+        },
+        "evidence": {
+          "$ref": "#/$defs/check/properties/evidence"
+        }
+      }
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "reference": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2000,
+      "pattern": "^[^?\\x00-\\x1f]+$"
+    },
+    "check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stage",
+        "status",
+        "basis",
+        "evidence"
+      ],
+      "properties": {
+        "stage": {
+          "enum": [
+            "placement",
+            "runtime_identity",
+            "activation",
+            "functional",
+            "real_use",
+            "browser_approval",
+            "cli_auth",
+            "inference",
+            "remote_identity",
+            "transfer_receipt",
+            "network_request",
+            "static_review"
+          ]
+        },
+        "status": {
+          "enum": [
+            "pass",
+            "fail",
+            "unverified",
+            "unavailable"
+          ]
+        },
+        "basis": {
+          "enum": [
+            "observed",
+            "agent_reported",
+            "user_reported",
+            "inferred"
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "maxItems": 30,
+          "items": {
+            "$ref": "#/$defs/reference"
+          }
+        },
+        "subject_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    }
+  },
+  "x-sillok-semantic-validator": "python -m sillok.eval.evidence check <record.json>",
+  "x-sillok-batch-validator": "python -m sillok.eval.evidence check-batch <record.json>",
+  "x-sillok-claim-requirements": {
+    "installation_verified": [
+      "placement"
+    ],
+    "runtime_verified": [
+      "runtime_identity"
+    ],
+    "release_verified": [
+      "placement",
+      "runtime_identity",
+      "activation",
+      "functional",
+      "real_use"
+    ],
+    "cli_authenticated": [
+      "cli_auth"
+    ],
+    "cli_usable": [
+      "cli_auth",
+      "inference"
+    ],
+    "remote_execution_verified": [
+      "remote_identity"
+    ],
+    "transfer_verified": [
+      "transfer_receipt"
+    ],
+    "static_review_completed": [
+      "static_review"
+    ]
+  }
+}
