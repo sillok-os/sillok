@@ -427,6 +427,71 @@ packs:
       - "8-section MECE 5-axis cause analysis with Red-Flag routing as first response line"
       - "No diagnosis / no prescription / no dosage — special-population auto-injection (pregnant/pediatric/geriatric/chronic)"
 
+  # ── Wave 2a (engineering ops + cold-domain guard) ─────────────────────
+  - id: sw-engineering-operations
+    title: SW Engineering Operations — requirements, design, traceability, delivery
+    path: packs/engineering/sw-engineering-operations.md
+    category: workflow
+    sub_category: engineering
+    trigger_signals:
+      explicit: ["[sw-eng]", "[sdd]", "[ears]", "[rtm]"]
+      contains: ["EARS", "SyRS", "SRS", "RTM", "traceability matrix", "ADR", "spec-driven development", "29148", "42010", "ASPICE", "acceptance criteria", "요구사항 명세", "인수 기준", "추적성 매트릭스", "스펙 주도 개발"]
+    intent_tags: ["engineering", "requirements", "traceability", "ai-assisted-development"]
+    output_contracts: ["requirements-table.md", "rtm.md", "red-team-findings.md"]
+    precedence: 75
+    visibility_label: SW Engineering Ops
+    summary_overlay:
+      - "EARS requirements → ADR/SDD → RTM → red-team, AI drafts and humans decide (🔒)"
+      - "AI-assisted development rules D1–D9 and delivery baseline SD1–SD8"
+
+  - id: github-operations
+    title: GitHub Operations — choose features by repository purpose and observed state
+    path: packs/engineering/github-operations.md
+    category: workflow
+    sub_category: engineering
+    trigger_signals:
+      explicit: ["[github]"]
+      contains: ["branch protection", "ruleset", "rulesets", "CODEOWNERS", "Dependabot", "GitHub Projects", "repository settings", "브랜치 보호", "저장소 설정"]
+    intent_tags: ["engineering", "github", "repository-governance", "security"]
+    output_contracts: ["repo-posture.md", "recommendations.md"]
+    precedence: 70
+    visibility_label: GitHub Ops
+    summary_overlay:
+      - "Select features by purpose, plan and visibility; permission gaps stay unknown, never zero"
+      - "Staged branch protection, security-feature separation, recoverability beyond Git history"
+
+  - id: github-actions-ops
+    title: GitHub Actions Ops — where to run, what it costs, how to read failures
+    path: packs/engineering/github-actions-ops.md
+    category: workflow
+    sub_category: engineering
+    trigger_signals:
+      explicit: ["[gh-actions]"]
+      contains: ["GitHub Actions", "self-hosted runner", "spending limit", "Actions minutes", "runs-on", "깃허브 액션", "자가 러너", "CI 비용", "워크플로 실패"]
+    intent_tags: ["engineering", "ci", "cost", "runners"]
+    output_contracts: ["path-decision.md", "cost-estimate.md", "failure-diagnosis.md"]
+    precedence: 72
+    visibility_label: GitHub Actions Ops
+    summary_overlay:
+      - "Run path: product OS → human screen → visibility → self-hosted → hosted size"
+      - "Bill estimate with public window, included amount and budget cap; first-error-line triage"
+
+  - id: cold-domain-grounding
+    title: Cold-Domain Grounding — ground first, codes only from primary sources
+    path: packs/methodology/cold-domain-grounding.md
+    category: quality-guard
+    sub_category: methodology
+    trigger_signals:
+      explicit: ["[cold-domain]", "[ground-first]"]
+      contains: ["unfamiliar domain", "classification scheme", "code list", "taxonomy codes", "분류체계", "코드체계", "택소노미"]
+    intent_tags: ["quality-guard", "grounding", "provenance"]
+    output_contracts: ["grounding-note.md", "limits-and-assumptions.md"]
+    precedence: 80
+    visibility_label: Cold-Domain Grounding
+    summary_overlay:
+      - "Pause, scout primary sources, tag [O]/[I]/[U]; codes and enums only from primary sources"
+      - "Mandatory grounding_source line and ## Limits & Assumptions section"
+
 retrieval_plans:
   - id: vault_first
     description: "Vault search only (default for most queries)"

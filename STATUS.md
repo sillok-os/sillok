@@ -12,7 +12,7 @@ First-time readers — use this page to verify what is shipped before adopting.
 |---|---|---|:-:|---|
 | 1 | Multi-format Auto-Ingest RAG | `pyeonchan` + `janggyeong` | `partial` | `pyeonchan` ships md ingest + watcher; FTS5 indexer deferred to Phase 2. `janggyeong` (corpus store) not yet a module. |
 | 2 | Two-Stage Routing | `naru` | `live` | `router_2tier.tier1_match` shipped (0.3.1: unmatched packs no longer returned on precedence alone; upper-case abbreviations match whole tokens only; 34-row router golden gates CI); Tier 2 LLM classifier live for `route` CLI. |
-| 3 | Typed Pack Registry + 5 Retrieval Plans | `jikji` + `bongsu` | `live` | 25 packs in `packs/registry.yaml`. `bongsu` vault search + 5 retrieval plans shipped in `0.1.0a2`. |
+| 3 | Typed Pack Registry + 5 Retrieval Plans | `jikji` + `bongsu` | `live` | 29 packs in `packs/registry.yaml` (25 released in `v0.3.1` + 4 Wave 2a on main). `bongsu` vault search + 5 retrieval plans shipped in `0.1.0a2`. |
 | 4 | Proposal-Only 4-Gate Governance | `sangso` | `live` | Lint / Diff / Eval Δ / Approval pipeline shipped in `0.1.0a7` (PR #10, closed #5). |
 | 5 | Multi-Tenant Overlay (scoped corpora) | `beopjeon` + `janggyeong` | `planned` | Overlay schema present in `sillok.schemas.overlay`; runtime composition not yet wired. |
 | 6 | MCP Bridge | `tongsa` | `live` | 3 tools (`sillok.list_packs` / `sillok.route` / `sillok.search`) shipped in `0.1.0a7` (PR #11, closed #4). |
@@ -37,11 +37,12 @@ Provider-neutral building blocks for observability, governance evidence, and sel
 
 ## Pack registry
 
-- Current count: **25 packs** across 4 sub-categories (`methodology`, `consulting`, `business`/`visual`, `core`)
+- Current count: **29 packs** across 5 sub-categories (`methodology`, `consulting`, `engineering`, `output-styles`, `core`)
 - Wave 1a (`0.1.0a7`): +5 packs — `meeting-minutes`, `change-management`, `tool-adoption-consulting`, `project-charter`, `infographic-design`
 - Wave 1b (`0.2.0a2`): +5 — `consulting-uxui-audit`, `consulting-ai-engineering-audit`, `consulting-security-audit`, `consulting-growth-audit`, `consulting-crossanalysis`
 - Wave 1c (`0.2.0a3`): +5 — `pack-maintenance`, `prompt-sequencing-meta`, `agent-1on1`, `worklog`, `everyday-health-symptom`
 - Wave 1 (10 → 25 packs) **complete** — see [#1](https://github.com/sillok-os/sillok/issues/1).
+- Wave 2a (unreleased): +4 — `sw-engineering-operations`, `github-operations`, `github-actions-ops`, `cold-domain-grounding`. Wave 2 ports 18 packs in ≤ 5-pack waves (2a engineering · 2b business · 2c visual · 2d health & travel).
 
 ## How this page is kept honest
 
