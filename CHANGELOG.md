@@ -34,6 +34,11 @@ name-reservation placeholder (pre-release tags were skipped by default).
 - **Eval-delta gate crashed without a registry.** `gate_eval_delta` raised
   `FileNotFoundError` when `repo_root` had no `packs/registry.yaml`; it now
   skips like it does for an unknown pack.
+- **Temp-source guard differed by platform.** `yeonryun.process_file`
+  refused auto-extraction only for a literal `/tmp/` prefix, so it fired on
+  Linux (pytest temp dirs live there) but not on macOS (`/var/folders`). It
+  now also covers the platform temp directory, with an explicit
+  `allow_temp_source=True` opt-in. Two tests had been failing on Linux.
 - **CI was green while tests failed.** Every CI step ended in `|| true`, so
   three failing tests on `main` went unnoticed since 0.3.0a1. The test job
   now gates; lint and mypy stay advisory via `continue-on-error` (existing
