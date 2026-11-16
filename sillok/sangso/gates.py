@@ -224,7 +224,12 @@ def _run_probes_with_proposed(
     from sillok.eval import run_probes
     from sillok.naru.router_2tier import load_registry
 
-    packs = load_registry(repo_root / "packs" / "registry.yaml")
+    registry_file = repo_root / "packs" / "registry.yaml"
+    if not registry_file.is_file():
+        # No registry under repo_root (fresh checkout, temp dir, installed
+        # wheel): there is no current body to diff against, so skip.
+        return None
+    packs = load_registry(registry_file)
     matching = next((p for p in packs if p.get("id") == pack_id), None)
     if matching is None:
         return None

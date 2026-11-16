@@ -10,6 +10,51 @@ adheres to [SemVer](https://semver.org/).
 - (none yet — pending F0.3 step 2 semantic-embedding router + FTS5
   indexer for `pyeonchan` Phase 2)
 
+## [0.3.1] — 2026-11-16
+
+**Routing correctness + honest CI.** No API changes; `0.3.0a2` → `0.3.1`
+upgrades cleanly. This is the first untagged `0.x` release: `pip install
+sillok` now resolves to the real package instead of the `0.0.1`
+name-reservation placeholder (pre-release tags were skipped by default).
+
+### Fixed
+- **Unmatched packs returned on precedence alone.** `tier1_match` added
+  `precedence × 0.1` to every pack and kept any score above zero, so an
+  unrelated message still returned the top-5 packs by precedence (5.00
+  candidates per message on the router golden) and Tier 2 loaded their
+  bodies. A pack is now a candidate only when an explicit trigger or a
+  keyword matches; precedence only breaks ties (1.10 candidates per message).
+  Observed in a real install on 2026-11-15, where a wrapper matcher had to
+  work around it.
+- **Abbreviations matched inside words.** Upper-case ASCII keywords such as
+  `SK`, `SCR`, `PMC` matched as substrings (`SCR` in `script`). They now
+  match whole tokens only, case-insensitively, and still match before a
+  Korean particle (`RTM을`). Lower-case and multi-word keywords keep
+  substring semantics so plurals still match.
+- **Eval-delta gate crashed without a registry.** `gate_eval_delta` raised
+  `FileNotFoundError` when `repo_root` had no `packs/registry.yaml`; it now
+  skips like it does for an unknown pack.
+- **Temp-source guard differed by platform.** `yeonryun.process_file`
+  refused auto-extraction only for a literal `/tmp/` prefix, so it fired on
+  Linux (pytest temp dirs live there) but not on macOS (`/var/folders`). It
+  now also covers the platform temp directory, with an explicit
+  `allow_temp_source=True` opt-in. Two tests had been failing on Linux.
+- **CI was green while tests failed.** Every CI step ended in `|| true`, so
+  three failing tests on `main` went unnoticed since 0.3.0a1. The test job
+  now gates; lint and mypy stay advisory via `continue-on-error` (existing
+  backlog: 36 ruff findings, 49 unformatted files) so their failures are
+  visible.
+
+### Changed
+- **Router golden wired into CI** (`tests/integration/test_router_golden.py`):
+  top-1 ≥ 90 %, expected pack within top-5 for every positive row, 4 new
+  negative rows must load no pack, ≤ 2 candidates per message on average.
+  Result on the bundled registry: top-1 30/30, top-5 30/30, negatives 4/4.
+- **Trigger repairs** grounded in each pack body: `consulting-saas-audit`
+  (+`SaaS`, `moat`, `Claim Verification` — its keywords were a copy of the
+  PM-framework list), `exec-communication` (+`SCQA`, `MD&A`).
+- **Install docs** use a `>=0.3.1` floor instead of `--pre`.
+
 ## [0.3.0a2] — 2026-08-11
 
 **Install repair.** A fresh `pip install` could not reach a working MCP

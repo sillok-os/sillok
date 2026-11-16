@@ -7,16 +7,19 @@
 ## Install
 
 ```bash
-pip install --pre 'sillok[mcp]'
+pip install 'sillok[mcp]>=0.3.1'
 ```
 
 This pulls the optional `mcp>=1.2,<2` package on top of the core install.
 
-Two things that bite without `--pre` and without the pin:
+Two things that bite without the version floor and without the pin:
 
-- **`--pre` is required.** The non-prerelease `sillok` on PyPI is the `0.0.1`
-  name-reservation placeholder — it installs an empty package with no
-  submodules, so `python -m sillok.tongsa` fails with `No module named`.
+- **Keep the `>=0.3.1` floor.** Releases up to `0.3.0a2` were alpha-tagged,
+  so plain `pip install sillok` skipped them and installed the `0.0.1`
+  name-reservation placeholder — an empty package with no submodules
+  (`python -m sillok.tongsa` fails with `No module named`). From `0.3.1`
+  releases are untagged `0.x` versions; the floor turns a stale index or
+  cache into a loud error instead of a silent placeholder install.
 - **MCP SDK 2.0 is incompatible.** It removed `mcp.server.fastmcp`, which
   the bridge imports. Installs from before this pin landed may hold
   `mcp==2.x`; fix with `pip install 'mcp>=1.2,<2'`.
@@ -120,7 +123,7 @@ Run `python -m sillok.tongsa describe` to print the same table from the live ins
 | Cursor doesn't see the tool | MCP config typo | Run `python -m sillok.tongsa tools` to confirm install, then restart Cursor. |
 | `ModuleNotFoundError: No module named 'mcp.server.fastmcp'` | MCP SDK 2.0 installed | `pip install 'mcp>=1.2,<2'` — 2.0 removed that module. |
 | Claude Code / Cursor still shows no tools after config | Host connects MCP servers at startup | Restart the host. A `.mcp.json` written mid-session is not loaded. |
-| `No Sillok pack registry found` | cwd is not a checkout and the install predates bundled packs | `pip install --pre --force-reinstall 'sillok[mcp]'`, or set `SILLOK_REGISTRY=/path/to/packs/registry.yaml`. |
+| `No Sillok pack registry found` | cwd is not a checkout and the install predates bundled packs | `pip install --force-reinstall 'sillok[mcp]>=0.3.1'`, or set `SILLOK_REGISTRY=/path/to/packs/registry.yaml`. |
 | `UnicodeEncodeError: 'cp949' codec can't encode character '\u2014'` | Windows console code page | Fixed in-process; on older installs set `PYTHONIOENCODING=utf-8` (also in the MCP `env` block). |
 
 ## Logs

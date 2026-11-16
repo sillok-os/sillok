@@ -29,7 +29,7 @@ Codex Desktop) sees the same packs and corpus. This directory will hold
 ## Generic MCP setup (works today)
 
 ```bash
-pip install --pre 'sillok[mcp]'
+pip install 'sillok[mcp]>=0.3.1'
 claude mcp add sillok -- python -m sillok.tongsa serve --transport stdio
 ```
 

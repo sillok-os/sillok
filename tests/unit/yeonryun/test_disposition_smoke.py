@@ -209,6 +209,7 @@ def test_process_file_writes_representative_atom(
         auto_extract=True,
         target_dir=target,
         source_repo="acme/test",
+        allow_temp_source=True,  # pytest tmp_path lives under the temp dir
     )
     assert result["disposition"] == "cross-repo-reusable"
     assert result.get("extracted_files")
@@ -240,3 +241,12 @@ def test_process_file_blocks_tmp_paths(reusable_doc: str) -> None:
         assert "/tmp/" in result["warning"]
     finally:
         p.unlink(missing_ok=True)
+
+
+def test_temp_guard_is_platform_independent(tmp_path: Path, reusable_doc: str) -> None:
+    """pytest's tmp_path sits under the system temp dir on every platform."""
+    src = tmp_path / "doc.md"
+    src.write_text(reusable_doc, encoding="utf-8")
+    result = process_file(src, auto_extract=True, target_dir=tmp_path / "out")
+    assert "temp" in result.get("warning", "")
+    assert not list((tmp_path / "out").glob("*.md"))
