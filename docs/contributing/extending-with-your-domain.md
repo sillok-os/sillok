@@ -267,7 +267,7 @@ All five must pass.
 
 Same as external, plus:
 
-- Mirror operating model rules apply (`00-meta/10-mirror-operating-model.md`): edit inside `aipm/project/Harness-Sillok/mirror/`, push from there.
+- Packs ported from the upstream harness go through its leak checks (no personal, client or internal path identifiers) before the PR is opened.
 - **Skip the fork**, push to a topic branch on `sillok-os/sillok` directly.
 - Self-review is forbidden — get a second reviewer (or a structured eval probe pass) before merging. If you're the only maintainer, document this in the merge commit and revisit when the reviewer pool widens.
 
@@ -300,8 +300,8 @@ A merged pack triggers three follow-ups, all owned by maintainers:
 
 ## See also
 
-- [`CONTRIBUTING.md`](../../CONTRIBUTING.md) — DCO, code style, scope discipline.
+- [`CONTRIBUTING.md`](https://github.com/sillok-os/sillok/blob/main/CONTRIBUTING.md) — DCO, code style, scope discipline.
 - [`docs/architecture/framework-coverage.md`](../architecture/framework-coverage.md) — the 25-category inventory you're filling.
-- [`packs/registry.yaml`](../../packs/registry.yaml) — the source of truth for what's currently registered.
-- [`NOTICE`](../../NOTICE) — trademark and citation manifest you append to.
-- [`GOVERNANCE.md`](../../GOVERNANCE.md) — proposal-only review pipeline.
+- [`packs/registry.yaml`](https://github.com/sillok-os/sillok/blob/main/packs/registry.yaml) — the source of truth for what's currently registered.
+- [`NOTICE`](https://github.com/sillok-os/sillok/blob/main/NOTICE) — trademark and citation manifest you append to.
+- [`GOVERNANCE.md`](https://github.com/sillok-os/sillok/blob/main/GOVERNANCE.md) — proposal-only review pipeline.

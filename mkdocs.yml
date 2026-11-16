@@ -61,16 +61,33 @@ markdown_extensions:
   - pymdownx.tabbed:
       alternate_style: true
 
+# Internal meta-audit kept in the repo for history; not part of the docs site.
+exclude_docs: |
+  architecture/coverage-vs-aipm-vault.md
+
 nav:
   - Home: index.md
   - Architecture:
       - Overview: architecture/README.md
-  - Modules: modules/.gitkeep
-  - Tutorials: tutorials/.gitkeep
-  - Recipes: recipes/.gitkeep
-  - Governance: governance/.gitkeep
-  - Benchmarks: benchmarks/.gitkeep
-  - API Reference: api/.gitkeep
+      - Framework coverage: architecture/framework-coverage.md
+      - Proposal-only governance: architecture/proposal-only-governance.md
+      - Frontmatter compatibility: architecture/frontmatter-compatibility.md
+  - Modules: modules/index.md
+  - Integrations:
+      - MCP quickstart: integrations/mcp-quickstart.md
+      - Claude Code install prompt: integrations/claude-code-install-prompt.md
+  - Tutorials: tutorials/index.md
+  - Recipes:
+      - recipes/index.md
+      - Search a vault with bongsu: recipes/search-vault-with-bongsu.md
+      - Decide reusability with yeonryun: recipes/decide-reusability-with-yeonryun.md
+  - Eval:
+      - Probe set: eval/probe-set.md
+  - Governance: governance/index.md
+  - Benchmarks: benchmarks/index.md
+  - Contributing:
+      - Extending with your domain: contributing/extending-with-your-domain.md
+  - API Reference: api/index.md
 
 extra:
   social:

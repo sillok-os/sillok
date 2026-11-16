@@ -1,14 +1,13 @@
 # Framework coverage — global standards inventory
 
 Sillok's roadmap covers **25 categories / 110+ global standards** across
-five axes. The `0.1.0a3` alpha ships **10 starter packs** spanning 7–8 of
-those categories; the remaining 17–18 categories are queued in the
-milestones called out in the table.
+five axes. `0.4.0` ships **43 packs** (Wave 1: 25 · Wave 2: 18). §2 starts
+with the current status of every category; the per-axis tables below it keep
+the standards each category covers and the original milestone plan.
 
-This document is the OSS-distribution version of the upstream coverage
-inventory (`aipm/project/Harness-Sillok/00-meta/06-framework-coverage-inventory.md`).
-The two are intentionally kept in sync but are licensed and distributed
-separately — see [`NOTICE`](../../NOTICE) before redistributing.
+This document mirrors the coverage inventory kept in the upstream harness.
+The two are licensed and distributed separately — see
+[`NOTICE`](https://github.com/sillok-os/sillok/blob/main/NOTICE) before redistributing.
 
 ---
 
@@ -38,7 +37,48 @@ separately — see [`NOTICE`](../../NOTICE) before redistributing.
 
 ## 2. Ship status per category
 
-Legend: ✅ ships in 0.1.0a3 today · 🚧 queued for 0.2.0a1 · ⏳ queued for 1.0.0 GA
+### Status in 0.4.0
+
+✅ dedicated pack(s) · ◐ partial (an audit lens or one aspect) · ⏳ no pack yet — open for contributors
+
+| # | Category | 0.4.0 | Pack(s) |
+|:-:|---|:-:|---|
+| 1 | ERM · IT Governance · EA | ✅ | `governance-standards` |
+| 2 | Risk quantification | ◐ | `risk-uncertainty` |
+| 3 | ITIL · ITSM | ✅ | `itil-operations` |
+| 4 | Security · Compliance | ◐ | `consulting-security-audit` |
+| 5 | Project · Portfolio | ✅ | `pm-enhanced` · `portfolio-governance` · `risk-uncertainty` · `project-charter` |
+| 6 | SAFe Agile | ✅ | `safe-agile-delivery` |
+| 7 | Change management | ✅ | `change-management` · `tool-adoption-consulting` |
+| 8 | Org design | ⏳ | — |
+| 9–13 | Automotive · Medical device · Banking · Insurance · Embedded SW | ⏳ | — |
+| 14 | Strategy · Market · BM | ✅ | `consulting-strategy-audit` · `platform-strategy` |
+| 15 | M&A · Financial modeling | ◐ | `unit-economics-modeling` (no M&A pack) |
+| 16 | SaaS · Pricing · GTM | ✅ | `consulting-saas-audit` · `saas-pricing-packaging` · `gtm-launch-playbook` |
+| 17 | Growth · Data | ◐ | `consulting-growth-audit` |
+| 18 | UX · Discovery | ◐ | `consulting-uxui-audit` |
+| 19 | AI · LLM engineering | ◐ | `consulting-ai-engineering-audit` |
+| 20 | Prompt sequencing | ✅ | `prompt-sequencing-meta` |
+| 21 | External delivery · Magazine | ✅ | `exec-communication` · `deck-builder` |
+| 22 | Content publishing E2E | ⏳ | — |
+| 23 | Report quality | ✅ | `report-quality` |
+| 24 | Enterprise B2B sales | ⏳ | — |
+| 25 | Design system / Diagram / Image | ✅ diagram · image ◐ design system | `diagram-design` · `image-prompt-playbook` · `gpt-image-2-reference` · `infographic-design` · `design-artifact-production` · `visual-quality` |
+
+Outside the 25 categories, `0.4.0` also ships engineering operations
+(`sw-engineering-operations`, `github-operations`, `github-actions-ops`),
+working-practice packs (`meeting-minutes`, `worklog`, `agent-1on1`,
+`pack-maintenance`, `cold-domain-grounding`) and personal health and travel
+packs (`everyday-health-symptom`, `running-injury-prevention`,
+`running-race-data-analysis`, `nutrition`, `travel-trip-planning`).
+
+### Original milestone plan (2026-04)
+
+The tables below keep the standards each category covers. Their milestone
+columns are the plan written for `0.1.0a3`; use the status table above for
+what ships today.
+
+Legend (plan): ✅ shipped in 0.1.0a3 · 🚧 planned for 0.2.0a1 · ⏳ planned for 1.0.0 GA
 
 ### Axis 1 — Governance / Risk / Security / Compliance
 
@@ -148,21 +188,21 @@ Other LLM harness systems (LangGraph / CrewAI / Claude Code Skills / BMAD / Devi
 2. **Industry-specific compliance ready** — Banking (Basel III/IV), Insurance (Solvency II / IFRS 17), Automotive (ISO 26262 / 21434 / R155 / R156), Medical Device (ISO 14971 / IEC 62304 / FDA Part 820 / EU MDR), Embedded SW (AUTOSAR / MISRA / SEI CERT) all live under the same operating model.
 3. **Cross-axis triangulation** — a banking RFP that needs ICAAP (cat 11) + ITIL Continuity (cat 3) + ERM Governance (cat 1) + SAFe delivery (cat 6) + Pyramid exec communication (cat 21) traverses one router, one pack pipeline, one proposal log.
 
-This is the "moat" claim. It is not yet fully delivered — `0.1.0a3` ships the foundation (axes 1, 2, 14, 16 partial, 21, 23) — but the registry shape, governance contract, and persona mapping are stable enough that downstream packs land additively rather than rearchitecturally.
+This is the "moat" claim. It is not yet fully delivered — `0.4.0` covers the categories marked ✅ and ◐ in §2, while the industry axis has no pack yet — but the registry shape, governance contract, and persona mapping are stable enough that downstream packs land additively rather than rearchitecturally.
 
 ---
 
 ## 5. How to follow the milestone
 
-| Milestone | Categories added | Standards added | Target |
-|---|:-:|:-:|---|
-| **0.1.0a3 (today)** | 7 | ~30 | shipped |
-| 0.1.0a4 (planned) | docs | docs | this doc + README inventory |
-| 0.2.0a1 | +6 (cat 2 · 4 · 7 · 8 · 19 partial · 21 partial) | +30 | Phase 1 close |
-| 0.3.0 | +5 (cat 14 · 16 · 17 · 18 · 22) | +20 | Business axis complete |
-| 1.0.0 GA | +12 (industry + AI + aux) | ~30 | All 25 / 110+ |
+| Release | Packs | What changed |
+|---|:-:|---|
+| `0.1.0a7` | 15 | Wave 1a: meeting minutes, change management, tool adoption, charter, infographic |
+| `0.2.0a2` · `0.2.0a3` | 25 | Wave 1b/1c: audit lenses (UX, AI engineering, security, growth, cross-analysis), meta and health packs |
+| `0.3.2` | 43 | Wave 2: engineering ops, pricing / GTM / unit economics / platform strategy, decks and visual production, health and travel |
+| `0.4.0` | 43 | experimental opt-in kernel managers (no pack changes) |
+| 1.0.0 GA | — | industry categories (9–13) and the remaining ⏳ categories, contributed additively |
 
-Open the [Roadmap](../../03-plan/) (in the upstream Harness-Sillok project) for activation gates and dependencies.
+Release notes: [`CHANGELOG.md`](https://github.com/sillok-os/sillok/blob/main/CHANGELOG.md) · live status: [`STATUS.md`](https://github.com/sillok-os/sillok/blob/main/STATUS.md).
 
 ---
 
@@ -170,4 +210,4 @@ Open the [Roadmap](../../03-plan/) (in the upstream Harness-Sillok project) for 
 
 - README §"What works today" — the four `python -m sillok.<module>` CLIs that operate over whichever packs are shipped.
 - `packs/registry.yaml` — the source of truth for what's currently registered.
-- `obsidian-vault/90_Governance/Reports/20260424-rag-corpus-reevaluation.md` (upstream-only) — the K-6 ablation that motivated the vault-resident-only architecture.
+- The upstream K-6 ablation (not published) motivated the vault-resident-only architecture.
