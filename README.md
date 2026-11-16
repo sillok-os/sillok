@@ -12,7 +12,7 @@
 
 ---
 
-> **Status**: `v0.3.1` alpha — 29 packs (Wave 1 registry: 1a/1b/1c · Wave 2a on main, unreleased), 10 eval probes, 4-gate governance + MCP bridge live, **plus Wave 2 modules** and a **functional unified `sillok` CLI**. See [`STATUS.md`](STATUS.md) for the per-feature live / partial / stub / planned matrix before adoption.
+> **Status**: `v0.3.1` alpha — 34 packs (Wave 1 registry: 1a/1b/1c · Wave 2a–2b on main, unreleased), 10 eval probes, 4-gate governance + MCP bridge live, **plus Wave 2 modules** and a **functional unified `sillok` CLI**. See [`STATUS.md`](STATUS.md) for the per-feature live / partial / stub / planned matrix before adoption.
 >
 > **New in `0.3.0a1` (Wave 2)** — seven provider-neutral modules: `sillok.telemetry.gate` (schema-enforced telemetry write-gate) · `sillok.sangso.canary` (shadow-vs-prod KPI canary) · `sillok.yeonryun.coverage` (coverage-gap detection) · `sillok.eval.calibration` (Brier confidence calibration) · `sillok.naru.action_layer` (action axis of 2-D routing) · `sillok.yeonryun.optimizer` (DSPy/GEPA-ready optimizer interface) · `sillok.eval.probe_seeder` (unlabelled probe seeder). The unified `sillok` command now dispatches `route` / `eval` / `sangso` / `schemas` / `tongsa`. See [`CHANGELOG.md`](CHANGELOG.md).
 

@@ -492,6 +492,87 @@ packs:
       - "Pause, scout primary sources, tag [O]/[I]/[U]; codes and enums only from primary sources"
       - "Mandatory grounding_source line and ## Limits & Assumptions section"
 
+  # ── Wave 2b (business strategy + deck builder) ────────────────────────
+  - id: gtm-launch-playbook
+    title: GTM Launch Playbook — launch tier, positioning, 30-60-90 plan
+    path: packs/business/gtm-launch-playbook.md
+    category: workflow
+    sub_category: business
+    trigger_signals:
+      explicit: ["[gtm]", "[launch]", "[30-60-90]", "[positioning]"]
+      contains: ["go-to-market", "GTM", "launch plan", "launch tier", "positioning canvas", "crossing the chasm", "Product Hunt", "출시 계획", "런칭", "앱 출시", "마케팅 계획", "사전 예약"]
+    intent_tags: ["business", "launch", "positioning", "go-to-market"]
+    output_contracts: ["launch-tier.md", "positioning-canvas.md", "messaging-hierarchy.md", "launch-plan-90.md"]
+    precedence: 72
+    visibility_label: GTM Launch
+    summary_overlay:
+      - "Launch tier first, Dunford positioning before messaging, 30-60-90 plan across all tracks"
+      - "Day-90 gate agreed before launch: rename / reposition / retire if below 50 % of target"
+
+  - id: unit-economics-modeling
+    title: Unit Economics & Financial Modeling — CAC, LTV, cohorts, efficiency, scenarios
+    path: packs/business/unit-economics-modeling.md
+    category: workflow
+    sub_category: business
+    trigger_signals:
+      explicit: ["[unit-economics]", "[cac-ltv]", "[rule-of-40]", "[burn-multiple]", "[cohort]"]
+      contains: ["unit economics", "CAC", "LTV", "payback period", "Rule of 40", "burn multiple", "magic number", "net revenue retention", "NRR", "GRR", "cohort retention", "runway", "단위경제", "수익 모델", "손익분기", "매출 추정"]
+    intent_tags: ["business", "finance", "unit-economics", "cohort"]
+    output_contracts: ["unit-economics.md", "cac-ltv-segments.md", "cohort-retention.md", "financial-model.md"]
+    precedence: 73
+    visibility_label: Unit Economics
+    summary_overlay:
+      - "Exact metric formulas (compound churn, CAC without retention, full COGS), LTV by ≥ 2 methods"
+      - "Dollar + logo cohorts, Rule of 40/X, burn multiple, mandatory 3-scenario model"
+
+  - id: saas-pricing-packaging
+    title: SaaS Pricing & Packaging — price metric, tiers, willingness to pay, price changes
+    path: packs/business/saas-pricing-packaging.md
+    category: workflow
+    sub_category: business
+    trigger_signals:
+      explicit: ["[pricing]", "[packaging]", "[price-metric]", "[willingness-to-pay]"]
+      contains: ["pricing tiers", "price metric", "willingness to pay", "Van Westendorp", "good-better-best", "freemium", "pricing page", "price increase", "가격 정책", "요금제", "구독료", "유료화", "무료 체험"]
+    intent_tags: ["business", "pricing", "packaging", "monetization"]
+    output_contracts: ["price-metric.md", "gbb-table.md", "vw-psm.md", "price-change-playbook.md"]
+    precedence: 73
+    visibility_label: SaaS Pricing
+    summary_overlay:
+      - "Price metric first, then good-better-best tiers with fences and an anchor"
+      - "Van Westendorp (N ≥ 100), conjoint, live tests; grandfathered price changes"
+
+  - id: platform-strategy
+    title: Platform & Ecosystem Strategy — multi-sided markets, network effects, cold start
+    path: packs/business/platform-strategy.md
+    category: workflow
+    sub_category: business
+    trigger_signals:
+      explicit: ["[platform]", "[marketplace]", "[2-sided]", "[network-effects]"]
+      contains: ["marketplace", "network effect", "network effects", "two-sided", "multi-sided", "chicken and egg", "cold start problem", "take rate", "API-first", "partner program", "플랫폼 전략", "플랫폼 비즈니스", "커뮤니티 플랫폼", "네트워크 효과", "양면 시장"]
+    intent_tags: ["business", "platform", "marketplace", "network-effects"]
+    output_contracts: ["platform-canvas.md", "network-effects.md", "cold-start-plan.md", "take-rate-model.md", "platform-risks.md"]
+    precedence: 71
+    visibility_label: Platform Strategy
+    summary_overlay:
+      - "Core interaction first; typed network effects; cold start with a graduation condition"
+      - "Liquidity and per-side NPS, take rate with benchmarks, ≥ 4 of 6 platform risks answered"
+
+  - id: deck-builder
+    title: Deck Builder — one request to a verified, evidence-backed slide deck
+    path: packs/output-styles/deck-builder.md
+    category: output-style
+    sub_category: business
+    trigger_signals:
+      explicit: ["[deck]"]
+      contains: ["slide deck", "pitch deck", "IR deck", "presentation slides", "IR 덱", "피치덱", "발표 덱", "공모전 발표", "발표자료", "슬라이드 만들"]
+    intent_tags: ["deck", "slides", "presentation", "one-pass"]
+    output_contracts: ["deck-contract.md", "deck.md", "verification-note.md"]
+    precedence: 72
+    visibility_label: Deck Builder
+    summary_overlay:
+      - "Action titles proven by exhibits; numbers and URLs only from verified sources"
+      - "Finished means verified as the real file; Limits & Assumptions always present"
+
 retrieval_plans:
   - id: vault_first
     description: "Vault search only (default for most queries)"
