@@ -654,6 +654,71 @@ packs:
       - "Fallback only after the playbook; ≤ 5 candidates, adapt not copy"
       - "Keep CC BY 4.0 attribution and three-axis taxonomy tags; never hide the fallback"
 
+  # ── Wave 2d (health + travel) ──────────────────────────────────────────
+  - id: running-injury-prevention
+    title: Running Injury & Prevention — road, trail and hiking injuries, load and return to run
+    path: packs/lifestyle/running-injury-prevention.md
+    category: domain
+    sub_category: health
+    trigger_signals:
+      explicit: ["[running]", "[running-injury]", "[trail]", "[hiking]"]
+      contains: ["running injury", "runner's knee", "IT band", "iliotibial", "plantar fasciitis", "shin splints", "Achilles tendinopathy", "stress fracture", "return to run", "marathon training", "trail running", "러닝 부상", "달리기 부상", "러너스니", "족저근막", "아킬레스건", "정강이 통증", "마라톤 준비", "트레일 러닝"]
+    intent_tags: ["health", "sports-medicine", "running", "non-prescriptive"]
+    output_contracts: ["9-section-running-report.md", "four-frame-injury.md", "return-to-run.md"]
+    precedence: 66
+    visibility_label: Running Injury
+    summary_overlay:
+      - "Emergency and red-flag routing first; possibilities, never diagnoses or doses"
+      - "Four frames per injury, prevention pillars, load spikes as flags, conservative return to run"
+
+  - id: running-race-data-analysis
+    title: Running Race Data Analysis — find the checkpoint that failed, then plan the next start
+    path: packs/lifestyle/running-race-data-analysis.md
+    category: domain
+    sub_category: health
+    trigger_signals:
+      explicit: ["[race-analysis]"]
+      contains: ["race splits", "race result analysis", "DNF", "cut-off time", "Garmin data", "Strava data", "training log analysis", "대회 기록", "페이스 분석", "훈련 기록 분석", "완주 전략"]
+    intent_tags: ["health", "running", "performance-data", "non-prescriptive"]
+    output_contracts: ["8-section-race-analysis.md", "checkpoint-timetable.md", "limits-and-method.md"]
+    precedence: 64
+    visibility_label: Race Data
+    summary_overlay:
+      - "Failing checkpoint first; slow vs stopped; same training windows; grade-normalised comparison"
+      - "Runner sets goals; no diagnosis or 'train more' advice; watch metrics labelled as estimates"
+
+  - id: nutrition
+    title: Nutrition — diet patterns, energy and protein, measurement, red flags
+    path: packs/lifestyle/nutrition.md
+    category: domain
+    sub_category: health
+    trigger_signals:
+      explicit: ["[nutrition]", "[diet]"]
+      contains: ["nutrition", "meal plan", "diet plan", "weight loss diet", "protein intake", "intermittent fasting", "keto diet", "Mediterranean diet", "식단", "다이어트", "영양제", "간헐적 단식", "영양 성분", "칼로리", "영양 정보"]
+    intent_tags: ["health", "nutrition", "diet", "non-prescriptive"]
+    output_contracts: ["9-section-nutrition.md", "diet-pattern-comparison.md", "red-flag-routing.md"]
+    precedence: 64
+    visibility_label: Nutrition
+    summary_overlay:
+      - "Eating-disorder and red-flag routing first; no brand-plus-dose, no weight promises"
+      - "Pattern comparison with evidence tiers; 28-day quick wins; special populations"
+
+  - id: travel-trip-planning
+    title: Travel Trip Planning — fixed points, comparable searches, entry rules, human-only payment
+    path: packs/lifestyle/travel-trip-planning.md
+    category: domain
+    sub_category: travel
+    trigger_signals:
+      explicit: ["[travel]", "[travel-trip-planning]"]
+      contains: ["trip planning", "travel itinerary", "flight search", "stopover", "layover", "ESTA", "visa requirements", "여행 계획", "여행 일정", "출장 일정", "항공권", "숙소 예약", "스톱오버"]
+    intent_tags: ["travel", "itinerary", "booking-prep", "entry-requirements"]
+    output_contracts: ["trip-header.md", "movement-comparison.md", "entry-requirements.md"]
+    precedence: 66
+    visibility_label: Travel Planning
+    summary_overlay:
+      - "Work back from fixed points; identical queries across sources; graded price evidence"
+      - "Entry rules per stop from official sources; unknown costs ≠ 0; people pay and ticket"
+
 retrieval_plans:
   - id: vault_first
     description: "Vault search only (default for most queries)"
