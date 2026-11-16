@@ -6,6 +6,18 @@ adheres to [SemVer](https://semver.org/).
 
 ## [Unreleased]
 
+### Added — packs Wave 2d (health + travel)
+- `running-injury-prevention` (domain/health) — emergency and red-flag
+  routing first, four frames per injury, prevention pillars, load spikes as
+  flags (ACWR caveats noted), conservative return to run.
+- `running-race-data-analysis` (domain/health) — failing checkpoint first,
+  slow vs stopped, same training windows, runner-owned goals.
+- `nutrition` (domain/health) — eating-disorder routing, diet-pattern
+  comparison with evidence tiers, no weight promises or brand doses.
+- `travel-trip-planning` (domain/travel) — fixed points, identical queries,
+  graded price evidence, per-stop entry rules, people pay and ticket.
+- Router golden: +4 positive rows (G49–G52).
+
 ### Added — packs Wave 2c (visual production + quality)
 - `design-artifact-production` — one artifact brief, claim ledger, semantic
   tokens and format adapters (image, print, slides, Word, Excel, web).
