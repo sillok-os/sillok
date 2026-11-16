@@ -12,7 +12,7 @@
 
 ---
 
-> **Status**: `v0.3.2` alpha — 43 packs (Wave 1: 1a/1b/1c · Wave 2: 2a–2d), 10 eval probes, 4-gate governance + MCP bridge live, **plus Wave 2 modules** and a **functional unified `sillok` CLI**. See [`STATUS.md`](STATUS.md) for the per-feature live / partial / stub / planned matrix before adoption.
+> **Status**: `v0.4.0` alpha — 43 packs (Wave 1: 1a/1b/1c · Wave 2: 2a–2d), experimental opt-in kernel managers, 10 eval probes, 4-gate governance + MCP bridge live, **plus Wave 2 modules** and a **functional unified `sillok` CLI**. See [`STATUS.md`](STATUS.md) for the per-feature live / partial / stub / planned matrix before adoption.
 >
 > **New in `0.3.0a1` (Wave 2)** — seven provider-neutral modules: `sillok.telemetry.gate` (schema-enforced telemetry write-gate) · `sillok.sangso.canary` (shadow-vs-prod KPI canary) · `sillok.yeonryun.coverage` (coverage-gap detection) · `sillok.eval.calibration` (Brier confidence calibration) · `sillok.naru.action_layer` (action axis of 2-D routing) · `sillok.yeonryun.optimizer` (DSPy/GEPA-ready optimizer interface) · `sillok.eval.probe_seeder` (unlabelled probe seeder). The unified `sillok` command now dispatches `route` / `eval` / `sangso` / `schemas` / `tongsa`. See [`CHANGELOG.md`](CHANGELOG.md).
 
@@ -265,7 +265,7 @@ Optional:
 
 ### Quickstart (60 seconds) — *GA target*
 
-> **Status (2026-06-02)**: this Quickstart describes the **GA experience** (`>=1.0.0`). The current shipped version is `0.3.2` (alpha-stage 0.x — Wave 1 and Wave 2 complete, 43 packs). For what works **today**, jump to [Part 4 — Usage](#part-4--usage).
+> **Status (2026-06-02)**: this Quickstart describes the **GA experience** (`>=1.0.0`). The current shipped version is `0.4.0` (alpha-stage 0.x — Wave 1 and Wave 2 complete, 43 packs, experimental kernel managers). For what works **today**, jump to [Part 4 — Usage](#part-4--usage).
 
 ```bash
 pip install sillok               # 1.0.0+ (GA target; today see Part 4 — Usage)

@@ -3,7 +3,7 @@
 Authoritative status of each [Top 10 Feature](README.md#top-10-features) at the latest published release.
 First-time readers — use this page to verify what is shipped before adopting.
 
-- **Released**: `v0.3.2` — [GitHub Release](https://github.com/sillok-os/sillok/releases/tag/v0.3.2) · [PyPI](https://pypi.org/project/sillok/0.3.2/) · packs Wave 2 (25 → 43 packs: engineering, business, visual, health & travel). Previous: `v0.3.1` (2026-11-16) — router no-match fix, abbreviation token matching, router golden + gating CI, untagged `0.x` versioning so `pip install sillok` gets the real package (previous: `v0.3.0a2`, 2026-08-11 — install/MCP-setup fixes)
+- **Released**: `v0.4.0` — [GitHub Release](https://github.com/sillok-os/sillok/releases/tag/v0.4.0) · [PyPI](https://pypi.org/project/sillok/0.4.0/) · experimental kernel managers (work context, context budget, playbook, memory recall) + evidence and request-coverage checkers, all opt-in. Previous: `v0.3.2` (2026-11-17) — packs Wave 2 (25 → 43 packs); `v0.3.1` (2026-11-16) — router no-match fix, abbreviation token matching, router golden + gating CI, untagged `0.x` versioning so `pip install sillok` gets the real package (previous: `v0.3.0a2`, 2026-08-11 — install/MCP-setup fixes)
 - **Status legend**: `live` = working code + tests + docs · `partial` = working but missing a documented sub-feature · `stub` = directory or file present, no functional code · `planned` = not yet present
 
 ## Feature matrix
@@ -35,10 +35,14 @@ Provider-neutral building blocks for observability, governance evidence, and sel
 | `sillok.yeonryun.optimizer` | `live` | dependency-free `Optimizer` protocol + reference impl | [#22](https://github.com/sillok-os/sillok/pull/22) |
 | `sillok.eval.probe_seeder` | `live` | seed unlabelled probes from conversation logs (redacted) | [#23](https://github.com/sillok-os/sillok/pull/23) |
 
-## Kernel managers (`0.4.0`, experimental — **not in any published release yet**)
+## Kernel managers (`0.4.0`, experimental)
 
-Ported from the upstream harness; publication waits for the upstream effect
-measurement. Each has an off switch; the playbook starts in shadow mode.
+Ported from the upstream harness and released in `v0.4.0`. Opt-in: nothing
+runs until the hook is installed; work context, playbook and recall run only
+when their config section is present, and the context budget only shortens
+blocks those managers produce. Each has an off switch; the playbook starts
+in shadow mode. Their effect on answers has not
+been measured in a controlled test yet.
 
 | Module | Status | Purpose |
 |---|:-:|---|
