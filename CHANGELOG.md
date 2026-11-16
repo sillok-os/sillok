@@ -6,6 +6,19 @@ adheres to [SemVer](https://semver.org/).
 
 ## [Unreleased]
 
+### Added — packs Wave 2c (visual production + quality)
+- `design-artifact-production` — one artifact brief, claim ledger, semantic
+  tokens and format adapters (image, print, slides, Word, Excel, web).
+- `diagram-design` — behaviour-first type selection; one accent, 1 px
+  hairlines, 4-unit grid, tokens as CSS variables, measured AA contrast.
+- `visual-quality` (quality guard) — V1–V8, anti-patterns, DESIGN.md
+  companion and a release gate for metadata, prompt residue and privacy.
+- `image-prompt-playbook` — brief checklist, 8-slot sentence, JSON for
+  multi-panel layouts, one-variable iteration, four-role A/B, safety rules.
+- `gpt-image-2-reference` — low-precedence fallback to a CC BY 4.0 prompt
+  catalogue with adaptation, attribution and taxonomy tags.
+- Router golden: +5 positive rows (G44–G48).
+
 ### Added — packs Wave 2b (business strategy + deck builder)
 - `gtm-launch-playbook` — launch tier, positioning canvas, messaging
   hierarchy, 30-60-90 plan, chasm sequencing, day-90 gate.
