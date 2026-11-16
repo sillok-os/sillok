@@ -107,6 +107,7 @@ def test_search_filters_then_disposition_promotes(
             vault_root=vault_with_results,
             source_repo="acme/playbooks",
             topic="saas-pricing",
+            allow_temp_source=True,  # pytest tmp_path lives under the temp dir
         )
         promoted.append(result)
 
@@ -137,6 +138,7 @@ def test_seam_skips_low_signal_logs(
         auto_extract=True,
         target_dir=target_dir,
         vault_root=vault_with_results,
+        allow_temp_source=True,
     )
     assert result["disposition"] == "none"
     assert not result.get("extracted_files")

@@ -37,6 +37,7 @@ import json
 import os
 import re
 import sys
+import tempfile
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -381,6 +382,22 @@ quality_score: 0.6
 # ----------------------------------------------------------------------
 
 
+def _is_temp_path(path: Path) -> bool:
+    """True for ``/tmp/...`` and anything under the platform temp directory.
+
+    Before 0.3.1 only the literal ``/tmp/`` prefix was checked, so the guard
+    fired on Linux but not on macOS (``/var/folders/...``) — and Linux CI
+    failed tests that macOS passed.
+    """
+    if str(path).startswith("/tmp/"):
+        return True
+    try:
+        path.resolve().relative_to(Path(tempfile.gettempdir()).resolve())
+    except ValueError:
+        return False
+    return True
+
+
 def process_file(
     filepath: str | os.PathLike[str],
     *,
@@ -390,6 +407,7 @@ def process_file(
     vault_root: Path | None = None,
     source_repo: str | None = None,
     topic: str = "general",
+    allow_temp_source: bool = False,
 ) -> dict[str, Any]:
     """Process a single ``.md`` file and return a disposition result.
 
@@ -413,6 +431,10 @@ def process_file(
         Provenance string written into the atomic note frontmatter.
     topic:
         ``topic`` value written into the atomic note frontmatter.
+    allow_temp_source:
+        Auto-extraction refuses sources under ``/tmp/`` or the system temp
+        directory, because their ``source_path`` is not canonical. Set this
+        to true only when the temp location is intentional (tests).
     """
     path = Path(filepath)
     if not path.exists() or path.suffix != ".md":
@@ -425,9 +447,9 @@ def process_file(
     result["title"] = meta.get("title", path.stem)
 
     if auto_extract and result["extractable_atoms"]:
-        if str(path).startswith("/tmp/"):
+        if not allow_temp_source and _is_temp_path(path):
             result["warning"] = (
-                "/tmp/ paths are not auto-extract targets "
+                "/tmp/ and system temp paths are not auto-extract targets "
                 "(canonical source_path cannot be guaranteed)"
             )
         elif target_dir is None:
