@@ -11,9 +11,13 @@
 
 > **알림**: 본 README는 [영문 README](README.md)의 동격(同格) 한국어판입니다. 코드·로그·CLI 출력 자체는 영어로 통일되어 있으나, 핵심 어휘에 한해 우리 전통 용어 — *실록·나루·봉수·직지·상소·장경·연륜·사관·법전·편찬·과거·마당·두레·통사·역참* — 을 그대로 살려 표기합니다.
 
-> **상태(v0.3.0a1, 2026-06-02)**: 25 packs(Wave 1 레지스트리) · 10 eval probes · 4-gate 거버넌스 · MCP 브리지 live, 여기에 **Wave 2 모듈 7종**과 **동작하는 통합 `sillok` CLI**가 추가되었습니다. 채택 전 기능별 live/partial/stub 매트릭스는 [`STATUS.md`](STATUS.md) 참고. (본 한국어판 본문 일부는 이전 버전 기준이며 영문판이 최신 정본입니다.)
+> **상태(v0.4.0, 2026-11-17)**: 43 packs(Wave 1: 25 · Wave 2: 18) · 실험적 opt-in 커널 관리자 4종 · 10 eval probes · 4-gate 거버넌스 · MCP 브리지 live · 동작하는 통합 `sillok` CLI. 채택 전 기능별 live/partial/stub 매트릭스는 [`STATUS.md`](STATUS.md) 참고. 두 판이 어긋나면 영문판이 정본입니다.
 >
-> **`0.3.0a1` 신규(Wave 2)** — provider-neutral 모듈 7종: `sillok.telemetry.gate`(스키마 강제 telemetry write-gate) · `sillok.sangso.canary`(shadow vs prod KPI canary) · `sillok.yeonryun.coverage`(coverage-gap 탐지) · `sillok.eval.calibration`(Brier confidence 보정) · `sillok.naru.action_layer`(2D 라우팅의 action축) · `sillok.yeonryun.optimizer`(DSPy/GEPA-ready optimizer 인터페이스) · `sillok.eval.probe_seeder`(unlabeled probe seeder). 통합 `sillok` 명령은 이제 `route`/`eval`/`sangso`/`schemas`/`tongsa`를 디스패치합니다. 상소(sangso)·사관(telemetry)·과거(gwageo/eval) 모듈은 더 이상 stub이 아니라 live이며 Wave 2 기능이 더해졌습니다. 자세한 내역: [`CHANGELOG.md`](CHANGELOG.md).
+> **`0.4.0` 신규** — 메시지 사이에서 동작하는 실험적 opt-in 커널 관리자 4종: `sillok.sacho`(작업 맥락) · `sillok.seungjeongwon`(문맥 예산) · `sillok.gyeongyeon`(플레이북, 기본 shadow) · `sillok.chunchugwan`(기억 회수). Claude Code 훅 하나(`python -m sillok.kernel.hook`)로 묶고, `sillok.eval.evidence`·`sillok.eval.request_coverage`를 더했습니다. 설정하기 전에는 아무것도 동작하지 않습니다 — [F. 커널 관리자](#f-커널-관리자-실험적-opt-in) 참고.
+>
+> **`0.3.2` 신규** — 팩 Wave 2: 25 → 43 packs(엔지니어링 운영 · 가격·GTM·단위경제·플랫폼 전략 · 덱·다이어그램·이미지 프롬프트·시각 품질 · 건강·여행).
+>
+> **`0.3.0a1` 이후** — provider-neutral 모듈 7종: `sillok.telemetry.gate`(스키마 강제 telemetry write-gate) · `sillok.sangso.canary`(shadow vs prod KPI canary) · `sillok.yeonryun.coverage`(coverage-gap 탐지) · `sillok.eval.calibration`(Brier confidence 보정) · `sillok.naru.action_layer`(2D 라우팅의 action축) · `sillok.yeonryun.optimizer`(DSPy/GEPA-ready optimizer 인터페이스) · `sillok.eval.probe_seeder`(unlabeled probe seeder). 통합 `sillok` 명령은 이제 `route`/`eval`/`sangso`/`schemas`/`tongsa`를 디스패치합니다. 상소(sangso)·사관(telemetry)·과거(gwageo/eval) 모듈은 더 이상 stub이 아니라 live이며 Wave 2 기능이 더해졌습니다. 자세한 내역: [`CHANGELOG.md`](CHANGELOG.md).
 
 ---
 
@@ -24,7 +28,7 @@
 1. [Part 1 — 가치 / 개요도](#part-1--가치--개요도) — Sillok 이 무엇이며 무엇을 받게 되나
 2. [Part 2 — 비즈니스 활용 방안](#part-2--비즈니스-활용-방안) — 본인 역할과 워크플로 매핑
 3. [Part 3 — 설치](#part-3--설치) — 요구사항 + 설치 단계
-4. [Part 4 — 사용](#part-4--사용) — `0.1.0a5` 가 today 동작시키는 것 + 사용법
+4. [Part 4 — 사용](#part-4--사용) — `0.4.0` 에서 지금 동작하는 것 + 사용법
 5. [Part 5 — 유지보수 & 확장](#part-5--유지보수--확장) — 트러블슈팅, 다인원 배포, 본인 도메인 확장
 6. [Part 6 — 부록](#part-6--부록) — 라이선스, 선행 연구, 인용
 
@@ -34,11 +38,12 @@
 
 ### 무엇을 받게 되나요
 
-- **10+ 개의 starter 프롬프트 팩** 기본 탑재(전략·PMO·ITIL·리스크·SAFe·exec-comms·governance·report-quality 등)
+- **43개 프롬프트 팩** 기본 탑재(전략·PMO·ITIL·리스크·SAFe·거버넌스·임원 보고와 덱·보고서 품질·가격과 GTM·단위경제·플랫폼 전략·엔지니어링 운영·다이어그램과 이미지 프롬프트 등)
 - **2단계 라우터** — 적합한 팩(들)을 먼저 고르고, 적합한 retrieval plan 을 다음으로 선택
 - **5종 retrieval plan** — `wiki_first`, with-fallback, recovery-first, dual-compare, no-corpus
 - **Reason-coded 출력** — 라우팅 결정마다 R1~R7 태깅(감사 가능)
 - **Proposal-only governance** — 4단계 게이트 검토, 무단 덮어쓰기 차단
+- **커널 관리자(실험적, opt-in)** — 메시지 사이의 작업 맥락·문맥 예산·플레이북·기억 회수를 Claude Code 훅 하나로 연결
 - 라우팅 자체는 **API 키 불필요**. `--execute` 와 키를 추가하면 LLM 호출
 - **외부 코퍼스 의존성 없음** — starter 코퍼스와 모든 통합이 `sillok` 안에 포함. 별도 wiki/지식 베이스 도구 설치 불필요
 
@@ -55,8 +60,8 @@ flowchart LR
         WORK["📝 신규 작업<br/>research · debrief · retro"]
     end
 
-    subgraph SILLOK["Sillok 0.1.0a5"]
-        PACKS["📦 10 starter packs<br/>strategy · PMO · ITIL · risk ·<br/>SAFe · pricing · governance ·<br/>report-quality · exec-comm"]
+    subgraph SILLOK["Sillok 0.4.0"]
+        PACKS["📦 43 packs<br/>strategy · PMO · ITIL · risk ·<br/>SAFe · pricing · GTM · finance ·<br/>exec-comm · decks · diagrams ·<br/>engineering ops · …"]
         ROUTER["🧭 나루(Naru)<br/>2단계 라우터"]
         SEARCH["🔎 봉수(Bongsu)<br/>vault 검색"]
         PROMOTE["🌱 연륜(Yeonryun)<br/>disposition + atom 승격"]
@@ -88,34 +93,38 @@ flowchart LR
 flowchart TB
     subgraph CORPUS["지식 계층"]
         VAULTROOT["vault root<br/>(.md + frontmatter v5.4)"]
-        REGISTRY["packs/registry.yaml<br/>(56-pack typed registry)"]
+        REGISTRY["packs/registry.yaml<br/>(43-pack typed registry)"]
     end
 
     subgraph INGEST["Ingest 경로"]
         PYEON["편찬(pyeonchan).ingest_md<br/>(md → atoms · today)"]
-        PYEON_F["편찬(pyeonchan) 다포맷<br/>(pdf/docx/xlsx · 0.2.0a1)"]
+        PYEON_F["편찬(pyeonchan) 다포맷<br/>(pdf/docx/xlsx · 계획)"]
     end
 
     subgraph QUERY["Query 경로"]
         BONGSU["봉수(bongsu).search<br/>(frontmatter + body grep)"]
         NARU["나루(naru).router_2tier<br/>(tier 1 키워드 → tier 2 LLM)"]
-        JIKJI["직지(jikji)<br/>(typed pack registry · stub)"]
+        JIKJI["직지(jikji)<br/>(typed pack registry)"]
     end
 
     subgraph LINT["Lint · 승격 경로"]
         YEON["연륜(yeonryun).disposition<br/>(score → atom 승격)"]
-        SANGSO["상소(sangso)<br/>(4-gate proposal · stub)"]
+        SANGSO["상소(sangso)<br/>(4-gate proposal)"]
     end
 
     subgraph OBS["관측"]
-        SAGWAN["사관(sagwan) / telemetry<br/>(라우팅 로그 · stub)"]
-        GWAGEO["과거(gwageo) / eval<br/>(probes · runner stub)"]
+        SAGWAN["사관(sagwan) / telemetry<br/>(write-gate · partial)"]
+        GWAGEO["과거(gwageo) / eval<br/>(10 probes · CI 게이트)"]
     end
 
     subgraph BRIDGES["엣지 브릿지"]
-        TONGSA["통사(tongsa) / MCP bridge<br/>(Claude Code · Cursor · stub)"]
+        TONGSA["통사(tongsa) / MCP bridge<br/>(MCP 도구 3종)"]
         DURE["두레(dure) / plugins<br/>(WAF fetch · code search · stub)"]
         YEOK["역참(yeokcham) / 외부 bridge<br/>(stub)"]
+    end
+
+    subgraph KERNEL_G["커널 · 0.4.0 · opt-in"]
+        KERNEL["kernel.hook<br/>(작업 맥락 · 문맥 예산 ·<br/>플레이북 · 기억 회수)"]
     end
 
     USER["사용자<br/>(CLI · Python API · IDE)"]
@@ -135,45 +144,55 @@ flowchart TB
     GWAGEO -.regress.-> NARU
     TONGSA -.MCP.-> USER
     DURE -.plugin.-> NARU
+    KERNEL -.hook.-> USER
 
     classDef stub fill:#fee2e2,stroke:#991b1b,stroke-dasharray: 5 5
     classDef live fill:#dcfce7,stroke:#14532d
-    class BONGSU,NARU,YEON,PYEON,VAULTROOT,REGISTRY live
-    class JIKJI,SANGSO,SAGWAN,GWAGEO,TONGSA,DURE,YEOK,PYEON_F stub
+    classDef partial fill:#fef9c3,stroke:#854d0e
+    class BONGSU,NARU,YEON,PYEON,VAULTROOT,REGISTRY,JIKJI,SANGSO,GWAGEO,TONGSA live
+    class SAGWAN,KERNEL partial
+    class DURE,YEOK,PYEON_F stub
 ```
 
-**범례:** 녹색 실선 = `0.1.0a5` production-path · 빨강 점선 = stub / Phase 1 / `0.2.0a1`. 모든 녹색 노드는 today `python -m sillok.<module>...` CLI 가 작동.
+**범례:** 녹색 = `0.4.0` 에서 `live` · 노랑 = `partial`(코드·테스트는 있고 하위 기능 또는 효과 측정이 빠짐) · 빨강 점선 = stub / 계획. 색은 [`STATUS.md`](STATUS.md) 를 따릅니다.
 
 ### Framework 커버리지 — Sillok 이 통합하는 것
 
-Sillok 의 **로드맵** 은 **5축 / 25 카테고리 / 110+ 글로벌 표준** 을 단일 registry · 단일 router · 단일 proposal-only governance 위에서 통합. **`0.1.0a5` 은 25 카테고리 중 ~7개 (10 starter packs) ship**, 나머지는 milestone 에 단계 도착.
+Sillok 의 **로드맵** 은 **5축 / 25 카테고리 / 110+ 글로벌 표준** 을 단일 registry · 단일 router · 단일 proposal-only governance 위에서 통합합니다. **`0.4.0` 은 43 packs 를 ship**(Wave 1: 25 · Wave 2: 18)하며, 팩이 없는 카테고리는 도메인 기여자에게 열려 있습니다.
 
 ```
 [축1] 거버넌스         [축2] 딜리버리        [축3] 산업특화          [축4] 비즈니스       [축5] AI/엔지니어링
-├─ ERM/EA          ✅  ├─ PMBOK 8        ✅  ├─ 자동차            ⏳ ├─ 전략/BM       ✅ ├─ AI/LLM Eng    🚧
-├─ Risk 정량       🚧 ├─ SAFe 6.0       ✅  ├─ 의료기기          ⏳ ├─ M&A/재무      ⏳ └─ Prompt 시퀀싱  ⏳
-├─ ITIL/ITSM       ✅  ├─ 변화관리        🚧 ├─ 금융 은행         ⏳ ├─ SaaS/Pricing/GTM ◐
-└─ 보안/컴플       🚧 └─ 조직설계        🚧 ├─ 보험              ⏳ ├─ 그로스/데이터  ⏳ [보조] 출력
-                                            └─ 임베디드 SW       ⏳ └─ UX/Discovery  ⏳ ├─ 외부 배포      ◐
+├─ ERM/EA          ✅  ├─ PMBOK 8        ✅  ├─ 자동차            ⏳ ├─ 전략/BM       ✅ ├─ AI/LLM Eng    ◐
+├─ Risk 정량       ◐  ├─ SAFe 6.0       ✅  ├─ 의료기기          ⏳ ├─ M&A/재무      ◐ └─ Prompt 시퀀싱  ✅
+├─ ITIL/ITSM       ✅  ├─ 변화관리        ✅  ├─ 금융 은행         ⏳ ├─ SaaS/Pricing/GTM ✅
+└─ 보안/컴플       ◐  └─ 조직설계        ⏳  ├─ 보험              ⏳ ├─ 그로스/데이터  ◐ [보조] 출력
+                                            └─ 임베디드 SW       ⏳ └─ UX/Discovery  ◐ ├─ 외부 배포      ✅
                                                                                        ├─ 콘텐츠 발행    ⏳
-✅ 0.1.0a5 today ship                                                                   ├─ 보고서 품질    ✅
-◐ 0.1.0a5 부분 ship                                                                     ├─ Enterprise B2B ⏳
-🚧 0.2.0a1 (Phase 1) 예정                                                                ├─ 디자인 시스템  ⏳
-⏳ 1.0.0 GA 예정                                                                         └─ 다이어그램/이미지 ⏳
+✅ 0.4.0 전용 팩 있음                                                                   ├─ 보고서 품질    ✅
+◐ 부분 — 감사 렌즈 또는 한 측면만                                                        ├─ Enterprise B2B ⏳
+⏳ 팩 없음 — 기여 환영                                                                   ├─ 디자인 시스템  ◐
+                                                                                       └─ 다이어그램/이미지 ✅
 ```
 
-#### 0.1.0a5 가 ship 하는 것
+#### 0.4.0 이 ship 하는 것 (43 packs)
 
-| 카테고리 | Pack(s) | 표준 |
+| 영역 | Pack(s) | 프레임워크 / 방법 |
 |---|---|---|
 | ERM · IT 거버넌스 · EA | `governance-standards` | COSO ERM 2017 · ISO 31000 · COBIT 2019 · TOGAF 10 ADM · Three Lines |
 | ITIL · ITSM | `itil-operations` | ITIL v4 · 5-Why + Ishikawa · Blameless PM · BIA · DR runbook |
-| 프로젝트 · 포트폴리오 | `pm-enhanced` + `portfolio-governance` + `risk-uncertainty` | PMBOK 8 · Stage-Gate · Power-Interest · Kraljic |
+| 프로젝트 · 포트폴리오 | `pm-enhanced` + `portfolio-governance` + `risk-uncertainty` + `project-charter` | PMBOK 8 · Stage-Gate · Power-Interest · Kraljic |
 | SAFe 애자일 | `safe-agile-delivery` | SAFe 6.0 · PI Planning · WSJF · ROAM · Lean Portfolio · I&A |
-| 전략 · 시장 · BM | `consulting-strategy-audit` | Porter 5F · Ansoff · Blue Ocean · BMC · TAM/SAM/SOM · Pyramid · SCQA |
-| SaaS · 감사 (부분) | `consulting-saas-audit` | SaaS audit lens — pricing/GTM 팩은 1.0.0 GA 예정 |
-| 임원 커뮤니케이션 | `exec-communication` | Pyramid · SCQA · 10-slide Board · 1-Pager · Sequoia · MD&A |
+| 변화관리 · 도구 도입 | `change-management` + `tool-adoption-consulting` | ADKAR · Kotter 8단계 |
+| 전략 · 시장 · BM | `consulting-strategy-audit` + `platform-strategy` | Porter 5F · Ansoff · Blue Ocean · BMC · TAM/SAM/SOM · 네트워크 효과 · 콜드 스타트 |
+| SaaS · 가격 · GTM | `consulting-saas-audit` + `saas-pricing-packaging` + `gtm-launch-playbook` | 가격 지표 · good-better-best · Van Westendorp · 포지셔닝 캔버스 · 캐즘 |
+| 재무 모델링 | `unit-economics-modeling` | CAC / LTV · 회수 기간 · NRR / GRR · Rule of 40 · burn multiple |
+| 감사 렌즈 | `consulting-uxui-audit` · `consulting-ai-engineering-audit` · `consulting-security-audit` · `consulting-growth-audit` · `consulting-crossanalysis` | UX · AI/LLM 엔지니어링 · 보안 · 그로스 · 교차 분석 |
+| 임원 커뮤니케이션 · 덱 | `exec-communication` + `deck-builder` | Pyramid · SCQA · 10-slide Board · 1-Pager · Sequoia · MD&A |
 | 보고서 품질 | `report-quality` | CRAAP · AIMQ · IQF · Bond Triangulation |
+| 시각 제작 | `infographic-design` · `design-artifact-production` · `diagram-design` · `visual-quality` · `image-prompt-playbook` · `gpt-image-2-reference` | 다이어그램·인포그래픽 패턴 · 대비 검사 · 이미지 프롬프트 반복 |
+| 엔지니어링 운영 | `sw-engineering-operations` · `github-operations` · `github-actions-ops` | 변경 · 리뷰 · CI/CD 운영 |
+| 업무 습관 · 메타 | `meeting-minutes` · `worklog` · `agent-1on1` · `pack-maintenance` · `prompt-sequencing-meta` · `cold-domain-grounding` | 회의록 · 업무 기록 · 팩 관리 · 프롬프트 시퀀싱 · 낯선 도메인 근거 확인 |
+| 건강 · 여행 (개인) | `everyday-health-symptom` · `running-injury-prevention` · `running-race-data-analysis` · `nutrition` · `travel-trip-planning` | 위험 신호 우선 · 의료 조언 아님 · 결제·예약은 사람이 |
 
 > 📚 **상세 인벤토리** — 25 카테고리 × 110+ 표준 × ship status × persona 페어링 → [`docs/architecture/framework-coverage.md`](docs/architecture/framework-coverage.md).
 
@@ -209,8 +228,8 @@ Sillok 의 **로드맵** 은 **5축 / 25 카테고리 / 110+ 글로벌 표준** 
 | 전략/비즈 컨설턴트 (A1) · 제품 매니저 · CPO/CSO/CEO | **#14 전략/BM** + #16 SaaS + #21 임원 커뮤니케이션 | ✅ today |
 | 프로젝트 컨설턴트 (PMP) · PjM/PMO Lead · COO/PfM | **#5 PMBOK** + #6 SAFe + #2 리스크 | ✅ today |
 | ITO/ITIL 컨설턴트 · SRE/ITSM · CIO/CISO | **#3 ITIL** + #1 ERM + #4 보안 (예정) | ✅ today |
-| Risk 컨설턴트 (FAIR) · Risk Engineer · CRO | **#1 ERM** + #2 리스크 정량 | ✅ + 🚧 0.2.0a1 |
-| AI Solution Architect · ML Engineer · CTO/CDO | #19 AI/LLM Eng | 🚧 0.2.0a1 |
+| Risk 컨설턴트 (FAIR) · Risk Engineer · CRO | **#1 ERM** + #2 리스크 정량 | ✅ + ◐ (`risk-uncertainty`) |
+| AI Solution Architect · ML Engineer · CTO/CDO | #19 AI/LLM Eng | ◐ `consulting-ai-engineering-audit` |
 | Industry SME (자동차 / 의료 / 금융 / 보험 / 임베디드) | #9~#13 | ⏳ 1.0.0 GA |
 
 > 🤝 **본인 도메인 pack 추가?** 아직 ship 되지 않은 17~18 카테고리는 도메인 SME 분들이 추가하실 수 있도록 의도적으로 비워둔 영역입니다. 단계별 가이드: [`docs/contributing/extending-with-your-domain.md`](docs/contributing/extending-with-your-domain.md).
@@ -247,7 +266,7 @@ print(result.confidence)           # 'high'
 EOF
 ```
 
-> 위 워크플로는 **GA 경험** (`>=1.0.0`) 기준. 현재 alpha (`0.1.0a5`) 의 today 동작 경로는 [Part 4 — 사용](#part-4--사용) 참조.
+> 위 워크플로는 **GA 경험** (`>=1.0.0`) 기준. 현재 alpha (`0.4.0`) 에서 지금 동작하는 경로는 [Part 4 — 사용](#part-4--사용) 참조.
 
 ---
 
@@ -266,7 +285,7 @@ EOF
 
 ### 60초 퀵스타트 — *GA 목표*
 
-> **상태(2026-04-27)**: 본 퀵스타트는 **GA 경험**(`>=1.0.0`) 기준입니다. 현재 출시 버전은 `0.1.0a5` (alpha). today 동작 경로는 [Part 4 — 사용](#part-4--사용) 참조.
+> **상태(2026-11-17)**: 본 퀵스타트는 **GA 경험**(`>=1.0.0`) 기준입니다. 현재 출시 버전은 `0.4.0` (alpha · 43 packs · 실험적 커널 관리자). today 동작 경로는 [Part 4 — 사용](#part-4--사용) 참조.
 
 ```bash
 pip install sillok               # 1.0.0+ (GA 목표)
@@ -422,14 +441,14 @@ sillok route "B2B SaaS tier-pricing case studies" --show-corpus
 
 ## Part 4 — 사용
 
-### 컨설턴트 퀵스타트 (0.1.0a5) — *today 동작 경로*
+### 컨설턴트 퀵스타트 (0.4.0) — *지금 동작하는 경로*
 
-Biz / Product / Project / IT / ITO 컨설턴트로서 **본인 RAG repository 만 가리키고** 지금 바로 쓰고 싶다면, `0.1.0a5` 의 전체 사용 경로는 본 섹션입니다. 통합 `sillok` 명령 + `@sillok` IDE 브릿지는 아직 alpha-stub — 단 아래 **Python module CLI** 들은 production-path.
+Biz / Product / Project / IT / ITO 컨설턴트로서 **본인 RAG repository 만 가리키고** 지금 바로 쓰고 싶다면, `0.4.0` 의 전체 사용 경로는 본 섹션입니다(43 packs · Wave 2 모듈 · 실험적 커널 관리자). 통합 `sillok` 명령(`route` / `eval` / `sangso` / `schemas` / `tongsa`)과 **`tongsa` MCP 브리지**(도구 3종)는 동작하며, GA 전용은 `route --execute` 자동 실행뿐입니다. 아래 **Python module CLI** 들도 그대로 씁니다.
 
 #### A. 본인 vault 인덱싱 (5분)
 
 ```bash
-pip install "sillok>=0.1.0a5"
+pip install "sillok>=0.3.1"
 
 # 본인 vault = .md + YAML frontmatter 폴더 어떤 것이든
 # (Obsidian · plain notes · docs site · 케이스 뱅크 모두 가능)
@@ -443,20 +462,23 @@ python -m sillok.bongsu.search --vault ~/Documents/my-vault \
 #### B. 쿼리에 맞는 starter pack(s) 선택
 
 ```bash
-python -m sillok.naru.router_2tier --message "Acme사 Q3 전략 작성"
+sillok route "Run a strategy audit for Acme with Porter five forces"
 
 # 출력:
-# applied prompt packs: consulting-strategy-audit, exec-communication
-# tier breakdown:       discovery_tier=2 → 10 packs scanned, 2 selected
+# 2-tier router — 'Run a strategy audit for Acme with Porter five forces'
+#    tier1 candidates (1):
+#      [summary] consulting-strategy-audit           score=  33.5  keyword:Porter
+#    tier2 loaded:
+#      OK  consulting-strategy-audit           ~ 1768 tokens
 ```
 
-10 starter packs 본문은 wheel 안에 동봉됩니다 — 위치:
+어느 팩의 트리거에도 걸리지 않는 메시지는 후보를 내지 않습니다(`0.3.1` 부터). `[strategy]` 같은 팩 태그나 도메인 용어를 넣어 방향을 잡으세요.
+
+43 packs 본문은 wheel 안에 동봉됩니다. 체크아웃 밖에서는 라우터가 이 동봉본을 쓰고, 자체 레지스트리를 쓰려면 `SILLOK_REGISTRY=/path/to/registry.yaml` 을 지정합니다:
 
 ```bash
-python -c "import sillok, os; print(os.path.dirname(sillok.__file__))"
-# 형제 'packs/' 트리에서 본문 확인:
-ls "$(python -c 'import sillok, os; print(os.path.dirname(os.path.dirname(sillok.__file__)))')/packs"
-# packs/consulting/  packs/methodology/  packs/output-styles/  registry.yaml
+python -c "import sillok, pathlib; print(pathlib.Path(sillok.__file__).parent / '_packs')"
+# business/  consulting/  core/  engineering/  lifestyle/  methodology/  output-styles/  visual/  registry.yaml
 ```
 
 #### C. 라우팅된 pack(s) 을 LLM 에 attach (today 는 수동)
@@ -464,11 +486,12 @@ ls "$(python -c 'import sillok, os; print(os.path.dirname(os.path.dirname(sillok
 통합 `sillok route --execute` 는 GA 목표. Today 는 라우팅된 pack 본문을 직접 LLM 시스템 프롬프트에 복사 — 또는 Claude Code / Cursor / Codex CLI 에서 한 줄로:
 
 ```bash
-ROUTED=$(python -m sillok.naru.router_2tier --message "Acme사 Q3 전략 작성" --json | jq -r '.packs[].id')
-for p in $ROUTED; do
-  cat "packs/**/$p.md"
-done > /tmp/system-prompt.md
-# /tmp/system-prompt.md 를 본인 LLM 시스템 프롬프트로 attach
+PACKS=$(python -c "import sillok, pathlib; print(pathlib.Path(sillok.__file__).parent / '_packs')")
+MSG="Run a strategy audit for Acme with Porter five forces"
+for p in $(python -m sillok.naru.router_2tier --message "$MSG" --json | jq -r '.tier2.loaded_packs | keys[]'); do
+  find "$PACKS" -name "$p.md" -exec cat {} +
+done > system-prompt.md
+# system-prompt.md 를 본인 LLM 의 시스템 프롬프트로 사용
 ```
 
 (GA: `sillok route --execute "..."` 한 번에 처리.)
@@ -495,7 +518,27 @@ python -m sillok.pyeonchan.ingest_md \
     --out ~/.sillok/index.jsonl
 ```
 
-> Multi-format ingest (`pdf` / `docx` / `xlsx` / `pptx` / `hwpx`) + watch/cron daemon 화는 `0.2.0a1` (Pyeonchan Phase 2) 에서 도착. 현재는 `.md` + frontmatter 로 표현 가능한 모든 것 인덱싱.
+> Multi-format ingest (`pdf` / `docx` / `xlsx` / `pptx` / `hwpx`) + cron daemon 화는 Pyeonchan Phase 2 계획입니다(일정 미정). 현재는 `.md` + frontmatter 로 표현 가능한 모든 것을 인덱싱합니다.
+
+#### F. 커널 관리자 (실험적, opt-in)
+
+`0.4.0` 은 Claude Code 에서 메시지 사이에 동작하는 관리자 4종을 더했습니다. 코드와 테스트는 있지만 답변 품질에 주는 효과는 통제 시험으로 재지 않았으므로 실험 기능입니다. 훅을 설치하기 전에는 아무것도 동작하지 않고, 작업 맥락·플레이북·기억 회수는 설정에 해당 항목이 있을 때만 돌며, 문맥 예산은 그 관리자들이 만든 블록만 줄입니다.
+
+| 관리자 | 하는 일 | 끄는 법 |
+|---|---|---|
+| 사초(`sacho`) | 세션이 하는 일의 종류를 턴 사이에 유지(명시 > 최근 쓰기 > 이어받기) | `SILLOK_WORK_CONTEXT=off` |
+| 경연(`gyeongyeon`) | 업무 종류별 교훈과 결과 카운터 · `shadow` 로 시작(세기만 하고 보여 주지 않음) | `SILLOK_PLAYBOOK_MODE=off` |
+| 춘추관(`chunchugwan`) | 기억 노트·지난 에피소드의 위치만 회수(5줄 이하 · 본문은 안 보냄) | `SILLOK_MEMORY_RECALL=off` |
+| 승정원(`seungjeongwon`) | 이번 세션에 이미 보인 블록을 위치 표시로 접음 | `SILLOK_CONTEXT_BUDGET=off` |
+
+```bash
+pip install "sillok>=0.4.0"
+# examples/kernel/*.json 을 ~/.sillok/ 로 복사한 뒤 경로·업무 종류·플레이북 항목을 고침
+echo '{"hook_event_name":"UserPromptSubmit","session_id":"demo","prompt":"fix this failing test"}' \
+  | SILLOK_PLAYBOOK_MODE=auto python -m sillok.kernel.hook --config ~/.sillok/kernel.json
+```
+
+`.claude/settings.json` 에 연결합니다(`UserPromptSubmit`, matcher `compact` 인 `SessionStart`, 선택으로 `Stop` 훅 `python -m sillok.eval.request_coverage` — 번호 요청 항목을 빠뜨린 답변을 한 번 되돌려 보냄). 전체 예시: [`examples/kernel/README.md`](examples/kernel/README.md).
 
 ### 자주 쓰는 명령어 (GA 목표)
 
@@ -527,16 +570,20 @@ sillok telemetry tail   ≡   sillok sagwan tail
 sillok eval run         ≡   sillok gwageo run
 ```
 
-### 0.1.0a5 가 **아직** 제공하지 않는 것
+### 0.4.0 이 **아직** 제공하지 않는 것
 
 | 능력 | 상태 | 도착 |
 |---|:-:|:-:|
-| `sillok ...` 통합 명령 | ⏳ stub | `0.2.0a1` |
-| `sillok corpus install --starter` | ⏳ 미구현 | `0.2.0a1` |
-| `@sillok` IDE 용 MCP bridge | ⏳ Tongsa stub | Phase 1 PR-D |
-| Multi-format ingest (pdf/docx/xlsx/pptx/hwpx) | ⏳ md only | `0.2.0a1` (Pyeonchan Phase 2) |
-| Proposal-only 4-gate governance executor | ⏳ Sangso stub | Phase 1 PR-A |
-| Eval CI blocking gate | ⏳ probes only · runner missing | Phase 1 PR-B |
+| `sillok route --execute` (LLM 호출) | ⏳ 미구현 | GA |
+| `sillok init` · `corpus` · `overlay` · `packs` · `sync` · `doctor` | ⏳ 미구현 | GA |
+| Multi-format ingest (pdf/docx/xlsx/pptx/hwpx) | ⏳ md only | Pyeonchan Phase 2 |
+| Multi-tenant overlay 런타임 | ⏳ 스키마만 | 계획 |
+| 플러그인 시스템 (`dure`) | ⏳ stub | 계획 |
+| 커널 관리자의 답변 효과 | ◐ 코드·테스트 있음 · 효과 미측정 | — |
+| 통합 `sillok` 명령 (`route` / `eval` / `sangso` / `schemas` / `tongsa`) | ✅ 출시 (`0.3.0a1`) | 완료 |
+| `@sillok` IDE 용 MCP bridge | ✅ 출시 (v0.1.0a7, `tongsa` 도구 3종) | 완료 |
+| Proposal-only 4-gate governance executor | ✅ 출시 (v0.1.0a7, `sangso`) | 완료 |
+| Eval CI blocking gate | ✅ 출시 (v0.1.0a7, `gwageo` 10-probe v1) | 완료 |
 
 위 항목 중 deal-breaker 가 있다면 alpha 유지 + 마일스톤 watch — §A–E 의 Python module CLI 들은 통합 surface 도착 후에도 그대로 작동.
 
@@ -546,6 +593,8 @@ sillok eval run         ≡   sillok gwageo run
 
 ### 트러블슈팅
 
+아래 일부 해결책은 `0.4.0` 에 아직 없는 GA 명령(`init`·`corpus`·`overlay`·`sync`·`doctor`·`config`)을 씁니다 — 위 표 참고.
+
 ```text
 sillok: command not found
   → pip install --user sillok 후 ~/.local/bin 을 PATH 에 추가
@@ -554,7 +603,7 @@ Corpus not found
   → sillok corpus install --starter
 
 MCP server timeout in IDE
-  → pip install sillok-mcp 후 IDE 재시작
+  → pip install 'sillok[mcp]' 후 IDE 재시작
 
 Overlay validation failed
   → sillok overlay validate <name>      # 정확한 필드 오류 확인
@@ -586,7 +635,7 @@ LLM execution fails
 
 ### 본인 도메인 pack 추가
 
-10 starter packs 는 framework 커버리지 인벤토리 25 카테고리 중 ~7개를 커버합니다. 나머지 17~18 카테고리(Banking / Insurance / Automotive / Medical Device / Embedded / M&A / Pricing / GTM / UX / Risk Quant / …)는 **도메인 SME** 분들이 추가하실 수 있도록 의도적으로 비워둔 영역입니다.
+43 packs 는 [커버리지 지도](#framework-커버리지--sillok-이-통합하는-것)의 ✅·◐ 카테고리를 다룹니다. 아직 ⏳ 인 카테고리(자동차 / 의료기기 / 은행 / 보험 / 임베디드 / 조직설계 / 콘텐츠 발행 / Enterprise B2B)와 ◐ 인 카테고리(Risk 정량 / 보안 / M&A / 그로스 / UX / AI 엔지니어링 / 디자인 시스템)는 **도메인 SME** 분들이 추가하실 수 있도록 의도적으로 비워 둔 영역입니다.
 
 기여하시려는 도메인이 있다면 전용 가이드가 전체 절차를 다룹니다:
 
@@ -613,6 +662,11 @@ pack anatomy, `registry.yaml` entry, **sanitization 체크리스트** (PR 반려
 통사(tongsa)        - MCP 서버 / IDE 통합 (通辭, 통역사 — 도구 간 언어 변환)
 편찬(pyeonchan)     - 코퍼스 큐레이션 파이프라인 (編纂, 사료를 묶어 책으로 엮음)
 역참(yeokcham)      - 외부 브릿지 (驛站, 역참 — 외부 vault·코퍼스로 가는 중계소)
+사초(sacho)         - 턴 사이 작업 맥락 (史草, 사관이 남긴 기록의 초고) · 0.4.0 opt-in
+승정원(seungjeongwon) - 문맥 예산 (承政院, 왕명 출납을 맡은 기관) · 0.4.0 opt-in
+경연(gyeongyeon)    - 업무 종류별 플레이북 (經筵, 임금이 학문을 익히던 자리) · 0.4.0 opt-in
+춘추관(chunchugwan) - 기억·에피소드 회수 (春秋館, 실록을 편찬·보관한 관청) · 0.4.0 opt-in
+커널(kernel)        - 위 4종을 묶는 Claude Code 훅 · 0.4.0
 ```
 
 모든 모듈 명령어는 영문 alias 도 가집니다(`sillok telemetry tail` ≡ `sillok sagwan tail`).

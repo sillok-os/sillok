@@ -19,30 +19,19 @@ Sillok is a small, opinionated harness for running prompt-engineered workflows o
 
 See [Architecture](architecture/README.md) for the full module map.
 
-## Status (2026-04-26)
+## Status (2026-11-17)
 
-Sillok is in **Phase 0** (Foundation). The current PyPI release is `0.0.1`, a namespace placeholder; the first functional alpha will be `0.1.0a1` once Phase 0 cherry-pick (F0.2 ~ F0.11) is complete and exited.
-
-| Phase | Status |
-|---|---|
-| Phase 0 — Foundation (cherry-pick + governance + skeleton) | in progress |
-| Phase 1 — Eval Discipline (CI-blocking eval, DSPy/GEPA) | next |
-| Phase 2 — Production Polish (cost telemetry, OTel, multi-format ingest) | future |
-| Phase 3 — Strategic (preprint, community, multi-tenant) | future |
+The current release is **`0.4.0`** (alpha): 43 packs, the 2-tier router, proposal-only governance, a 10-probe eval gate, the MCP bridge, and four experimental, opt-in kernel managers. The per-feature live / partial / stub matrix is in [`STATUS.md`](https://github.com/sillok-os/sillok/blob/main/STATUS.md), release notes in [`CHANGELOG.md`](https://github.com/sillok-os/sillok/blob/main/CHANGELOG.md).
 
 ## Quick start
 
 ```bash
-pip install "sillok==0.0.1"   # placeholder reserve only — wait for 0.1.0a1
+pip install sillok              # 0.4.0 · Python 3.11+
+sillok route "Run a strategy audit for Acme with Porter five forces"
+python -m sillok.eval run       # 10 golden probes
 ```
 
-Once `0.1.0a1` ships:
-
-```bash
-pip install sillok
-sillok init
-sillok route "Draft a Q3 strategy report"
-```
+MCP bridge for Claude Code / Cursor: see [MCP quickstart](integrations/mcp-quickstart.md). Kernel managers (opt-in): see the README section *F. Kernel managers* and [`examples/kernel/`](https://github.com/sillok-os/sillok/tree/main/examples/kernel).
 
 ## License & community
 

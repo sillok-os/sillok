@@ -14,7 +14,11 @@
 
 > **Status**: `v0.4.0` alpha — 43 packs (Wave 1: 1a/1b/1c · Wave 2: 2a–2d), experimental opt-in kernel managers, 10 eval probes, 4-gate governance + MCP bridge live, **plus Wave 2 modules** and a **functional unified `sillok` CLI**. See [`STATUS.md`](STATUS.md) for the per-feature live / partial / stub / planned matrix before adoption.
 >
-> **New in `0.3.0a1` (Wave 2)** — seven provider-neutral modules: `sillok.telemetry.gate` (schema-enforced telemetry write-gate) · `sillok.sangso.canary` (shadow-vs-prod KPI canary) · `sillok.yeonryun.coverage` (coverage-gap detection) · `sillok.eval.calibration` (Brier confidence calibration) · `sillok.naru.action_layer` (action axis of 2-D routing) · `sillok.yeonryun.optimizer` (DSPy/GEPA-ready optimizer interface) · `sillok.eval.probe_seeder` (unlabelled probe seeder). The unified `sillok` command now dispatches `route` / `eval` / `sangso` / `schemas` / `tongsa`. See [`CHANGELOG.md`](CHANGELOG.md).
+> **New in `0.4.0`** — four experimental, opt-in kernel managers that act between messages: `sillok.sacho` (work context), `sillok.seungjeongwon` (context budget), `sillok.gyeongyeon` (playbook, shadow by default) and `sillok.chunchugwan` (memory recall), wired by one Claude Code hook (`python -m sillok.kernel.hook`), plus `sillok.eval.evidence` and `sillok.eval.request_coverage`. Nothing runs until you configure it — see [F. Kernel managers](#f-kernel-managers-experimental-opt-in).
+>
+> **New in `0.3.2`** — packs Wave 2: 25 → 43 packs (engineering ops · pricing, GTM, unit economics, platform strategy · decks, diagrams, image prompts, visual QA · health and travel).
+>
+> **Since `0.3.0a1`** — seven provider-neutral modules: `sillok.telemetry.gate` (schema-enforced telemetry write-gate) · `sillok.sangso.canary` (shadow-vs-prod KPI canary) · `sillok.yeonryun.coverage` (coverage-gap detection) · `sillok.eval.calibration` (Brier confidence calibration) · `sillok.naru.action_layer` (action axis of 2-D routing) · `sillok.yeonryun.optimizer` (DSPy/GEPA-ready optimizer interface) · `sillok.eval.probe_seeder` (unlabelled probe seeder). The unified `sillok` command now dispatches `route` / `eval` / `sangso` / `schemas` / `tongsa`. See [`CHANGELOG.md`](CHANGELOG.md).
 
 ## Reading order
 
@@ -23,7 +27,7 @@ This README is organized as **value → use cases → install → use → mainta
 1. [Part 1 — Value & Overview](#part-1--value--overview) — what Sillok is and what you get
 2. [Part 2 — Business Use Cases](#part-2--business-use-cases) — find your role and a workflow that fits
 3. [Part 3 — Installation](#part-3--installation) — requirements and setup paths
-4. [Part 4 — Usage](#part-4--usage) — what actually works in `0.3.0a1` and how to drive it
+4. [Part 4 — Usage](#part-4--usage) — what actually works in `0.4.0` and how to drive it
 5. [Part 5 — Maintenance & Extension](#part-5--maintenance--extension) — troubleshoot, deploy at scale, extend with your domain
 6. [Part 6 — Appendix](#part-6--appendix) — license, prior art, citation
 
@@ -33,11 +37,12 @@ This README is organized as **value → use cases → install → use → mainta
 
 ### What you get
 
-- **15 starter prompt packs** out of the box (strategy, PMO, ITIL, risk, SAFe, exec-comms, governance, report-quality, charter, change-mgmt, infographic, meeting-minutes, tool-adoption, …)
+- **43 prompt packs** out of the box (strategy, PMO, ITIL, risk, SAFe, governance, exec-comms and decks, report-quality, pricing & GTM, unit economics, platform strategy, engineering ops, diagrams & image prompts, …)
 - **2-stage router** — picks the right pack(s), then picks the right retrieval plan
 - **5 retrieval plans** — `wiki_first`, with-fallback, recovery-first, dual-compare, no-corpus
 - **Reason-coded output** — every routing decision tagged R1~R7 (audit-ready)
 - **Proposal-only governance** — 4-gate review pipeline, no silent overwrites
+- **Kernel managers (experimental, opt-in)** — work context, context budget, playbook and memory recall between messages, wired by one Claude Code hook
 - **No API key needed** for routing itself. Add `--execute` + your key to invoke an LLM.
 - **No external corpus dependency** — the starter corpus and all integrations ship with `sillok`. No third-party knowledge base or wiki tool to install.
 
@@ -54,8 +59,8 @@ flowchart LR
         WORK["📝 New work<br/>research · debrief · retro"]
     end
 
-    subgraph SILLOK["Sillok 0.3.0a1"]
-        PACKS["📦 15 starter packs<br/>strategy · PMO · ITIL · risk ·<br/>SAFe · governance · report-quality ·<br/>exec-comm · charter · change-mgmt ·<br/>infographic · meeting-minutes · …"]
+    subgraph SILLOK["Sillok 0.4.0"]
+        PACKS["📦 43 packs<br/>strategy · PMO · ITIL · risk ·<br/>SAFe · pricing · GTM · finance ·<br/>exec-comm · decks · diagrams ·<br/>engineering ops · …"]
         ROUTER["🧭 Naru<br/>2-stage router"]
         SEARCH["🔎 Bongsu<br/>vault search"]
         PROMOTE["🌱 Yeonryun<br/>disposition + atom promote"]
@@ -87,34 +92,38 @@ flowchart LR
 flowchart TB
     subgraph CORPUS["Knowledge layer"]
         VAULTROOT["vault root<br/>(.md + frontmatter v5.4)"]
-        REGISTRY["packs/registry.yaml<br/>(15-pack typed registry, expanding)"]
+        REGISTRY["packs/registry.yaml<br/>(43-pack typed registry)"]
     end
 
     subgraph INGEST["Ingest path"]
         PYEON["pyeonchan.ingest_md<br/>(md → atoms · today)"]
-        PYEON_F["pyeonchan multi-format<br/>(pdf/docx/xlsx · Wave 2)"]
+        PYEON_F["pyeonchan multi-format<br/>(pdf/docx/xlsx · planned)"]
     end
 
     subgraph QUERY["Query path"]
         BONGSU["bongsu.search<br/>(frontmatter + body grep)"]
         NARU["naru.router_2tier<br/>(tier 1 keyword → tier 2 LLM)"]
-        JIKJI["jikji<br/>(typed pack registry · stub)"]
+        JIKJI["jikji<br/>(typed pack registry)"]
     end
 
     subgraph LINT["Lint / promote path"]
         YEON["yeonryun.disposition<br/>(score → promote atom)"]
-        SANGSO["sangso<br/>(4-gate proposal · stub)"]
+        SANGSO["sangso<br/>(4-gate proposal)"]
     end
 
     subgraph OBS["Observability"]
-        SAGWAN["sagwan / telemetry<br/>(routing log · stub)"]
-        GWAGEO["gwageo / eval<br/>(probes · runner stub)"]
+        SAGWAN["sagwan / telemetry<br/>(write-gate · partial)"]
+        GWAGEO["gwageo / eval<br/>(10 probes · CI gate)"]
     end
 
     subgraph BRIDGES["Edge bridges"]
-        TONGSA["tongsa / MCP bridge<br/>(Claude Code · Cursor · stub)"]
+        TONGSA["tongsa / MCP bridge<br/>(3 MCP tools)"]
         DURE["dure / plugins<br/>(WAF fetch · code search · stub)"]
         YEOK["yeokcham / external bridge<br/>(stub)"]
+    end
+
+    subgraph KERNEL_G["Kernel · 0.4.0 · opt-in"]
+        KERNEL["kernel.hook<br/>(work context · budget ·<br/>playbook · recall)"]
     end
 
     USER["User<br/>(CLI · Python API · IDE)"]
@@ -134,45 +143,55 @@ flowchart TB
     GWAGEO -.regress.-> NARU
     TONGSA -.MCP.-> USER
     DURE -.plugin.-> NARU
+    KERNEL -.hook.-> USER
 
     classDef stub fill:#fee2e2,stroke:#991b1b,stroke-dasharray: 5 5
     classDef live fill:#dcfce7,stroke:#14532d
-    class BONGSU,NARU,YEON,PYEON,VAULTROOT,REGISTRY live
-    class JIKJI,SANGSO,SAGWAN,GWAGEO,TONGSA,DURE,YEOK,PYEON_F stub
+    classDef partial fill:#fef9c3,stroke:#854d0e
+    class BONGSU,NARU,YEON,PYEON,VAULTROOT,REGISTRY,JIKJI,SANGSO,GWAGEO,TONGSA live
+    class SAGWAN,KERNEL partial
+    class DURE,YEOK,PYEON_F stub
 ```
 
-**Legend:** green solid = production-path in `0.3.0a1` (Wave 1 complete) · red dashed = stub / planned. Every solid node has a `python -m sillok.<module>...` CLI you can run today.
+**Legend:** green = `live` in `0.4.0` · yellow = `partial` (working code and tests; a sub-feature or an effect measurement is missing) · red dashed = stub / planned. The colours follow [`STATUS.md`](STATUS.md).
 
 ### Framework coverage — what Sillok integrates
 
-Sillok's **roadmap** covers **5 axes / 25 categories / 110+ global standards** under one registry, one router, one proposal-only governance gate. **`0.3.0a1` ships 25 packs (Wave 1 complete) across 4 sub-categories** — methodology, consulting, business/visual, output-styles; the rest land additively per Wave (Wave 2 targets ~40 packs).
+Sillok's **roadmap** covers **5 axes / 25 categories / 110+ global standards** under one registry, one router, one proposal-only governance gate. **`0.4.0` ships 43 packs** (Wave 1: 25 · Wave 2: 18). Categories without a pack are open for domain contributors.
 
 ```
 [Axis 1] Governance     [Axis 2] Delivery       [Axis 3] Industry        [Axis 4] Business      [Axis 5] AI/Eng
-├─ ERM/EA            ✅  ├─ PMBOK 8         ✅  ├─ Automotive        ⏳ ├─ Strategy/BM    ✅  ├─ AI/LLM Eng    🚧
-├─ Risk Quant        🚧 ├─ SAFe 6.0        ✅  ├─ Medical Device    ⏳ ├─ M&A/Finance    ⏳ └─ Prompt Seq    ⏳
-├─ ITIL/ITSM         ✅  ├─ Change Mgmt     🚧 ├─ Banking           ⏳ ├─ SaaS/Pricing/GTM ◐
-└─ Security/Compl    🚧 └─ Org Design      🚧 ├─ Insurance         ⏳ ├─ Growth/Data    ⏳ [Aux] Output
-                                              └─ Embedded SW       ⏳ └─ UX/Discovery   ⏳ ├─ Ext delivery   ◐
+├─ ERM/EA            ✅  ├─ PMBOK 8         ✅  ├─ Automotive        ⏳ ├─ Strategy/BM    ✅  ├─ AI/LLM Eng    ◐
+├─ Risk Quant        ◐  ├─ SAFe 6.0        ✅  ├─ Medical Device    ⏳ ├─ M&A/Finance    ◐  └─ Prompt Seq    ✅
+├─ ITIL/ITSM         ✅  ├─ Change Mgmt     ✅  ├─ Banking           ⏳ ├─ SaaS/Pricing/GTM ✅
+└─ Security/Compl    ◐  └─ Org Design      ⏳  ├─ Insurance         ⏳ ├─ Growth/Data    ◐  [Aux] Output
+                                              └─ Embedded SW       ⏳ └─ UX/Discovery   ◐  ├─ Ext delivery   ✅
                                                                                           ├─ Content publish ⏳
-✅ ships in 0.3.0a1 today (Wave 1 complete, 25 packs)                                      ├─ Report quality ✅
-◐ partial ship in 0.3.0a1                                                                  ├─ Enterprise B2B ⏳
-🚧 queued for Wave 2 (~0.3.0a1)                                                            ├─ Design system  ⏳
-⏳ queued for 1.0.0 GA                                                                     └─ Diagram/Image  ⏳
+✅ dedicated pack(s) in 0.4.0                                                               ├─ Report quality ✅
+◐ partial — an audit lens or one aspect only                                               ├─ Enterprise B2B ⏳
+⏳ no pack yet — open for contributors                                                      ├─ Design system  ◐
+                                                                                          └─ Diagram/Image  ✅
 ```
 
-#### What ships in 0.3.0a1 (Wave 1 complete)
+#### What ships in 0.4.0 (43 packs)
 
-| Category | Pack(s) | Standards |
+| Area | Pack(s) | Frameworks / methods |
 |---|---|---|
 | ERM · IT Governance · EA | `governance-standards` | COSO ERM 2017 · ISO 31000 · COBIT 2019 · TOGAF 10 ADM · Three Lines |
 | ITIL · ITSM | `itil-operations` | ITIL v4 · 5-Why + Ishikawa · Blameless PM · BIA · DR runbook |
-| Project · Portfolio | `pm-enhanced` + `portfolio-governance` + `risk-uncertainty` | PMBOK 8 · Stage-Gate · Power-Interest · Kraljic |
+| Project · Portfolio | `pm-enhanced` + `portfolio-governance` + `risk-uncertainty` + `project-charter` | PMBOK 8 · Stage-Gate · Power-Interest · Kraljic |
 | SAFe Agile | `safe-agile-delivery` | SAFe 6.0 · PI Planning · WSJF · ROAM · Lean Portfolio · I&A |
-| Strategy · Market · BM | `consulting-strategy-audit` | Porter 5F · Ansoff · Blue Ocean · BMC · TAM/SAM/SOM · Pyramid · SCQA |
-| SaaS · Audit (partial) | `consulting-saas-audit` | SaaS audit lens — pricing/GTM packs queued for 1.0.0 GA |
-| Executive communication | `exec-communication` | Pyramid · SCQA · 10-slide Board · 1-Pager · Sequoia · MD&A |
+| Change · tool adoption | `change-management` + `tool-adoption-consulting` | ADKAR · Kotter 8-step |
+| Strategy · Market · BM | `consulting-strategy-audit` + `platform-strategy` | Porter 5F · Ansoff · Blue Ocean · BMC · TAM/SAM/SOM · network effects · cold start |
+| SaaS · Pricing · GTM | `consulting-saas-audit` + `saas-pricing-packaging` + `gtm-launch-playbook` | price metric · good-better-best · Van Westendorp · positioning canvas · crossing the chasm |
+| Finance modelling | `unit-economics-modeling` | CAC / LTV · payback · NRR / GRR · Rule of 40 · burn multiple |
+| Audit lenses | `consulting-uxui-audit` · `consulting-ai-engineering-audit` · `consulting-security-audit` · `consulting-growth-audit` · `consulting-crossanalysis` | UX · AI/LLM engineering · security · growth · cross-analysis |
+| Executive communication · decks | `exec-communication` + `deck-builder` | Pyramid · SCQA · 10-slide Board · 1-Pager · Sequoia · MD&A |
 | Report quality | `report-quality` | CRAAP · AIMQ · IQF · Bond Triangulation |
+| Visual production | `infographic-design` · `design-artifact-production` · `diagram-design` · `visual-quality` · `image-prompt-playbook` · `gpt-image-2-reference` | diagram and infographic patterns · contrast checks · image-prompt iteration |
+| Engineering operations | `sw-engineering-operations` · `github-operations` · `github-actions-ops` | change, review and CI/CD operations |
+| Working practice · meta | `meeting-minutes` · `worklog` · `agent-1on1` · `pack-maintenance` · `prompt-sequencing-meta` · `cold-domain-grounding` | minutes · work logs · pack upkeep · prompt sequencing · grounding in unfamiliar domains |
+| Health · travel (personal) | `everyday-health-symptom` · `running-injury-prevention` · `running-race-data-analysis` · `nutrition` · `travel-trip-planning` | red-flag routing first · not medical advice · people pay and book |
 
 > 📚 **Full inventory** — 25 categories × 110+ standards × ship status × persona pairing in [`docs/architecture/framework-coverage.md`](docs/architecture/framework-coverage.md).
 
@@ -208,11 +227,11 @@ Match yourself to a row, then jump to the matching workflow archetype below.
 | Strategy / Biz Consultant (A1) · Product Manager · CPO/CSO/CEO | **#14 Strategy/BM** + #16 SaaS + #21 Exec comms | ✅ today |
 | Project Consultant (PMP) · PjM/PMO Lead · COO/PfM | **#5 PMBOK** + #6 SAFe + #2 Risk | ✅ today |
 | ITO/ITIL Consultant · SRE/ITSM · CIO/CISO | **#3 ITIL** + #1 ERM + #4 Security (queued) | ✅ today |
-| Risk Consultant (FAIR) · Risk Engineer · CRO | **#1 ERM** + #2 Risk Quant | ✅ + 🚧 Wave 2 |
-| AI Solution Architect · ML Engineer · CTO/CDO | #19 AI/LLM Eng | ✅ `consulting-ai-engineering-audit` (Wave 1b · v0.2.0a2) |
+| Risk Consultant (FAIR) · Risk Engineer · CRO | **#1 ERM** + #2 Risk Quant | ✅ + ◐ (`risk-uncertainty`) |
+| AI Solution Architect · ML Engineer · CTO/CDO | #19 AI/LLM Eng | ◐ `consulting-ai-engineering-audit` (Wave 1b · v0.2.0a2) |
 | Industry SME (Auto / Med / Banking / Insurance / Embedded) | #9~#13 | ⏳ 1.0.0 GA |
 
-> 🤝 **Adding a pack for your domain?** The 17–18 categories not yet shipped are intentionally left for domain SMEs. Step-by-step in [`docs/contributing/extending-with-your-domain.md`](docs/contributing/extending-with-your-domain.md) — pack anatomy, sanitization, standards citation, and the 5-step quality gate.
+> 🤝 **Adding a pack for your domain?** Categories marked ⏳ above (industry standards, org design, content publishing, enterprise B2B) are intentionally left for domain SMEs. Step-by-step in [`docs/contributing/extending-with-your-domain.md`](docs/contributing/extending-with-your-domain.md) — pack anatomy, sanitization, standards citation, and the 5-step quality gate.
 
 ### Common workflows
 
@@ -246,7 +265,7 @@ print(result.confidence)           # 'high'
 EOF
 ```
 
-> Workflows above describe the **GA experience** (`>=1.0.0`). For what works in the current alpha (`0.3.0a1`, Wave 1 complete), see [Part 4 — Usage](#part-4--usage).
+> Workflows above describe the **GA experience** (`>=1.0.0`). For what works in the current alpha (`0.4.0`), see [Part 4 — Usage](#part-4--usage).
 
 ---
 
@@ -265,7 +284,7 @@ Optional:
 
 ### Quickstart (60 seconds) — *GA target*
 
-> **Status (2026-06-02)**: this Quickstart describes the **GA experience** (`>=1.0.0`). The current shipped version is `0.4.0` (alpha-stage 0.x — Wave 1 and Wave 2 complete, 43 packs, experimental kernel managers). For what works **today**, jump to [Part 4 — Usage](#part-4--usage).
+> **Status (2026-11-17)**: this Quickstart describes the **GA experience** (`>=1.0.0`). The current shipped version is `0.4.0` (alpha-stage 0.x — Wave 1 and Wave 2 complete, 43 packs, experimental kernel managers). For what works **today**, jump to [Part 4 — Usage](#part-4--usage).
 
 ```bash
 pip install sillok               # 1.0.0+ (GA target; today see Part 4 — Usage)
@@ -438,9 +457,9 @@ sillok route "B2B SaaS tier-pricing case studies" --show-corpus
 
 ## Part 4 — Usage
 
-### Consultant Quickstart for 0.3.0a1 — *what works today*
+### Consultant Quickstart for 0.4.0 — *what works today*
 
-If you're a Biz / Product / Project / IT / ITO consultant and you only want to **point Sillok at your own RAG repository** and use it now, this section is the entire story for `0.3.0a1` (Wave 1 registry, 25 packs; Wave 2 modules). The unified `sillok` command is now functional (`sillok route` / `eval` / `sangso` / `schemas` / `tongsa`); the GA-only piece is the `route --execute` auto-run. The **`tongsa` MCP bridge** (3 tools) and the **Python module CLIs** below are production-path.
+If you're a Biz / Product / Project / IT / ITO consultant and you only want to **point Sillok at your own RAG repository** and use it now, this section is the entire story for `0.4.0` (43 packs, Wave 2 modules, experimental kernel managers). The unified `sillok` command is functional (`sillok route` / `eval` / `sangso` / `schemas` / `tongsa`); the GA-only piece is the `route --execute` auto-run. The **`tongsa` MCP bridge** (3 tools) and the **Python module CLIs** below are production-path.
 
 #### A. Index your own vault (5 min)
 
@@ -459,20 +478,23 @@ python -m sillok.bongsu.search --vault ~/Documents/my-vault \
 #### B. Pick the right starter pack(s) for a query
 
 ```bash
-python -m sillok.naru.router_2tier --message "Draft a Q3 strategy for Acme"
+sillok route "Run a strategy audit for Acme with Porter five forces"
 
 # Output:
-# applied prompt packs: consulting-strategy-audit, exec-communication
-# tier breakdown:       discovery_tier=2 → 10 packs scanned, 2 selected
+# 2-tier router — 'Run a strategy audit for Acme with Porter five forces'
+#    tier1 candidates (1):
+#      [summary] consulting-strategy-audit           score=  33.5  keyword:Porter
+#    tier2 loaded:
+#      OK  consulting-strategy-audit           ~ 1768 tokens
 ```
 
-The 15 starter packs ship inside the wheel — find their full bodies at:
+A message that matches no pack's triggers returns no candidates (since `0.3.1`); add a pack's explicit tag such as `[strategy]` or a domain term to steer it.
+
+All 43 packs ship inside the wheel. Outside a checkout the router uses that bundled copy; set `SILLOK_REGISTRY=/path/to/registry.yaml` to use your own registry:
 
 ```bash
-python -c "import sillok, os; print(os.path.dirname(sillok.__file__))"
-# Then look at the sibling 'packs/' tree:
-ls "$(python -c 'import sillok, os; print(os.path.dirname(os.path.dirname(sillok.__file__)))')/packs"
-# packs/consulting/  packs/methodology/  packs/output-styles/  registry.yaml
+python -c "import sillok, pathlib; print(pathlib.Path(sillok.__file__).parent / '_packs')"
+# business/  consulting/  core/  engineering/  lifestyle/  methodology/  output-styles/  visual/  registry.yaml
 ```
 
 #### C. Attach the routed pack(s) to your LLM (manual today)
@@ -480,11 +502,12 @@ ls "$(python -c 'import sillok, os; print(os.path.dirname(os.path.dirname(sillok
 The unified `sillok route --execute` is GA-target. Today you copy the routed pack body into your LLM's system prompt by hand — or in Claude Code / Cursor / Codex CLI use a one-liner:
 
 ```bash
-ROUTED=$(python -m sillok.naru.router_2tier --message "Draft a Q3 strategy for Acme" --json | jq -r '.packs[].id')
-for p in $ROUTED; do
-  cat "packs/**/$p.md"
-done > /tmp/system-prompt.md
-# Then attach /tmp/system-prompt.md as system prompt to your LLM of choice.
+PACKS=$(python -c "import sillok, pathlib; print(pathlib.Path(sillok.__file__).parent / '_packs')")
+MSG="Run a strategy audit for Acme with Porter five forces"
+for p in $(python -m sillok.naru.router_2tier --message "$MSG" --json | jq -r '.tier2.loaded_packs | keys[]'); do
+  find "$PACKS" -name "$p.md" -exec cat {} +
+done > system-prompt.md
+# Then use system-prompt.md as the system prompt of your LLM of choice.
 ```
 
 (GA: `sillok route --execute "..."` does this in one call.)
@@ -511,7 +534,27 @@ python -m sillok.pyeonchan.ingest_md \
     --out ~/.sillok/index.jsonl
 ```
 
-> Multi-format ingest (`pdf` / `docx` / `xlsx` / `pptx` / `hwpx`) and watch/cron daemonization land in Wave 2 (Pyeonchan Phase 2 · target `~0.3.0a1`). For now, anything you can express as `.md` + frontmatter is indexed.
+> Multi-format ingest (`pdf` / `docx` / `xlsx` / `pptx` / `hwpx`) and cron daemonization are planned for Pyeonchan Phase 2 (not yet scheduled). For now, anything you can express as `.md` + frontmatter is indexed.
+
+#### F. Kernel managers (experimental, opt-in)
+
+`0.4.0` adds four managers that act between messages in Claude Code. They are experimental: each has working code and tests, but their effect on answers has not been measured in a controlled test. Nothing runs until you install the hook, and work context, playbook and recall run only when their section is in the config; the context budget only shortens blocks those managers produce.
+
+| Manager | What it does | Off switch |
+|---|---|---|
+| `sacho` | keeps the kind of work a session is doing across turns (explicit > recent writes > inherited) | `SILLOK_WORK_CONTEXT=off` |
+| `gyeongyeon` | lessons per work type with outcome counters; starts in `shadow` (counts only, shows nothing) | `SILLOK_PLAYBOOK_MODE=off` |
+| `chunchugwan` | recalls pointers to memory notes and past episodes (≤ 5 lines, never note bodies) | `SILLOK_MEMORY_RECALL=off` |
+| `seungjeongwon` | collapses blocks already shown this session into pointers | `SILLOK_CONTEXT_BUDGET=off` |
+
+```bash
+pip install "sillok>=0.4.0"
+# copy examples/kernel/*.json to ~/.sillok/ and edit paths, work types and playbook items
+echo '{"hook_event_name":"UserPromptSubmit","session_id":"demo","prompt":"fix this failing test"}' \
+  | SILLOK_PLAYBOOK_MODE=auto python -m sillok.kernel.hook --config ~/.sillok/kernel.json
+```
+
+Wire it into `.claude/settings.json` (`UserPromptSubmit`, `SessionStart` with matcher `compact`, and optionally the `Stop` hook `python -m sillok.eval.request_coverage`, which sends an answer back once when it skips a numbered request item). Full example: [`examples/kernel/README.md`](examples/kernel/README.md).
 
 ### Common commands (GA target)
 
@@ -543,14 +586,18 @@ sillok telemetry tail   ≡   sillok sagwan tail
 sillok eval run         ≡   sillok gwageo run
 ```
 
-### What 0.3.0a1 does **not** yet provide
+### What 0.4.0 does **not** yet provide
 
 | Capability | Status | Lands in |
 |---|:-:|:-:|
-| `sillok ...` unified command | ⏳ stub | Wave 2 (~`0.3.0a1`) |
-| `sillok corpus install --starter` | ⏳ not implemented | Wave 2 |
+| `sillok route --execute` (LLM call) | ⏳ not implemented | GA |
+| `sillok init` · `corpus` · `overlay` · `packs` · `sync` · `doctor` | ⏳ not implemented | GA |
+| Multi-format ingest (pdf/docx/xlsx/pptx/hwpx) | ⏳ md only | Pyeonchan Phase 2 |
+| Multi-tenant overlay runtime | ⏳ schema only | planned |
+| Plugin system (`dure`) | ⏳ stub | planned |
+| Kernel managers' effect on answers | ◐ code and tests, effect not measured | — |
+| Unified `sillok` command (`route` / `eval` / `sangso` / `schemas` / `tongsa`) | ✅ shipped (`0.3.0a1`) | done |
 | `@sillok` MCP bridge for IDEs | ✅ shipped (v0.1.0a7, `tongsa` 3 tools) | done |
-| Multi-format ingest (pdf/docx/xlsx/pptx/hwpx) | ⏳ md only | Wave 2 (Pyeonchan Phase 2) |
 | Proposal-only 4-gate governance executor | ✅ shipped (v0.1.0a7, `sangso`) | done |
 | Eval CI blocking gate | ✅ shipped (v0.1.0a7, `gwageo` 10-probe v1) | done |
 
@@ -561,6 +608,8 @@ If any of those are dealbreakers, stay on the alpha and watch the milestones —
 ## Part 5 — Maintenance & Extension
 
 ### Troubleshooting
+
+Some fixes below use GA commands (`init`, `corpus`, `overlay`, `sync`, `doctor`, `config`) that `0.4.0` does not have yet — see the table above.
 
 ```text
 sillok: command not found
@@ -602,7 +651,7 @@ Quick rule of thumb: if more than 10 people will use Sillok at your company, rea
 
 ### Adding a pack for your domain
 
-The 15 starter packs cover ~9 of the 25 categories in the framework coverage inventory. The remaining 15–16 categories (Banking / Insurance / Automotive / Medical Device / Embedded / M&A / Pricing / GTM / UX / Risk Quant / …) are intentionally left for **domain SMEs** to land additively.
+The 43 packs cover the categories marked ✅ and ◐ in the [coverage map](#framework-coverage--what-sillok-integrates). The categories still marked ⏳ (Automotive / Medical Device / Banking / Insurance / Embedded / Org design / Content publishing / Enterprise B2B) and the ◐ ones (Risk Quant / Security / M&A / Growth / UX / AI engineering / Design system) are intentionally left for **domain SMEs** to land additively.
 
 If you have a domain you want to contribute, the dedicated guide covers the entire procedure:
 
@@ -629,6 +678,11 @@ dure          - plugin framework
 tongsa        - MCP server (IDE integration)
 pyeonchan     - corpus curation pipeline
 yeokcham      - external bridge (vault, custom corpora)
+sacho         - work context across turns (0.4.0, opt-in)
+seungjeongwon - context budget (0.4.0, opt-in)
+gyeongyeon    - playbook per work type (0.4.0, opt-in)
+chunchugwan   - memory / episode recall (0.4.0, opt-in)
+kernel        - Claude Code hook wiring the four (0.4.0)
 ```
 
 Every module command also has an English alias (`sillok telemetry tail` ≡ `sillok sagwan tail`).

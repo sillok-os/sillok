@@ -48,7 +48,6 @@ Numbering is sequential and gap-free.
 
 ## See also
 
-- Phase / roadmap: see `docs/governance/roadmap.md` (when published) or
-  upstream `aipm/project/Harness-Sillok/03-plan/01-roadmap-and-activation-gates.md`
+- Releases and status: [`CHANGELOG.md`](https://github.com/sillok-os/sillok/blob/main/CHANGELOG.md) · [`STATUS.md`](https://github.com/sillok-os/sillok/blob/main/STATUS.md)
 - Trademarks and attributions: `NOTICE`
 - Top 10 features (Feature #4 governance): `README.md`

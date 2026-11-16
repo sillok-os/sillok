@@ -15,14 +15,25 @@ The Korean module names map 1-to-1 to English aliases on the CLI
 | `sillok.telemetry` | `sagwan` / `telemetry` | #10 Failure Taxonomy + Replay | `sillok/telemetry/` (Phase 1) |
 | `sillok.eval` | `gwageo` / `eval` | #8 Eval Probes + KPI | `sillok/eval/` (Phase 1) |
 | `sillok.cli` | `madang` / `cli` | (entry point) | `sillok/cli/` |
-| `sillok.plugins` | `dure` / `plugins` | #7 Plugin System | `sillok/plugins/` (Phase 1) |
+| `sillok.plugins` | `dure` / `plugins` | #7 Plugin System | `sillok/plugins/` (stub) |
+| `sillok.tongsa` | `tongsa` | #6 MCP Bridge | `sillok/tongsa/` — `pip install 'sillok[mcp]'` |
 
-## Two more sub-packages (separate distributions)
+## Kernel managers (`0.4.0`, experimental, opt-in)
 
-| Module | Distribution | Top 10 Feature | Status |
-|---|---|:-:|---|
-| (Tongsa) MCP bridge | `pip install sillok-tongsa` | #6 MCP Bridge | Phase 1 (PR-D) |
-| (Yeokcham) external corpus connector | `pip install sillok-yeokcham-*` | (extension point) | Phase 2+ |
+| Module | Purpose | Source |
+|---|---|---|
+| `sillok.sacho` | work context across turns | `sillok/sacho/` |
+| `sillok.seungjeongwon` | context budget — collapse repeats to pointers | `sillok/seungjeongwon/` |
+| `sillok.gyeongyeon` | playbook per work type (shadow → auto) | `sillok/gyeongyeon/` |
+| `sillok.chunchugwan` | memory / episode recall, pointer-only | `sillok/chunchugwan/` |
+| `sillok.kernel.hook` | Claude Code hook wiring the four | `sillok/kernel/` · example in `examples/kernel/` |
+| `sillok.eval.evidence` · `sillok.eval.request_coverage` | execution-evidence checker · numbered-request Stop hook | `sillok/eval/` |
+
+## Planned extension point
+
+| Module | Status |
+|---|---|
+| (Yeokcham) external corpus connector | planned — not published |
 
 ## Module READMEs
 
