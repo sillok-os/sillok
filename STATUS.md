@@ -12,7 +12,7 @@ First-time readers — use this page to verify what is shipped before adopting.
 |---|---|---|:-:|---|
 | 1 | Multi-format Auto-Ingest RAG | `pyeonchan` + `janggyeong` | `partial` | `pyeonchan` ships md ingest + watcher; FTS5 indexer deferred to Phase 2. `janggyeong` (corpus store) not yet a module. |
 | 2 | Two-Stage Routing | `naru` | `live` | `router_2tier.tier1_match` shipped (0.3.1: unmatched packs no longer returned on precedence alone; upper-case abbreviations match whole tokens only; 34-row router golden gates CI); Tier 2 LLM classifier live for `route` CLI. |
-| 3 | Typed Pack Registry + 5 Retrieval Plans | `jikji` + `bongsu` | `live` | 43 packs in `packs/registry.yaml`, all released in `v0.3.2` (Wave 1: 25 · Wave 2: 18). `bongsu` vault search + 5 retrieval plans shipped in `0.1.0a2`. |
+| 3 | Typed Pack Registry + 5 Retrieval Plans | `jikji` + `bongsu` | `live` | 47 packs in `packs/registry.yaml` (43 released in `v0.3.2` — Wave 1: 25 · Wave 2: 18 — plus 4 Wave 3a research packs on main, unreleased). `bongsu` vault search + 5 retrieval plans shipped in `0.1.0a2`. |
 | 4 | Proposal-Only 4-Gate Governance | `sangso` | `live` | Lint / Diff / Eval Δ / Approval pipeline shipped in `0.1.0a7` (PR #10, closed #5). |
 | 5 | Multi-Tenant Overlay (scoped corpora) | `beopjeon` + `janggyeong` | `planned` | Overlay schema present in `sillok.schemas.overlay`; runtime composition not yet wired. |
 | 6 | MCP Bridge | `tongsa` | `live` | 3 tools (`sillok.list_packs` / `sillok.route` / `sillok.search`) shipped in `0.1.0a7` (PR #11, closed #4). |
@@ -58,7 +58,7 @@ been measured in a controlled test yet.
 
 ## Pack registry
 
-- Current count: **43 packs** across 8 sub-categories (`methodology`, `consulting`, `engineering`, `business`, `visual`, `lifestyle`, `output-styles`, `core`)
+- Current count: **47 packs** across 9 sub-categories (`methodology`, `consulting`, `engineering`, `business`, `visual`, `lifestyle`, `research`, `output-styles`, `core`)
 - Wave 1a (`0.1.0a7`): +5 packs — `meeting-minutes`, `change-management`, `tool-adoption-consulting`, `project-charter`, `infographic-design`
 - Wave 1b (`0.2.0a2`): +5 — `consulting-uxui-audit`, `consulting-ai-engineering-audit`, `consulting-security-audit`, `consulting-growth-audit`, `consulting-crossanalysis`
 - Wave 1c (`0.2.0a3`): +5 — `pack-maintenance`, `prompt-sequencing-meta`, `agent-1on1`, `worklog`, `everyday-health-symptom`
@@ -67,6 +67,7 @@ been measured in a controlled test yet.
 - Wave 2b (`v0.3.2`): +5 — `gtm-launch-playbook`, `unit-economics-modeling`, `saas-pricing-packaging`, `platform-strategy`, `deck-builder`.
 - Wave 2c (`v0.3.2`): +5 — `design-artifact-production`, `diagram-design`, `visual-quality`, `image-prompt-playbook`, `gpt-image-2-reference`.
 - Wave 2d (`v0.3.2`): +4 — `running-injury-prevention`, `running-race-data-analysis`, `nutrition`, `travel-trip-planning`. Wave 2 (18 packs) is complete and released in `v0.3.2`. Wave 2 ports 18 packs in ≤ 5-pack waves (2a engineering · 2b business · 2c visual · 2d health & travel).
+- Wave 3a (unreleased): +4 — `academic-paper-writing`, `academic-integrity-review`, `research-enhanced`, `deep-research` (new `research` sub-category). Release is a separate decision.
 
 ## How this page is kept honest
 

@@ -6,6 +6,26 @@ adheres to [SemVer](https://semver.org/).
 
 ## [Unreleased]
 
+### Added — packs Wave 3a (research)
+- `academic-paper-writing` (workflow/research) — five lenses with declared
+  blind spots, contradiction map, claim reliability table, outline approved
+  before prose, citations checked by identifier and for support (a title is
+  not evidence), authorship and AI-disclosure gate, mock review in a fresh
+  context.
+- `academic-integrity-review` (workflow/research) — forensics with A/B/C
+  evidence and symmetric human-authorship signals, probability verdicts only,
+  no document text sent out, execution record, oral-verification protocol;
+  findings-first review; proofreading that never changes meaning.
+- `research-enhanced` (domain/research) — viewpoint, depth and use declared
+  first; 2–6 perspectives; triangulation across method, source and
+  perspective; Observed / Inferred / Recommendation labels; reflection audit
+  in a fresh context.
+- `deep-research` (workflow/research) — periodic seven-axis landscape scan
+  of any field, cross-axis insights, drill-downs, dated events vs attributed
+  forecasts, claim ledger.
+- Router golden: +7 positive rows (G53–G59), including a collision row where
+  `deep-research` must outrank `research-enhanced`.
+
 ## [0.4.0] — 2026-11-17
 
 **Four kernel managers that act between messages, ported from the upstream
