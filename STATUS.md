@@ -3,7 +3,7 @@
 Authoritative status of each [Top 10 Feature](README.md#top-10-features) at the latest published release.
 First-time readers — use this page to verify what is shipped before adopting.
 
-- **Released**: `v0.4.0` — [GitHub Release](https://github.com/sillok-os/sillok/releases/tag/v0.4.0) · [PyPI](https://pypi.org/project/sillok/0.4.0/) · experimental kernel managers (work context, context budget, playbook, memory recall) + evidence and request-coverage checkers, all opt-in. Previous: `v0.3.2` (2026-11-17) — packs Wave 2 (25 → 43 packs); `v0.3.1` (2026-11-16) — router no-match fix, abbreviation token matching, router golden + gating CI, untagged `0.x` versioning so `pip install sillok` gets the real package (previous: `v0.3.0a2`, 2026-08-11 — install/MCP-setup fixes)
+- **Released**: `v0.4.1` — [GitHub Release](https://github.com/sillok-os/sillok/releases/tag/v0.4.1) · [PyPI](https://pypi.org/project/sillok/0.4.1/) · packs Wave 3a (43 → 47 packs: research and academic papers). Previous: `v0.4.0` (2026-11-17) — experimental kernel managers (work context, context budget, playbook, memory recall) + evidence and request-coverage checkers, all opt-in; `v0.3.2` (2026-11-17) — packs Wave 2 (25 → 43 packs); `v0.3.1` (2026-11-16) — router no-match fix, abbreviation token matching, router golden + gating CI, untagged `0.x` versioning so `pip install sillok` gets the real package (previous: `v0.3.0a2`, 2026-08-11 — install/MCP-setup fixes)
 - **Status legend**: `live` = working code + tests + docs · `partial` = working but missing a documented sub-feature · `stub` = directory or file present, no functional code · `planned` = not yet present
 
 ## Feature matrix
@@ -12,7 +12,7 @@ First-time readers — use this page to verify what is shipped before adopting.
 |---|---|---|:-:|---|
 | 1 | Multi-format Auto-Ingest RAG | `pyeonchan` + `janggyeong` | `partial` | `pyeonchan` ships md ingest + watcher; FTS5 indexer deferred to Phase 2. `janggyeong` (corpus store) not yet a module. |
 | 2 | Two-Stage Routing | `naru` | `live` | `router_2tier.tier1_match` shipped (0.3.1: unmatched packs no longer returned on precedence alone; upper-case abbreviations match whole tokens only; 34-row router golden gates CI); Tier 2 LLM classifier live for `route` CLI. |
-| 3 | Typed Pack Registry + 5 Retrieval Plans | `jikji` + `bongsu` | `live` | 47 packs in `packs/registry.yaml` (43 released in `v0.3.2` — Wave 1: 25 · Wave 2: 18 — plus 4 Wave 3a research packs on main, unreleased). `bongsu` vault search + 5 retrieval plans shipped in `0.1.0a2`. |
+| 3 | Typed Pack Registry + 5 Retrieval Plans | `jikji` + `bongsu` | `live` | 47 packs in `packs/registry.yaml`, all released in `v0.4.1` (Wave 1: 25 · Wave 2: 18 · Wave 3a: 4). `bongsu` vault search + 5 retrieval plans shipped in `0.1.0a2`. |
 | 4 | Proposal-Only 4-Gate Governance | `sangso` | `live` | Lint / Diff / Eval Δ / Approval pipeline shipped in `0.1.0a7` (PR #10, closed #5). |
 | 5 | Multi-Tenant Overlay (scoped corpora) | `beopjeon` + `janggyeong` | `planned` | Overlay schema present in `sillok.schemas.overlay`; runtime composition not yet wired. |
 | 6 | MCP Bridge | `tongsa` | `live` | 3 tools (`sillok.list_packs` / `sillok.route` / `sillok.search`) shipped in `0.1.0a7` (PR #11, closed #4). |
@@ -67,7 +67,7 @@ been measured in a controlled test yet.
 - Wave 2b (`v0.3.2`): +5 — `gtm-launch-playbook`, `unit-economics-modeling`, `saas-pricing-packaging`, `platform-strategy`, `deck-builder`.
 - Wave 2c (`v0.3.2`): +5 — `design-artifact-production`, `diagram-design`, `visual-quality`, `image-prompt-playbook`, `gpt-image-2-reference`.
 - Wave 2d (`v0.3.2`): +4 — `running-injury-prevention`, `running-race-data-analysis`, `nutrition`, `travel-trip-planning`. Wave 2 (18 packs) is complete and released in `v0.3.2`. Wave 2 ports 18 packs in ≤ 5-pack waves (2a engineering · 2b business · 2c visual · 2d health & travel).
-- Wave 3a (unreleased): +4 — `academic-paper-writing`, `academic-integrity-review`, `research-enhanced`, `deep-research` (new `research` sub-category). Release is a separate decision.
+- Wave 3a (`v0.4.1`): +4 — `academic-paper-writing`, `academic-integrity-review`, `research-enhanced`, `deep-research` (new `research` sub-category).
 
 ## How this page is kept honest
 

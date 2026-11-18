@@ -11,7 +11,9 @@
 
 > **알림**: 본 README는 [영문 README](README.md)의 동격(同格) 한국어판입니다. 코드·로그·CLI 출력 자체는 영어로 통일되어 있으나, 핵심 어휘에 한해 우리 전통 용어 — *실록·나루·봉수·직지·상소·장경·연륜·사관·법전·편찬·과거·마당·두레·통사·역참* — 을 그대로 살려 표기합니다.
 
-> **상태(v0.4.0, 2026-11-17)**: 43 packs(Wave 1: 25 · Wave 2: 18) · 실험적 opt-in 커널 관리자 4종 · 10 eval probes · 4-gate 거버넌스 · MCP 브리지 live · 동작하는 통합 `sillok` CLI. 채택 전 기능별 live/partial/stub 매트릭스는 [`STATUS.md`](STATUS.md) 참고. 두 판이 어긋나면 영문판이 정본입니다.
+> **상태(v0.4.1, 2026-11-19)**: 47 packs(Wave 1: 25 · Wave 2: 18 · Wave 3a: 4) · 실험적 opt-in 커널 관리자 4종 · 10 eval probes · 4-gate 거버넌스 · MCP 브리지 live · 동작하는 통합 `sillok` CLI. 채택 전 기능별 live/partial/stub 매트릭스는 [`STATUS.md`](STATUS.md) 참고. 두 판이 어긋나면 영문판이 정본입니다.
+>
+> **`0.4.1` 신규** — 팩 Wave 3a: 43 → 47 packs, 새 `research` 분류(학술 논문 작성 · 학술 무결성 검토 · 일상 리서치 · 다축 심층 리서치).
 >
 > **`0.4.0` 신규** — 메시지 사이에서 동작하는 실험적 opt-in 커널 관리자 4종: `sillok.sacho`(작업 맥락) · `sillok.seungjeongwon`(문맥 예산) · `sillok.gyeongyeon`(플레이북, 기본 shadow) · `sillok.chunchugwan`(기억 회수). Claude Code 훅 하나(`python -m sillok.kernel.hook`)로 묶고, `sillok.eval.evidence`·`sillok.eval.request_coverage`를 더했습니다. 설정하기 전에는 아무것도 동작하지 않습니다 — [F. 커널 관리자](#f-커널-관리자-실험적-opt-in) 참고.
 >
@@ -38,7 +40,7 @@
 
 ### 무엇을 받게 되나요
 
-- **43개 프롬프트 팩** 기본 탑재(전략·PMO·ITIL·리스크·SAFe·거버넌스·임원 보고와 덱·보고서 품질·가격과 GTM·단위경제·플랫폼 전략·엔지니어링 운영·다이어그램과 이미지 프롬프트 등)
+- **47개 프롬프트 팩** 기본 탑재(리서치·학술 논문·전략·PMO·ITIL·리스크·SAFe·거버넌스·임원 보고와 덱·보고서 품질·가격과 GTM·단위경제·플랫폼 전략·엔지니어링 운영·다이어그램과 이미지 프롬프트 등)
 - **2단계 라우터** — 적합한 팩(들)을 먼저 고르고, 적합한 retrieval plan 을 다음으로 선택
 - **5종 retrieval plan** — `wiki_first`, with-fallback, recovery-first, dual-compare, no-corpus
 - **Reason-coded 출력** — 라우팅 결정마다 R1~R7 태깅(감사 가능)
@@ -61,7 +63,7 @@ flowchart LR
     end
 
     subgraph SILLOK["Sillok 0.4.0"]
-        PACKS["📦 43 packs<br/>strategy · PMO · ITIL · risk ·<br/>SAFe · pricing · GTM · finance ·<br/>exec-comm · decks · diagrams ·<br/>engineering ops · …"]
+        PACKS["📦 47 packs<br/>strategy · PMO · ITIL · risk ·<br/>SAFe · pricing · GTM · finance ·<br/>exec-comm · decks · diagrams ·<br/>engineering ops · …"]
         ROUTER["🧭 나루(Naru)<br/>2단계 라우터"]
         SEARCH["🔎 봉수(Bongsu)<br/>vault 검색"]
         PROMOTE["🌱 연륜(Yeonryun)<br/>disposition + atom 승격"]
@@ -93,7 +95,7 @@ flowchart LR
 flowchart TB
     subgraph CORPUS["지식 계층"]
         VAULTROOT["vault root<br/>(.md + frontmatter v5.4)"]
-        REGISTRY["packs/registry.yaml<br/>(43-pack typed registry)"]
+        REGISTRY["packs/registry.yaml<br/>(47-pack typed registry)"]
     end
 
     subgraph INGEST["Ingest 경로"]
@@ -158,7 +160,7 @@ flowchart TB
 
 ### Framework 커버리지 — Sillok 이 통합하는 것
 
-Sillok 의 **로드맵** 은 **5축 / 25 카테고리 / 110+ 글로벌 표준** 을 단일 registry · 단일 router · 단일 proposal-only governance 위에서 통합합니다. **`0.4.0` 은 43 packs 를 ship**(Wave 1: 25 · Wave 2: 18)하며, 팩이 없는 카테고리는 도메인 기여자에게 열려 있습니다.
+Sillok 의 **로드맵** 은 **5축 / 25 카테고리 / 110+ 글로벌 표준** 을 단일 registry · 단일 router · 단일 proposal-only governance 위에서 통합합니다. **`0.4.1` 은 47 packs 를 ship**(Wave 1: 25 · Wave 2: 18 · Wave 3a: 4)하며, 팩이 없는 카테고리는 도메인 기여자에게 열려 있습니다.
 
 ```
 [축1] 거버넌스         [축2] 딜리버리        [축3] 산업특화          [축4] 비즈니스       [축5] AI/엔지니어링
@@ -174,7 +176,7 @@ Sillok 의 **로드맵** 은 **5축 / 25 카테고리 / 110+ 글로벌 표준** 
                                                                                        └─ 다이어그램/이미지 ✅
 ```
 
-#### 0.4.0 이 ship 하는 것 (43 packs)
+#### 0.4.1 이 ship 하는 것 (47 packs)
 
 | 영역 | Pack(s) | 프레임워크 / 방법 |
 |---|---|---|
@@ -192,6 +194,7 @@ Sillok 의 **로드맵** 은 **5축 / 25 카테고리 / 110+ 글로벌 표준** 
 | 시각 제작 | `infographic-design` · `design-artifact-production` · `diagram-design` · `visual-quality` · `image-prompt-playbook` · `gpt-image-2-reference` | 다이어그램·인포그래픽 패턴 · 대비 검사 · 이미지 프롬프트 반복 |
 | 엔지니어링 운영 | `sw-engineering-operations` · `github-operations` · `github-actions-ops` | 변경 · 리뷰 · CI/CD 운영 |
 | 업무 습관 · 메타 | `meeting-minutes` · `worklog` · `agent-1on1` · `pack-maintenance` · `prompt-sequencing-meta` · `cold-domain-grounding` | 회의록 · 업무 기록 · 팩 관리 · 프롬프트 시퀀싱 · 낯선 도메인 근거 확인 |
+| 리서치 · 학술 논문 | `research-enhanced` · `deep-research` · `academic-paper-writing` · `academic-integrity-review` | 3축 삼각검증 · 7축 동향 스캔 · STORM식 개요 우선 집필 · 인용 실재·지지 검사 · AI 사용 공개 게이트 · 증거 등급 기반 무결성 검토 |
 | 건강 · 여행 (개인) | `everyday-health-symptom` · `running-injury-prevention` · `running-race-data-analysis` · `nutrition` · `travel-trip-planning` | 위험 신호 우선 · 의료 조언 아님 · 결제·예약은 사람이 |
 
 > 📚 **상세 인벤토리** — 25 카테고리 × 110+ 표준 × ship status × persona 페어링 → [`docs/architecture/framework-coverage.md`](docs/architecture/framework-coverage.md).
@@ -285,7 +288,7 @@ EOF
 
 ### 60초 퀵스타트 — *GA 목표*
 
-> **상태(2026-11-17)**: 본 퀵스타트는 **GA 경험**(`>=1.0.0`) 기준입니다. 현재 출시 버전은 `0.4.0` (alpha · 43 packs · 실험적 커널 관리자). today 동작 경로는 [Part 4 — 사용](#part-4--사용) 참조.
+> **상태(2026-11-17)**: 본 퀵스타트는 **GA 경험**(`>=1.0.0`) 기준입니다. 현재 출시 버전은 `0.4.1` (alpha · 47 packs · 실험적 커널 관리자). today 동작 경로는 [Part 4 — 사용](#part-4--사용) 참조.
 
 ```bash
 pip install sillok               # 1.0.0+ (GA 목표)
@@ -443,7 +446,7 @@ sillok route "B2B SaaS tier-pricing case studies" --show-corpus
 
 ### 컨설턴트 퀵스타트 (0.4.0) — *지금 동작하는 경로*
 
-Biz / Product / Project / IT / ITO 컨설턴트로서 **본인 RAG repository 만 가리키고** 지금 바로 쓰고 싶다면, `0.4.0` 의 전체 사용 경로는 본 섹션입니다(43 packs · Wave 2 모듈 · 실험적 커널 관리자). 통합 `sillok` 명령(`route` / `eval` / `sangso` / `schemas` / `tongsa`)과 **`tongsa` MCP 브리지**(도구 3종)는 동작하며, GA 전용은 `route --execute` 자동 실행뿐입니다. 아래 **Python module CLI** 들도 그대로 씁니다.
+Biz / Product / Project / IT / ITO 컨설턴트로서 **본인 RAG repository 만 가리키고** 지금 바로 쓰고 싶다면, `0.4.1` 의 전체 사용 경로는 본 섹션입니다(47 packs · Wave 2 모듈 · 실험적 커널 관리자). 통합 `sillok` 명령(`route` / `eval` / `sangso` / `schemas` / `tongsa`)과 **`tongsa` MCP 브리지**(도구 3종)는 동작하며, GA 전용은 `route --execute` 자동 실행뿐입니다. 아래 **Python module CLI** 들도 그대로 씁니다.
 
 #### A. 본인 vault 인덱싱 (5분)
 
@@ -474,7 +477,7 @@ sillok route "Run a strategy audit for Acme with Porter five forces"
 
 어느 팩의 트리거에도 걸리지 않는 메시지는 후보를 내지 않습니다(`0.3.1` 부터). `[strategy]` 같은 팩 태그나 도메인 용어를 넣어 방향을 잡으세요.
 
-43 packs 본문은 wheel 안에 동봉됩니다. 체크아웃 밖에서는 라우터가 이 동봉본을 쓰고, 자체 레지스트리를 쓰려면 `SILLOK_REGISTRY=/path/to/registry.yaml` 을 지정합니다:
+47 packs 본문은 wheel 안에 동봉됩니다. 체크아웃 밖에서는 라우터가 이 동봉본을 쓰고, 자체 레지스트리를 쓰려면 `SILLOK_REGISTRY=/path/to/registry.yaml` 을 지정합니다:
 
 ```bash
 python -c "import sillok, pathlib; print(pathlib.Path(sillok.__file__).parent / '_packs')"
@@ -635,7 +638,7 @@ LLM execution fails
 
 ### 본인 도메인 pack 추가
 
-43 packs 는 [커버리지 지도](#framework-커버리지--sillok-이-통합하는-것)의 ✅·◐ 카테고리를 다룹니다. 아직 ⏳ 인 카테고리(자동차 / 의료기기 / 은행 / 보험 / 임베디드 / 조직설계 / 콘텐츠 발행 / Enterprise B2B)와 ◐ 인 카테고리(Risk 정량 / 보안 / M&A / 그로스 / UX / AI 엔지니어링 / 디자인 시스템)는 **도메인 SME** 분들이 추가하실 수 있도록 의도적으로 비워 둔 영역입니다.
+47 packs 는 [커버리지 지도](#framework-커버리지--sillok-이-통합하는-것)의 ✅·◐ 카테고리를 다룹니다. 아직 ⏳ 인 카테고리(자동차 / 의료기기 / 은행 / 보험 / 임베디드 / 조직설계 / 콘텐츠 발행 / Enterprise B2B)와 ◐ 인 카테고리(Risk 정량 / 보안 / M&A / 그로스 / UX / AI 엔지니어링 / 디자인 시스템)는 **도메인 SME** 분들이 추가하실 수 있도록 의도적으로 비워 둔 영역입니다.
 
 기여하시려는 도메인이 있다면 전용 가이드가 전체 절차를 다룹니다:
 

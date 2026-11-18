@@ -12,7 +12,9 @@
 
 ---
 
-> **Status**: `v0.4.0` alpha — 47 packs (Wave 1: 1a/1b/1c · Wave 2: 2a–2d · Wave 3a research on main, unreleased), experimental opt-in kernel managers, 10 eval probes, 4-gate governance + MCP bridge live, **plus Wave 2 modules** and a **functional unified `sillok` CLI**. See [`STATUS.md`](STATUS.md) for the per-feature live / partial / stub / planned matrix before adoption.
+> **Status**: `v0.4.1` alpha — 47 packs (Wave 1: 1a/1b/1c · Wave 2: 2a–2d · Wave 3a: research), experimental opt-in kernel managers, 10 eval probes, 4-gate governance + MCP bridge live, **plus Wave 2 modules** and a **functional unified `sillok` CLI**. See [`STATUS.md`](STATUS.md) for the per-feature live / partial / stub / planned matrix before adoption.
+>
+> **New in `0.4.1`** — packs Wave 3a: 43 → 47 packs in a new `research` category (academic paper writing, academic integrity review, everyday research, deep multi-axis research).
 >
 > **New in `0.4.0`** — four experimental, opt-in kernel managers that act between messages: `sillok.sacho` (work context), `sillok.seungjeongwon` (context budget), `sillok.gyeongyeon` (playbook, shadow by default) and `sillok.chunchugwan` (memory recall), wired by one Claude Code hook (`python -m sillok.kernel.hook`), plus `sillok.eval.evidence` and `sillok.eval.request_coverage`. Nothing runs until you configure it — see [F. Kernel managers](#f-kernel-managers-experimental-opt-in).
 >
@@ -37,7 +39,7 @@ This README is organized as **value → use cases → install → use → mainta
 
 ### What you get
 
-- **43 prompt packs** out of the box (strategy, PMO, ITIL, risk, SAFe, governance, exec-comms and decks, report-quality, pricing & GTM, unit economics, platform strategy, engineering ops, diagrams & image prompts, …)
+- **47 prompt packs** out of the box (research and academic papers, strategy, PMO, ITIL, risk, SAFe, governance, exec-comms and decks, report-quality, pricing & GTM, unit economics, platform strategy, engineering ops, diagrams & image prompts, …)
 - **2-stage router** — picks the right pack(s), then picks the right retrieval plan
 - **5 retrieval plans** — `wiki_first`, with-fallback, recovery-first, dual-compare, no-corpus
 - **Reason-coded output** — every routing decision tagged R1~R7 (audit-ready)
@@ -60,7 +62,7 @@ flowchart LR
     end
 
     subgraph SILLOK["Sillok 0.4.0"]
-        PACKS["📦 43 packs<br/>strategy · PMO · ITIL · risk ·<br/>SAFe · pricing · GTM · finance ·<br/>exec-comm · decks · diagrams ·<br/>engineering ops · …"]
+        PACKS["📦 47 packs<br/>strategy · PMO · ITIL · risk ·<br/>SAFe · pricing · GTM · finance ·<br/>exec-comm · decks · diagrams ·<br/>engineering ops · …"]
         ROUTER["🧭 Naru<br/>2-stage router"]
         SEARCH["🔎 Bongsu<br/>vault search"]
         PROMOTE["🌱 Yeonryun<br/>disposition + atom promote"]
@@ -92,7 +94,7 @@ flowchart LR
 flowchart TB
     subgraph CORPUS["Knowledge layer"]
         VAULTROOT["vault root<br/>(.md + frontmatter v5.4)"]
-        REGISTRY["packs/registry.yaml<br/>(43-pack typed registry)"]
+        REGISTRY["packs/registry.yaml<br/>(47-pack typed registry)"]
     end
 
     subgraph INGEST["Ingest path"]
@@ -157,7 +159,7 @@ flowchart TB
 
 ### Framework coverage — what Sillok integrates
 
-Sillok's **roadmap** covers **5 axes / 25 categories / 110+ global standards** under one registry, one router, one proposal-only governance gate. **`0.4.0` ships 43 packs** (Wave 1: 25 · Wave 2: 18). Categories without a pack are open for domain contributors.
+Sillok's **roadmap** covers **5 axes / 25 categories / 110+ global standards** under one registry, one router, one proposal-only governance gate. **`0.4.1` ships 47 packs** (Wave 1: 25 · Wave 2: 18 · Wave 3a: 4). Categories without a pack are open for domain contributors.
 
 ```
 [Axis 1] Governance     [Axis 2] Delivery       [Axis 3] Industry        [Axis 4] Business      [Axis 5] AI/Eng
@@ -173,7 +175,7 @@ Sillok's **roadmap** covers **5 axes / 25 categories / 110+ global standards** u
                                                                                           └─ Diagram/Image  ✅
 ```
 
-#### What ships in 0.4.0 (43 packs)
+#### What ships in 0.4.1 (47 packs)
 
 | Area | Pack(s) | Frameworks / methods |
 |---|---|---|
@@ -191,6 +193,7 @@ Sillok's **roadmap** covers **5 axes / 25 categories / 110+ global standards** u
 | Visual production | `infographic-design` · `design-artifact-production` · `diagram-design` · `visual-quality` · `image-prompt-playbook` · `gpt-image-2-reference` | diagram and infographic patterns · contrast checks · image-prompt iteration |
 | Engineering operations | `sw-engineering-operations` · `github-operations` · `github-actions-ops` | change, review and CI/CD operations |
 | Working practice · meta | `meeting-minutes` · `worklog` · `agent-1on1` · `pack-maintenance` · `prompt-sequencing-meta` · `cold-domain-grounding` | minutes · work logs · pack upkeep · prompt sequencing · grounding in unfamiliar domains |
+| Research · academic papers | `research-enhanced` · `deep-research` · `academic-paper-writing` · `academic-integrity-review` | three-axis triangulation · seven-axis landscape scans · STORM-style outline-first drafting · citation existence and support checks · AI-disclosure gate · evidence-graded integrity review |
 | Health · travel (personal) | `everyday-health-symptom` · `running-injury-prevention` · `running-race-data-analysis` · `nutrition` · `travel-trip-planning` | red-flag routing first · not medical advice · people pay and book |
 
 > 📚 **Full inventory** — 25 categories × 110+ standards × ship status × persona pairing in [`docs/architecture/framework-coverage.md`](docs/architecture/framework-coverage.md).
@@ -284,7 +287,7 @@ Optional:
 
 ### Quickstart (60 seconds) — *GA target*
 
-> **Status (2026-11-17)**: this Quickstart describes the **GA experience** (`>=1.0.0`). The current shipped version is `0.4.0` (alpha-stage 0.x — Wave 1 and Wave 2 complete, 43 packs, experimental kernel managers). For what works **today**, jump to [Part 4 — Usage](#part-4--usage).
+> **Status (2026-11-17)**: this Quickstart describes the **GA experience** (`>=1.0.0`). The current shipped version is `0.4.1` (alpha-stage 0.x — Wave 1, Wave 2 and Wave 3a, 47 packs, experimental kernel managers). For what works **today**, jump to [Part 4 — Usage](#part-4--usage).
 
 ```bash
 pip install sillok               # 1.0.0+ (GA target; today see Part 4 — Usage)
@@ -459,7 +462,7 @@ sillok route "B2B SaaS tier-pricing case studies" --show-corpus
 
 ### Consultant Quickstart for 0.4.0 — *what works today*
 
-If you're a Biz / Product / Project / IT / ITO consultant and you only want to **point Sillok at your own RAG repository** and use it now, this section is the entire story for `0.4.0` (43 packs, Wave 2 modules, experimental kernel managers). The unified `sillok` command is functional (`sillok route` / `eval` / `sangso` / `schemas` / `tongsa`); the GA-only piece is the `route --execute` auto-run. The **`tongsa` MCP bridge** (3 tools) and the **Python module CLIs** below are production-path.
+If you're a Biz / Product / Project / IT / ITO consultant and you only want to **point Sillok at your own RAG repository** and use it now, this section is the entire story for `0.4.1` (47 packs, Wave 2 modules, experimental kernel managers). The unified `sillok` command is functional (`sillok route` / `eval` / `sangso` / `schemas` / `tongsa`); the GA-only piece is the `route --execute` auto-run. The **`tongsa` MCP bridge** (3 tools) and the **Python module CLIs** below are production-path.
 
 #### A. Index your own vault (5 min)
 
@@ -490,7 +493,7 @@ sillok route "Run a strategy audit for Acme with Porter five forces"
 
 A message that matches no pack's triggers returns no candidates (since `0.3.1`); add a pack's explicit tag such as `[strategy]` or a domain term to steer it.
 
-All 43 packs ship inside the wheel. Outside a checkout the router uses that bundled copy; set `SILLOK_REGISTRY=/path/to/registry.yaml` to use your own registry:
+All 47 packs ship inside the wheel. Outside a checkout the router uses that bundled copy; set `SILLOK_REGISTRY=/path/to/registry.yaml` to use your own registry:
 
 ```bash
 python -c "import sillok, pathlib; print(pathlib.Path(sillok.__file__).parent / '_packs')"
@@ -651,7 +654,7 @@ Quick rule of thumb: if more than 10 people will use Sillok at your company, rea
 
 ### Adding a pack for your domain
 
-The 43 packs cover the categories marked ✅ and ◐ in the [coverage map](#framework-coverage--what-sillok-integrates). The categories still marked ⏳ (Automotive / Medical Device / Banking / Insurance / Embedded / Org design / Content publishing / Enterprise B2B) and the ◐ ones (Risk Quant / Security / M&A / Growth / UX / AI engineering / Design system) are intentionally left for **domain SMEs** to land additively.
+The 47 packs cover the categories marked ✅ and ◐ in the [coverage map](#framework-coverage--what-sillok-integrates). The categories still marked ⏳ (Automotive / Medical Device / Banking / Insurance / Embedded / Org design / Content publishing / Enterprise B2B) and the ◐ ones (Risk Quant / Security / M&A / Growth / UX / AI engineering / Design system) are intentionally left for **domain SMEs** to land additively.
 
 If you have a domain you want to contribute, the dedicated guide covers the entire procedure:
 
