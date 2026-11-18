@@ -26,7 +26,7 @@ The current release is **`0.4.1`** (alpha): 47 packs, the 2-tier router, proposa
 ## Quick start
 
 ```bash
-pip install sillok              # 0.4.0 · Python 3.11+
+pip install sillok              # 0.4.1 · Python 3.11+
 sillok route "Run a strategy audit for Acme with Porter five forces"
 python -m sillok.eval run       # 10 golden probes
 ```
