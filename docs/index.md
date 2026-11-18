@@ -21,7 +21,7 @@ See [Architecture](architecture/README.md) for the full module map.
 
 ## Status (2026-11-17)
 
-The current release is **`0.4.0`** (alpha): 43 packs, the 2-tier router, proposal-only governance, a 10-probe eval gate, the MCP bridge, and four experimental, opt-in kernel managers. The per-feature live / partial / stub matrix is in [`STATUS.md`](https://github.com/sillok-os/sillok/blob/main/STATUS.md), release notes in [`CHANGELOG.md`](https://github.com/sillok-os/sillok/blob/main/CHANGELOG.md).
+The current release is **`0.4.1`** (alpha): 47 packs, the 2-tier router, proposal-only governance, a 10-probe eval gate, the MCP bridge, and four experimental, opt-in kernel managers. The per-feature live / partial / stub matrix is in [`STATUS.md`](https://github.com/sillok-os/sillok/blob/main/STATUS.md), release notes in [`CHANGELOG.md`](https://github.com/sillok-os/sillok/blob/main/CHANGELOG.md).
 
 ## Quick start
 

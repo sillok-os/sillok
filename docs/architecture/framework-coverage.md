@@ -1,7 +1,7 @@
 # Framework coverage — global standards inventory
 
 Sillok's roadmap covers **25 categories / 110+ global standards** across
-five axes. `0.4.0` ships **43 packs** (Wave 1: 25 · Wave 2: 18). §2 starts
+five axes. `0.4.1` ships **47 packs** (Wave 1: 25 · Wave 2: 18 · Wave 3a: 4). §2 starts
 with the current status of every category; the per-axis tables below it keep
 the standards each category covers and the original milestone plan.
 

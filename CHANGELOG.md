@@ -6,6 +6,12 @@ adheres to [SemVer](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.4.1] — 2026-11-19
+
+**Packs Wave 3a: a new `research` category (43 → 47 packs).** Content only:
+no module, CLI or router behaviour changed, so `0.4.0` → `0.4.1` upgrades
+cleanly.
+
 ### Added — packs Wave 3a (research)
 - `academic-paper-writing` (workflow/research) — five lenses with declared
   blind spots, contradiction map, claim reliability table, outline approved
