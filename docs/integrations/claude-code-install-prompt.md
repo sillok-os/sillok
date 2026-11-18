@@ -75,12 +75,11 @@ session whether it worked.
 > }
 > ```
 >
-> The `os.chdir` wrapper is load-bearing on the currently published release:
-> the wheel ships code but not the pack registry, and the registry is read
-> from a path relative to the working directory. An MCP server inherits *this*
-> project's directory, so without the chdir it raises
-> `FileNotFoundError: packs/registry.yaml`. Drop the wrapper only once you are
-> on a release whose wheel bundles `sillok/_packs/`.
+> The `os.chdir` wrapper keeps this checkout's `packs/registry.yaml` in use:
+> the registry is read from a path relative to the working directory, and an
+> MCP server inherits *this* project's directory. Released wheels also bundle
+> the packs as `sillok/_packs/`, so a plain `pip install sillok` (no checkout)
+> works without the wrapper.
 >
 > **5. Prove the tools actually answer before declaring success** — run the
 > same entry point the MCP config uses, so a failure shows up here rather than
@@ -92,7 +91,7 @@ session whether it worked.
 > <venv-python> -c "import os;os.chdir('D:/sillok-os');from sillok.tongsa.__main__ import cli;cli()" smoke
 > ```
 >
-> Expect a pack count (25 on the current release) and at least one routed pack
+> Expect a pack count (47 on `0.4.1`) and at least one routed pack
 > with reason codes. `FileNotFoundError: packs/registry.yaml` here means the
 > chdir path is wrong.
 >

@@ -37,11 +37,11 @@ The two are licensed and distributed separately — see
 
 ## 2. Ship status per category
 
-### Status in 0.4.0
+### Status in 0.4.1
 
 ✅ dedicated pack(s) · ◐ partial (an audit lens or one aspect) · ⏳ no pack yet — open for contributors
 
-| # | Category | 0.4.0 | Pack(s) |
+| # | Category | 0.4.1 | Pack(s) |
 |:-:|---|:-:|---|
 | 1 | ERM · IT Governance · EA | ✅ | `governance-standards` |
 | 2 | Risk quantification | ◐ | `risk-uncertainty` |
@@ -65,7 +65,9 @@ The two are licensed and distributed separately — see
 | 24 | Enterprise B2B sales | ⏳ | — |
 | 25 | Design system / Diagram / Image | ✅ diagram · image ◐ design system | `diagram-design` · `image-prompt-playbook` · `gpt-image-2-reference` · `infographic-design` · `design-artifact-production` · `visual-quality` |
 
-Outside the 25 categories, `0.4.0` also ships engineering operations
+Outside the 25 categories, `0.4.1` also ships research and academic-paper
+packs (`research-enhanced`, `deep-research`, `academic-paper-writing`,
+`academic-integrity-review`), engineering operations
 (`sw-engineering-operations`, `github-operations`, `github-actions-ops`),
 working-practice packs (`meeting-minutes`, `worklog`, `agent-1on1`,
 `pack-maintenance`, `cold-domain-grounding`) and personal health and travel
@@ -188,7 +190,7 @@ Other LLM harness systems (LangGraph / CrewAI / Claude Code Skills / BMAD / Devi
 2. **Industry-specific compliance ready** — Banking (Basel III/IV), Insurance (Solvency II / IFRS 17), Automotive (ISO 26262 / 21434 / R155 / R156), Medical Device (ISO 14971 / IEC 62304 / FDA Part 820 / EU MDR), Embedded SW (AUTOSAR / MISRA / SEI CERT) all live under the same operating model.
 3. **Cross-axis triangulation** — a banking RFP that needs ICAAP (cat 11) + ITIL Continuity (cat 3) + ERM Governance (cat 1) + SAFe delivery (cat 6) + Pyramid exec communication (cat 21) traverses one router, one pack pipeline, one proposal log.
 
-This is the "moat" claim. It is not yet fully delivered — `0.4.0` covers the categories marked ✅ and ◐ in §2, while the industry axis has no pack yet — but the registry shape, governance contract, and persona mapping are stable enough that downstream packs land additively rather than rearchitecturally.
+This is the "moat" claim. It is not yet fully delivered — `0.4.1` covers the categories marked ✅ and ◐ in §2, while the industry axis has no pack yet — but the registry shape, governance contract, and persona mapping are stable enough that downstream packs land additively rather than rearchitecturally.
 
 ---
 
@@ -200,6 +202,7 @@ This is the "moat" claim. It is not yet fully delivered — `0.4.0` covers the c
 | `0.2.0a2` · `0.2.0a3` | 25 | Wave 1b/1c: audit lenses (UX, AI engineering, security, growth, cross-analysis), meta and health packs |
 | `0.3.2` | 43 | Wave 2: engineering ops, pricing / GTM / unit economics / platform strategy, decks and visual production, health and travel |
 | `0.4.0` | 43 | experimental opt-in kernel managers (no pack changes) |
+| `0.4.1` | 47 | Wave 3a: research and academic papers (everyday research, deep research, paper writing, integrity review) |
 | 1.0.0 GA | — | industry categories (9–13) and the remaining ⏳ categories, contributed additively |
 
 Release notes: [`CHANGELOG.md`](https://github.com/sillok-os/sillok/blob/main/CHANGELOG.md) · live status: [`STATUS.md`](https://github.com/sillok-os/sillok/blob/main/STATUS.md).
