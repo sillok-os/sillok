@@ -12,7 +12,7 @@
 
 ---
 
-> **Status**: `v0.4.0` alpha — 43 packs (Wave 1: 1a/1b/1c · Wave 2: 2a–2d), experimental opt-in kernel managers, 10 eval probes, 4-gate governance + MCP bridge live, **plus Wave 2 modules** and a **functional unified `sillok` CLI**. See [`STATUS.md`](STATUS.md) for the per-feature live / partial / stub / planned matrix before adoption.
+> **Status**: `v0.4.0` alpha — 47 packs (Wave 1: 1a/1b/1c · Wave 2: 2a–2d · Wave 3a research on main, unreleased), experimental opt-in kernel managers, 10 eval probes, 4-gate governance + MCP bridge live, **plus Wave 2 modules** and a **functional unified `sillok` CLI**. See [`STATUS.md`](STATUS.md) for the per-feature live / partial / stub / planned matrix before adoption.
 >
 > **New in `0.4.0`** — four experimental, opt-in kernel managers that act between messages: `sillok.sacho` (work context), `sillok.seungjeongwon` (context budget), `sillok.gyeongyeon` (playbook, shadow by default) and `sillok.chunchugwan` (memory recall), wired by one Claude Code hook (`python -m sillok.kernel.hook`), plus `sillok.eval.evidence` and `sillok.eval.request_coverage`. Nothing runs until you configure it — see [F. Kernel managers](#f-kernel-managers-experimental-opt-in).
 >
