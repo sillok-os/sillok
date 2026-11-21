@@ -1,6 +1,6 @@
 # ADR 0001 — Initial Architecture Decisions
 
-- **Status**: accepted
+- **Status**: accepted (D4 superseded and D5 clarified by ADR 0002)
 - **Date**: 2026-04-26
 - **Deciders**: Project Sponsor (peterkimpmp)
 - **Supersedes**: —

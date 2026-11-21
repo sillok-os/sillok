@@ -7,7 +7,7 @@ Sillok is a small, opinionated harness for running prompt-engineered workflows o
 ## Top 10 features
 
 1. **Multi-format Auto-Ingest RAG** — md / pdf / docx / xlsx / pptx / txt / hwpx; watch / cron / on-demand.
-2. **Two-Stage Routing** — Tier 1 keyword match + Tier 2 LLM intent; ~97% token reduction.
+2. **Two-Stage Routing** — Tier 1 deterministic keyword match + Tier 2 pack-body load, with no LLM call; about 94% fewer pack-instruction tokens than loading every pack (ADR 0002).
 3. **Typed Pack Registry + 5 Retrieval Plans** — `vault_first` / `with_fallback` / `recovery_first` / `dual_compare` / `no_corpus`.
 4. **Proposal-Only 4-Gate Governance** — auto-growth never overwrites prompts directly.
 5. **Multi-Tenant Overlay** — personal + team + per-client corpus layers.

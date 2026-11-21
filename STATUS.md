@@ -11,8 +11,8 @@ First-time readers — use this page to verify what is shipped before adopting.
 | # | Feature | Module(s) | Status | Notes / linked issue |
 |---|---|---|:-:|---|
 | 1 | Multi-format Auto-Ingest RAG | `pyeonchan` + `janggyeong` | `partial` | `pyeonchan` ships md ingest + watcher; FTS5 indexer deferred to Phase 2. `janggyeong` (corpus store) not yet a module. |
-| 2 | Two-Stage Routing | `naru` | `live` | `router_2tier.tier1_match` shipped (0.3.1: unmatched packs no longer returned on precedence alone; upper-case abbreviations match whole tokens only; 34-row router golden gates CI); Tier 2 LLM classifier live for `route` CLI. |
-| 3 | Typed Pack Registry + 5 Retrieval Plans | `jikji` + `bongsu` | `live` | 47 packs in `packs/registry.yaml`, all released in `v0.4.1` (Wave 1: 25 · Wave 2: 18 · Wave 3a: 4). `bongsu` vault search + 5 retrieval plans shipped in `0.1.0a2`. |
+| 2 | Two-Stage Routing | `naru` | `live` | `router_2tier.tier1_match` shipped (0.3.1: unmatched packs no longer returned on precedence alone; upper-case abbreviations match whole tokens only; 34-row router golden gates CI); Tier 2 loads the selected pack bodies; routing makes no LLM call (an LLM intent tier is not implemented — ADR 0002). |
+| 3 | Typed Pack Registry + 5 Retrieval Plans | `jikji` + `bongsu` | `live` | 47 packs in `packs/registry.yaml`, all released in `v0.4.1` (Wave 1: 25 · Wave 2: 18 · Wave 3a: 4). `bongsu` vault search + 5 retrieval plan IDs shipped in `0.1.0a2`; none of the 47 starter packs declares a plan yet. |
 | 4 | Proposal-Only 4-Gate Governance | `sangso` | `live` | Lint / Diff / Eval Δ / Approval pipeline shipped in `0.1.0a7` (PR #10, closed #5). |
 | 5 | Multi-Tenant Overlay (scoped corpora) | `beopjeon` + `janggyeong` | `planned` | Overlay schema present in `sillok.schemas.overlay`; runtime composition not yet wired. |
 | 6 | MCP Bridge | `tongsa` | `live` | 3 tools (`sillok.list_packs` / `sillok.route` / `sillok.search`) shipped in `0.1.0a7` (PR #11, closed #4). |

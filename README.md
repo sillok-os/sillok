@@ -40,8 +40,8 @@ This README is organized as **value → use cases → install → use → mainta
 ### What you get
 
 - **47 prompt packs** out of the box (research and academic papers, strategy, PMO, ITIL, risk, SAFe, governance, exec-comms and decks, report-quality, pricing & GTM, unit economics, platform strategy, engineering ops, diagrams & image prompts, …)
-- **2-stage router** — picks the right pack(s), then picks the right retrieval plan
-- **5 retrieval plans** — `wiki_first`, with-fallback, recovery-first, dual-compare, no-corpus
+- **2-stage router** — deterministic keyword match picks the pack(s), then loads only their bodies (no LLM call while routing)
+- **5 retrieval plan IDs** — `vault_first`, `vault_then_llmwiki_fallback`, `llmwiki_recovery_first`, `dual_compare`, `no_corpus` (a pack may declare one; the 47 starter packs do not yet)
 - **Reason-coded output** — every routing decision tagged R1~R7 (audit-ready)
 - **Proposal-only governance** — 4-gate review pipeline, no silent overwrites
 - **Kernel managers (experimental, opt-in)** — work context, context budget, playbook and memory recall between messages, wired by one Claude Code hook
@@ -104,7 +104,7 @@ flowchart TB
 
     subgraph QUERY["Query path"]
         BONGSU["bongsu.search<br/>(frontmatter + body grep)"]
-        NARU["naru.router_2tier<br/>(tier 1 keyword → tier 2 LLM)"]
+        NARU["naru.router_2tier<br/>(tier 1 keyword → tier 2 pack bodies)"]
         JIKJI["jikji<br/>(typed pack registry)"]
     end
 
@@ -205,8 +205,8 @@ The 10 capabilities below are what differentiate Sillok from a plain RAG noteboo
 | # | Feature | What it does | Module(s) |
 |---|---|---|---|
 | 1 | **Multi-format Auto-Ingest RAG** | Auto-builds your personal RAG corpus from `md` / `pdf` / `docx` / `xlsx` / `pptx` / `txt` / `hwpx` (Korean) and re-learns incrementally on file change (`watch`), on schedule (`cron`), or on demand. First-run bootstrap + delta re-index — no full re-scan. | `pyeonchan` + `janggyeong` |
-| 2 | **Two-Stage Routing** | Tier 1 keyword/regex match → Tier 2 LLM intent classification. Loads only the packs and corpus slice each query needs. ~97% token reduction vs. always-on full context. | `naru` |
-| 3 | **Typed Pack Registry + 5 Retrieval Plans** | Every pack declares its `corpus_affinity.retrieval_plan`: `vault_first`, `vault_then_llmwiki_fallback`, `llmwiki_recovery_first`, `dual_compare`, or `no_corpus`. Routing is data-driven, not heuristic. | `jikji` + `bongsu` |
+| 2 | **Two-Stage Routing** | Tier 1 deterministic keyword match (no LLM call) → Tier 2 loads only the selected packs' bodies. On the 59 router golden messages this uses about 94% fewer pack-instruction tokens than loading all 47 pack bodies (chars/4 estimate; pack instructions only, not total context). See ADR 0002. | `naru` |
+| 3 | **Typed Pack Registry + 5 Retrieval Plans** | A pack can declare a `corpus_affinity.retrieval_plan`: `vault_first`, `vault_then_llmwiki_fallback`, `llmwiki_recovery_first`, `dual_compare`, or `no_corpus`; `bongsu` supports all five. The 47 starter packs do not declare one yet. | `jikji` + `bongsu` |
 | 4 | **Proposal-Only 4-Gate Governance** | Auto-growth and eval feedback **never** overwrite system prompts or pack bodies directly. All changes land in `prompts/system/proposals/` and pass a 4-gate review (lint → diff → eval delta → human approval). Hard guard against prompt drift and corpus poisoning. | `sangso` |
 | 5 | **Multi-Tenant Overlay (scoped corpora)** | Personal vault + team vault + per-client vault are composed as permission-scoped layers. The same router serves a solo user and a 1,000-person org without re-architecting. | `beopjeon` (scope) + `janggyeong` |
 | 6 | **MCP Bridge** | The same corpus and packs are exposed over Model Context Protocol — usable from Claude Code, Cursor, Codex CLI, Continue, ChatGPT Desktop. **3 tools shipped in v0.1.0a7**: `sillok.list_packs`, `sillok.route`, `sillok.search`. Run via `python -m sillok.tongsa serve`. See [`docs/integrations/mcp-quickstart.md`](docs/integrations/mcp-quickstart.md). | `tongsa` |
@@ -263,7 +263,7 @@ python - <<'EOF'
 from sillok import route_message
 result = route_message("Generate a risk register for a Phase-2 ERP rollout")
 print(result.applied_packs)        # ['pm-enhanced', 'risk-uncertainty']
-print(result.retrieval_plan)       # 'wiki_first'
+print(result.retrieval_plan)       # 'vault_first'
 print(result.confidence)           # 'high'
 EOF
 ```
@@ -296,7 +296,7 @@ sillok route "Draft a Q3 strategy report for Acme Corp"
 
 # Expected output:
 # applied prompt packs: consulting-strategy-audit, exec-communication
-# retrieval plan:       wiki_first
+# retrieval plan:       vault_first
 # confidence:           high (0.91)
 # reason codes:         R1 R3
 ```
@@ -328,7 +328,7 @@ sillok route "Quarterly OKR draft for the product team"
 
 # Expected output:
 # applied prompt packs: pm-enhanced, exec-communication
-# retrieval plan:       wiki_first
+# retrieval plan:       vault_first
 # confidence:           high (0.88)
 # reason codes:         R1 R3 R4
 
@@ -390,7 +390,7 @@ Restart your IDE, then in chat:
 ```text
 # Expected output (in IDE chat):
 # applied prompt packs: pm-enhanced, safe-agile-delivery, change-management
-# retrieval plan:       wiki_first
+# retrieval plan:       vault_first
 # confidence:           high
 # reason codes:         R1 R3
 ```

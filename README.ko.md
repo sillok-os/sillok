@@ -41,8 +41,8 @@
 ### 무엇을 받게 되나요
 
 - **47개 프롬프트 팩** 기본 탑재(리서치·학술 논문·전략·PMO·ITIL·리스크·SAFe·거버넌스·임원 보고와 덱·보고서 품질·가격과 GTM·단위경제·플랫폼 전략·엔지니어링 운영·다이어그램과 이미지 프롬프트 등)
-- **2단계 라우터** — 적합한 팩(들)을 먼저 고르고, 적합한 retrieval plan 을 다음으로 선택
-- **5종 retrieval plan** — `wiki_first`, with-fallback, recovery-first, dual-compare, no-corpus
+- **2단계 라우터** — 결정론적 키워드 매칭으로 팩(들)을 고르고, 고른 팩의 본문만 불러옴(라우팅 중 LLM 호출 없음)
+- **5종 retrieval plan ID** — `vault_first`, `vault_then_llmwiki_fallback`, `llmwiki_recovery_first`, `dual_compare`, `no_corpus` (팩이 선언할 수 있음 · 기본 47팩은 아직 선언하지 않음)
 - **Reason-coded 출력** — 라우팅 결정마다 R1~R7 태깅(감사 가능)
 - **Proposal-only governance** — 4단계 게이트 검토, 무단 덮어쓰기 차단
 - **커널 관리자(실험적, opt-in)** — 메시지 사이의 작업 맥락·문맥 예산·플레이북·기억 회수를 Claude Code 훅 하나로 연결
@@ -105,7 +105,7 @@ flowchart TB
 
     subgraph QUERY["Query 경로"]
         BONGSU["봉수(bongsu).search<br/>(frontmatter + body grep)"]
-        NARU["나루(naru).router_2tier<br/>(tier 1 키워드 → tier 2 LLM)"]
+        NARU["나루(naru).router_2tier<br/>(tier 1 키워드 → tier 2 팩 본문)"]
         JIKJI["직지(jikji)<br/>(typed pack registry)"]
     end
 
@@ -206,8 +206,8 @@ Sillok 의 **로드맵** 은 **5축 / 25 카테고리 / 110+ 글로벌 표준** 
 | # | Feature | 무엇을 하나 | 모듈 |
 |---|---|---|---|
 | 1 | **Multi-format Auto-Ingest RAG** | `md` / `pdf` / `docx` / `xlsx` / `pptx` / `txt` / `hwpx`(한글) 에서 개인 RAG 코퍼스를 자동 구축. 파일 변경(`watch`), 스케줄(`cron`), 또는 on-demand 로 incremental 학습. | `pyeonchan` + `janggyeong` |
-| 2 | **Two-Stage Routing** | Tier 1 키워드/regex 매칭 → Tier 2 LLM 인텐트 분류. 항상 켜진 풀 컨텍스트 대비 ~97% 토큰 절감. | `naru` |
-| 3 | **Typed Pack Registry + 5 Retrieval Plans** | 모든 팩이 `corpus_affinity.retrieval_plan` 을 선언. 라우팅이 휴리스틱이 아닌 데이터 주도. | `jikji` + `bongsu` |
+| 2 | **Two-Stage Routing** | Tier 1 결정론적 키워드 매칭(LLM 호출 없음) → Tier 2 고른 팩 본문만 로드. 라우터 골든 메시지 59건 기준 47팩 본문 전체를 싣는 것보다 팩 지침 토큰 약 94% 절감(글자/4 추정 · 전체 문맥이 아닌 팩 지침만 비교). ADR 0002 참조. | `naru` |
+| 3 | **Typed Pack Registry + 5 Retrieval Plans** | 팩은 `corpus_affinity.retrieval_plan` 을 선언할 수 있고 `bongsu` 가 5종을 지원. 기본 47팩은 아직 선언하지 않음. | `jikji` + `bongsu` |
 | 4 | **Proposal-Only 4-Gate Governance** | 자동 성장과 eval 피드백이 시스템 프롬프트나 팩 본문을 절대로 직접 덮어쓰지 않음. 4단계 게이트 통과 필수. | `sangso` |
 | 5 | **Multi-Tenant Overlay (스코프 코퍼스)** | 개인 + 팀 + 클라이언트별 vault 가 권한 스코프 계층으로 결합. | `beopjeon` (스코프) + `janggyeong` |
 | 6 | **MCP Bridge** | 같은 코퍼스와 팩을 MCP 로 노출 — Claude Code, Cursor, Codex CLI, Continue, ChatGPT Desktop. 도구 lock-in 없음. | `tongsa` |
@@ -264,7 +264,7 @@ python - <<'EOF'
 from sillok import route_message
 result = route_message("Phase-2 ERP 롤아웃을 위한 risk register 생성")
 print(result.applied_packs)        # ['pm-enhanced', 'risk-uncertainty']
-print(result.retrieval_plan)       # 'wiki_first'
+print(result.retrieval_plan)       # 'vault_first'
 print(result.confidence)           # 'high'
 EOF
 ```
@@ -297,7 +297,7 @@ sillok route "Acme사 Q3 전략 보고서 작성"
 
 # 예상 출력:
 # applied prompt packs: consulting-strategy-audit, exec-communication
-# retrieval plan:       wiki_first
+# retrieval plan:       vault_first
 # confidence:           high (0.91)
 # reason codes:         R1 R3
 ```
@@ -329,7 +329,7 @@ sillok route "프로덕트팀 분기 OKR 초안"
 
 # 예상 출력:
 # applied prompt packs: pm-enhanced, exec-communication
-# retrieval plan:       wiki_first
+# retrieval plan:       vault_first
 # confidence:           high (0.88)
 # reason codes:         R1 R3 R4
 
@@ -376,7 +376,7 @@ IDE 재시작 후 채팅에서:
 ```text
 # IDE 채팅 예상 출력:
 # applied prompt packs: pm-enhanced, safe-agile-delivery, change-management
-# retrieval plan:       wiki_first
+# retrieval plan:       vault_first
 # confidence:           high
 # reason codes:         R1 R3
 ```
