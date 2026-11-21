@@ -6,6 +6,12 @@ adheres to [SemVer](https://semver.org/).
 
 ## [Unreleased]
 
+### Fixed — documentation
+- Routing claims now match the code (ADR 0002): Tier 2 loads the selected
+  pack bodies and routing makes no LLM call; the measured pack-instruction
+  saving is about 94% (not ~97%); the 47 starter packs do not declare a
+  `retrieval_plan` yet; sample outputs use the valid plan ID `vault_first`.
+
 ## [0.4.1] — 2026-11-19
 
 **Packs Wave 3a: a new `research` category (43 → 47 packs).** Content only:
