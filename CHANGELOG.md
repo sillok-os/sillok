@@ -11,6 +11,12 @@ adheres to [SemVer](https://semver.org/).
   pack bodies and routing makes no LLM call; the measured pack-instruction
   saving is about 94% (not ~97%); the 47 starter packs do not declare a
   `retrieval_plan` yet; sample outputs use the valid plan ID `vault_first`.
+- README (EN · KO): the "Common workflows" and "Setup paths" sections now
+  say up front that `sillok init` / `corpus` / `overlay` and `route_message`
+  are GA targets, and point to what works on 0.4.1 (`sillok route`, the
+  `tongsa` MCP bridge, Python 3.11+). The Korean README's MCP section no
+  longer installs the non-existent `sillok-mcp` package; it now matches the
+  English `sillok[mcp]` + `python -m sillok.tongsa` setup.
 
 ## [0.4.1] — 2026-11-19
 

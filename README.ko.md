@@ -237,13 +237,15 @@ Sillok 의 **로드맵** 은 **5축 / 25 카테고리 / 110+ 글로벌 표준** 
 
 > 🤝 **본인 도메인 pack 추가?** 아직 ship 되지 않은 17~18 카테고리는 도메인 SME 분들이 추가하실 수 있도록 의도적으로 비워둔 영역입니다. 단계별 가이드: [`docs/contributing/extending-with-your-domain.md`](docs/contributing/extending-with-your-domain.md).
 
-### 자주 쓰는 워크플로
+### 자주 쓰는 워크플로 — *GA 목표*
 
-3 가지 archetype — 컨설팅 / PM / AI 빌더 사용 대부분을 커버.
+> **상태(0.4.1)**: 아래 워크플로는 아직 출시되지 않은 GA 명령을 씁니다 — `sillok init` · `sillok corpus` · `sillok overlay` · 파이썬 API `route_message` ([0.4.0 이 아직 제공하지 않는 것](#040-이-아직-제공하지-않는-것) 참조). 지금 동작하는 경로는 `pip install sillok`(Python 3.11+) → `sillok route "<요청 문장>"`, 그리고 `tongsa` MCP 브리지입니다 — [Part 4 — 사용](#part-4--사용) 참조.
+
+3 가지 archetype — 컨설팅 / PM / AI 빌더의 GA 사용 대부분을 커버.
 
 #### 시니어 컨설턴트
 ```bash
-pip install sillok sillok-mcp
+pip install 'sillok[mcp]'
 sillok init
 sillok corpus install --starter
 sillok overlay create --client acme    # 클라이언트 단위 커스터마이징
@@ -259,7 +261,7 @@ sillok init --registry https://internal.example.com/sillok-registry.yaml
 
 #### AI 에이전트 빌더
 ```bash
-pip install sillok sillok-mcp
+pip install 'sillok[mcp]'
 python - <<'EOF'
 from sillok import route_message
 result = route_message("Phase-2 ERP 롤아웃을 위한 risk register 생성")
@@ -269,7 +271,7 @@ print(result.confidence)           # 'high'
 EOF
 ```
 
-> 위 워크플로는 **GA 경험** (`>=1.0.0`) 기준. 현재 alpha (`0.4.0`) 에서 지금 동작하는 경로는 [Part 4 — 사용](#part-4--사용) 참조.
+> 위 워크플로는 **GA 경험** (`>=1.0.0`) 기준. 현재 alpha (`0.4.1`) 에서 지금 동작하는 경로는 [Part 4 — 사용](#part-4--사용) 참조.
 
 ---
 
@@ -304,7 +306,9 @@ sillok route "Acme사 Q3 전략 보고서 작성"
 
 라우팅이 동작합니다. 그게 전부입니다.
 
-### 설치 단계
+### 설치 단계 — *GA 목표*
+
+> **상태(0.4.1)**: `sillok init` · `sillok corpus` · `sillok overlay` 를 부르는 단계는 GA 경험 기준이며 0.4.1 에서는 동작하지 않습니다. 0.4.1 은 [Part 4 — 사용](#part-4--사용)에서 시작하세요.
 
 3개 stage. 각 stage 는 이전 단계를 전제. 필요한 만큼만 진행하세요.
 
@@ -347,21 +351,33 @@ sillok route "프로덕트팀 분기 OKR 초안" --execute
 **MCP 서버(통사;Tongsa)** 를 통해 IDE 채팅에서 직접 Sillok 라우팅을 사용합니다.
 
 ```bash
-pip install sillok-mcp
+pip install 'sillok[mcp]'
 ```
 
-**Claude Code** — `~/.claude/settings.json` 또는 프로젝트 `.mcp.json` 에 추가:
+**Claude Code** — 다음 한 줄을 실행하거나
+
+```bash
+claude mcp add sillok -- python -m sillok.tongsa serve --transport stdio
+```
+
+아래 내용을 **프로젝트 루트의** `.mcp.json` 으로 저장합니다(`.claude/mcp.json` 도, `settings.json` 도 아닙니다 — Claude Code 는 거기서 `mcpServers` 를 읽지 않습니다):
 
 ```json
 {
   "mcpServers": {
     "sillok": {
-      "command": "sillok-mcp",
-      "args": ["serve", "--stdio"]
+      "command": "python",
+      "args": ["-m", "sillok.tongsa", "serve", "--transport", "stdio"],
+      "env": {
+        "PYTHONUNBUFFERED": "1",
+        "PYTHONIOENCODING": "utf-8"
+      }
     }
   }
 }
 ```
+
+**`.mcp.json` 을 쓴 뒤 Claude Code 를 다시 시작하세요.** MCP 서버는 시작할 때 연결되므로, 세션 중에 쓴 파일은 다음 실행 전까지 도구가 보이지 않습니다.
 
 **Cursor** — 같은 형식으로 `~/.cursor/mcp.json` 에 저장.
 
