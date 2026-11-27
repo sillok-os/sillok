@@ -236,9 +236,11 @@ Match yourself to a row, then jump to the matching workflow archetype below.
 
 > 🤝 **Adding a pack for your domain?** Categories marked ⏳ above (industry standards, org design, content publishing, enterprise B2B) are intentionally left for domain SMEs. Step-by-step in [`docs/contributing/extending-with-your-domain.md`](docs/contributing/extending-with-your-domain.md) — pack anatomy, sanitization, standards citation, and the 5-step quality gate.
 
-### Common workflows
+### Common workflows — *GA target*
 
-Three archetypes covering most consulting / PM / AI-builder usage today.
+> **Status (0.4.1)**: these workflows use GA commands that are not shipped yet — `sillok init`, `sillok corpus`, `sillok overlay` and the `route_message` Python API (see [What 0.4.0 does not yet provide](#what-040-does-not-yet-provide)). What works today: `pip install sillok` (Python 3.11+) → `sillok route "<your request>"`, plus the `tongsa` MCP bridge — see [Part 4 — Usage](#part-4--usage).
+
+Three archetypes covering most consulting / PM / AI-builder usage at GA.
 
 #### Senior consultant
 ```bash
@@ -268,7 +270,7 @@ print(result.confidence)           # 'high'
 EOF
 ```
 
-> Workflows above describe the **GA experience** (`>=1.0.0`). For what works in the current alpha (`0.4.0`), see [Part 4 — Usage](#part-4--usage).
+> Workflows above describe the **GA experience** (`>=1.0.0`). For what works in the current alpha (`0.4.1`), see [Part 4 — Usage](#part-4--usage).
 
 ---
 
@@ -303,7 +305,9 @@ sillok route "Draft a Q3 strategy report for Acme Corp"
 
 You're routing. That's it.
 
-### Setup paths
+### Setup paths — *GA target*
+
+> **Status (0.4.1)**: steps that call `sillok init`, `sillok corpus` or `sillok overlay` describe the GA experience and do not run on 0.4.1. For 0.4.1, start from [Part 4 — Usage](#part-4--usage).
 
 Three stages. Each builds on the previous. Stop wherever you have what you need.
 
